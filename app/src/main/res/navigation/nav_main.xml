@@ -3,11 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/navControlFragment">
+    app:startDestination="@id/guideMainFragment">
 
     <fragment
         android:id="@+id/navControlFragment"
         android:name="com.kisssum.smartcity.navigation.NavControlFragment"
         android:label="fragment_nav_control"
         tools:layout="@layout/fragment_nav_control" />
+    <fragment
+        android:id="@+id/guideMainFragment"
+        android:name="com.kisssum.smartcity.guidepages.GuideMainFragment"
+        android:label="fragment_guide_main"
+        tools:layout="@layout/fragment_guide_main" >
+        <action
+            android:id="@+id/action_guideMainFragment_to_navControlFragment"
+            app:destination="@id/navControlFragment" />
+    </fragment>
 </navigation>
