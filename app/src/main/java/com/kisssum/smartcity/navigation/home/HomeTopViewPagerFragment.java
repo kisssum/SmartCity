@@ -5,36 +5,38 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentHomeBinding;
+import com.kisssum.smartcity.databinding.FragmentHomeTopViewPagerBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link HomeTopViewPagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeTopViewPagerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private FragmentHomeBinding binding;
-
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    public HomeFragment() {
-        // Required empty public constructor
+    private FragmentHomeTopViewPagerBinding binding;
+    private int index = 0;
+
+    public HomeTopViewPagerFragment(int index) {
+        this.index = index;
     }
 
     /**
@@ -43,11 +45,11 @@ public class HomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment HomeTopViewPagerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static HomeTopViewPagerFragment newInstance(String param1, String param2) {
+        HomeTopViewPagerFragment fragment = new HomeTopViewPagerFragment(0);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,7 +69,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater);
+        binding = FragmentHomeTopViewPagerBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -75,33 +77,13 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
-            @NonNull
-            @Override
-            public Fragment createFragment(int position) {
-                return new HomeTopViewPagerFragment(position);
-            }
+        List<Integer> imgs = new ArrayList<>();
+        imgs.add(R.drawable.top_view_pager_1);
+        imgs.add(R.drawable.top_view_pager_2);
+        imgs.add(R.drawable.top_view_pager_3);
+        imgs.add(R.drawable.top_view_pager_4);
+        imgs.add(R.drawable.top_view_pager_5);
 
-            @Override
-            public int getItemCount() {
-                return 5;
-            }
-        };
-
-        binding.topViewPager.setAdapter(adapter);
-
-        // 无限滚轮
-        loopTopViewPager();
-    }
-
-    private void loopTopViewPager() {
-        new Handler().postDelayed(() -> {
-            int cIndex = binding.topViewPager.getCurrentItem();
-            if (cIndex >= 4) cIndex = 0;
-            else cIndex++;
-
-            binding.topViewPager.setCurrentItem(cIndex);
-            loopTopViewPager();
-        }, 3000);
+        binding.imageView2.setImageResource(imgs.get(index));
     }
 }
