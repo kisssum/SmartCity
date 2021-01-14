@@ -4,22 +4,22 @@
 
     <item
         android:id="@+id/item_home"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_baseline_home_24"
         android:title="首页" />
     <item
         android:id="@+id/item_allservice"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_baseline_home_repair_service_24"
         android:title="全部服务" />
     <item
         android:id="@+id/item_partybuidling"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_baseline_construction_24"
         android:title="智慧党建" />
     <item
         android:id="@+id/item_news"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_baseline_text_snippet_24"
         android:title="新闻" />
     <item
         android:id="@+id/item_me"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="个人中心" />
 </menu>
