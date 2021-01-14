@@ -76,8 +76,11 @@ public class GuidePagesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.ratingBar.setProgress(index + 1);
+
         if (index != 4) {
             binding.btnGo.setVisibility(View.INVISIBLE);
+        }else {
             binding.btnGo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
