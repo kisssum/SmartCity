@@ -1,5 +1,7 @@
 package com.kisssum.smartcity.guidepages;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -80,10 +82,15 @@ public class GuidePagesFragment extends Fragment {
 
         if (index != 4) {
             binding.btnGo.setVisibility(View.INVISIBLE);
-        }else {
+        } else {
             binding.btnGo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    // 保存
+                    SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                    sp.edit().putBoolean("GuidePage", true).commit();
+
+
                     Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
                     Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
                 }

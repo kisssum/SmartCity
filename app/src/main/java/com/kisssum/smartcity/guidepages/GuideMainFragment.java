@@ -1,10 +1,13 @@
 package com.kisssum.smartcity.guidepages;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.view.LayoutInflater;
@@ -74,19 +77,27 @@ public class GuideMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
-            @NonNull
-            @Override
-            public Fragment createFragment(int position) {
-                return new GuidePagesFragment(position);
-            }
+        SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        boolean guidePage = sp.getBoolean("GuidePage", false);
 
-            @Override
-            public int getItemCount() {
-                return 5;
-            }
-        };
+        if (guidePage) {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
+        } else {
+            FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
+                @NonNull
+                @Override
+                public Fragment createFragment(int position) {
+                    return new GuidePagesFragment(position);
+                }
 
-        binding.viewPager.setAdapter(adapter);
+                @Override
+                public int getItemCount() {
+                    return 5;
+                }
+            };
+
+            binding.viewPager.setAdapter(adapter);
+        }
     }
 }
