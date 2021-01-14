@@ -79,6 +79,7 @@ public class NavControlFragment extends Fragment {
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
                 switch (item.getItemId()) {
                     case R.id.item_home:
                         Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.homeFragment);
