@@ -3,35 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".navigation.home.HomeFragment">
 
-    <SearchView
-        android:id="@+id/searchView"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:iconifiedByDefault="false"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/topViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        tools:layout_editor_absoluteX="190dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <include
-        android:id="@+id/service_list"
-        layout="@layout/home_application_service_table"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topViewPager" />
+            <SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="false"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/topViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/searchView"
+                tools:layout_editor_absoluteX="190dp" />
+
+            <include
+                android:id="@+id/service_list"
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/topViewPager" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="热门主题"
+                app:layout_constraintTop_toBottomOf="@+id/service_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/hotServiceList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

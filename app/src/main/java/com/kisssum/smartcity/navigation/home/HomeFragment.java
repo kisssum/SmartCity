@@ -1,17 +1,17 @@
 package com.kisssum.smartcity.navigation.home;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
@@ -76,7 +76,8 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
+        // 轮播图
+        FragmentStateAdapter topViewAdapter = new FragmentStateAdapter(requireActivity()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -88,16 +89,22 @@ public class HomeFragment extends Fragment {
                 return 5;
             }
         };
-
-        binding.topViewPager.setAdapter(adapter);
-
+        binding.topViewPager.setAdapter(topViewAdapter);
         // 无限滚轮
         loopTopViewPager();
 
+        // 更多服务跳转
         binding.serviceList.serviceMore.setOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
         });
+
+        // 热门主题
+        GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
+        HotServiceListAdpater HotServiceAdpater = new HotServiceListAdpater();
+        binding.hotServiceList.setLayoutManager(layoutManager);
+        binding.hotServiceList.setAdapter(HotServiceAdpater);
+        binding.hotServiceList.setNestedScrollingEnabled(false);
     }
 
     private void loopTopViewPager() {
