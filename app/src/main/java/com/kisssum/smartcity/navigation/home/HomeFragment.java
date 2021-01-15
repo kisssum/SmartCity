@@ -77,6 +77,23 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // 轮播图
+        initLunbotu();
+
+        // 服务列表
+        initServiceList();
+
+        // 热门主题
+        initHotTheme();
+
+        // 新闻专栏
+        initNews();
+    }
+
+    private void initNews(){
+
+    }
+
+    private void initLunbotu() {
         FragmentStateAdapter topViewAdapter = new FragmentStateAdapter(requireActivity()) {
             @NonNull
             @Override
@@ -92,14 +109,17 @@ public class HomeFragment extends Fragment {
         binding.topViewPager.setAdapter(topViewAdapter);
         // 无限滚轮
         loopTopViewPager();
+    }
 
+    private void initServiceList() {
         // 更多服务跳转
         binding.serviceList.serviceMore.setOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
         });
+    }
 
-        // 热门主题
+    private void initHotTheme() {
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
         HotServiceListAdpater HotServiceAdpater = new HotServiceListAdpater();
         binding.hotServiceList.setLayoutManager(layoutManager);
