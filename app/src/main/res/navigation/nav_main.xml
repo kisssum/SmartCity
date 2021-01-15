@@ -9,7 +9,11 @@
         android:id="@+id/navControlFragment"
         android:name="com.kisssum.smartcity.navigation.NavControlFragment"
         android:label="fragment_nav_control"
-        tools:layout="@layout/fragment_nav_control" />
+        tools:layout="@layout/fragment_nav_control" >
+        <action
+            android:id="@+id/action_navControlFragment_to_meInformationFragment"
+            app:destination="@id/meInformationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
         android:name="com.kisssum.smartcity.guidepages.GuideMainFragment"
@@ -19,4 +23,9 @@
             android:id="@+id/action_guideMainFragment_to_navControlFragment"
             app:destination="@id/navControlFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/meInformationFragment"
+        android:name="com.kisssum.smartcity.navigation.me.MeInformationFragment"
+        android:label="fragment_me_information"
+        tools:layout="@layout/fragment_me_information" />
 </navigation>
