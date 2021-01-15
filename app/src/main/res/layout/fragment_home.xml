@@ -25,6 +25,7 @@
         tools:layout_editor_absoluteX="190dp" />
 
     <include
+        android:id="@+id/service_list"
         layout="@layout/home_application_service_table"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

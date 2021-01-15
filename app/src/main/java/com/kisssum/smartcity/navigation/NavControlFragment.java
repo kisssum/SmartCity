@@ -76,29 +76,26 @@ public class NavControlFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-                switch (item.getItemId()) {
-                    case R.id.item_home:
-                        Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.homeFragment);
-                        break;
-                    case R.id.item_allservice:
-                        Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
-                        break;
-                    case R.id.item_partybuidling:
-                        Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.partyBuildingFragment);
-                        break;
-                    case R.id.item_news:
-                        Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.newsFragment);
-                        break;
-                    case R.id.item_me:
-                        Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.meFragment);
-                        break;
-                }
-                return true;
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            switch (item.getItemId()) {
+                case R.id.item_home:
+                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.homeFragment);
+                    break;
+                case R.id.item_allservice:
+                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+                    break;
+                case R.id.item_partybuidling:
+                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.partyBuildingFragment);
+                    break;
+                case R.id.item_news:
+                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.newsFragment);
+                    break;
+                case R.id.item_me:
+                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.meFragment);
+                    break;
             }
+            return true;
         });
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.os.Handler;
@@ -92,6 +93,11 @@ public class HomeFragment extends Fragment {
 
         // 无限滚轮
         loopTopViewPager();
+
+        binding.serviceList.serviceMore.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
     }
 
     private void loopTopViewPager() {
