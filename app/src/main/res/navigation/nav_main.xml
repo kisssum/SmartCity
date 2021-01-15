@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_navControlFragment_to_meInformationFragment"
             app:destination="@id/meInformationFragment" />
+        <action
+            android:id="@+id/action_navControlFragment_to_opinionFragment"
+            app:destination="@id/opinionFragment" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -28,4 +31,9 @@
         android:name="com.kisssum.smartcity.navigation.me.MeInformationFragment"
         android:label="fragment_me_information"
         tools:layout="@layout/fragment_me_information" />
+    <fragment
+        android:id="@+id/opinionFragment"
+        android:name="com.kisssum.smartcity.navigation.me.OpinionFragment"
+        android:label="fragment_opinion"
+        tools:layout="@layout/fragment_opinion" />
 </navigation>
