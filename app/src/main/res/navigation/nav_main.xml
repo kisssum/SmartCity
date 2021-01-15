@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_navControlFragment_to_opinionFragment"
             app:destination="@id/opinionFragment" />
+        <action
+            android:id="@+id/action_navControlFragment_to_changePwdFragment"
+            app:destination="@id/changePwdFragment" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -36,4 +39,9 @@
         android:name="com.kisssum.smartcity.navigation.me.OpinionFragment"
         android:label="fragment_opinion"
         tools:layout="@layout/fragment_opinion" />
+    <fragment
+        android:id="@+id/changePwdFragment"
+        android:name="com.kisssum.smartcity.navigation.me.ChangePwdFragment"
+        android:label="fragment_change_pwd"
+        tools:layout="@layout/fragment_change_pwd" />
 </navigation>

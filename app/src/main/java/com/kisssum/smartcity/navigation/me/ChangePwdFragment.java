@@ -1,25 +1,24 @@
 package com.kisssum.smartcity.navigation.me;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentMeBinding;
+import com.kisssum.smartcity.databinding.FragmentChangePwdBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link ChangePwdFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeFragment extends Fragment {
+public class ChangePwdFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,9 +29,9 @@ public class MeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentMeBinding binding;
+    private FragmentChangePwdBinding binding;
 
-    public MeFragment() {
+    public ChangePwdFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +41,11 @@ public class MeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MeFragment.
+     * @return A new instance of fragment ChangePwdFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeFragment newInstance(String param1, String param2) {
-        MeFragment fragment = new MeFragment();
+    public static ChangePwdFragment newInstance(String param1, String param2) {
+        ChangePwdFragment fragment = new ChangePwdFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +65,7 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMeBinding.inflate(inflater);
+        binding = FragmentChangePwdBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -74,8 +73,8 @@ public class MeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.l1.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.l3.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_changePwdFragment));
-        binding.l4.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_opinionFragment));
+        binding.changePwdToolbar.setNavigationOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+        });
     }
 }
