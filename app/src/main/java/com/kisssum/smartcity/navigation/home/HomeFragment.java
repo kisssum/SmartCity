@@ -13,6 +13,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
 
@@ -89,8 +91,40 @@ public class HomeFragment extends Fragment {
         initNews();
     }
 
-    private void initNews(){
+    private void initNews() {
+        FragmentStateAdapter newsAdapter = new FragmentStateAdapter(requireActivity()) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return new HomeNewsViewPagerFragment(position);
+            }
 
+            @Override
+            public int getItemCount() {
+                return 5;
+            }
+        };
+        binding.newsPager.setAdapter(newsAdapter);
+
+        new TabLayoutMediator(binding.newsTablayout, binding.newsPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("国内");
+                    break;
+                case 1:
+                    tab.setText("国际");
+                    break;
+                case 2:
+                    tab.setText("军事");
+                    break;
+                case 3:
+                    tab.setText("财经");
+                    break;
+                case 4:
+                    tab.setText("娱乐");
+                    break;
+            }
+        }).attach();
     }
 
     private void initLunbotu() {
