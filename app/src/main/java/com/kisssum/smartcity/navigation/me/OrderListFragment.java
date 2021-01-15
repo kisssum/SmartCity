@@ -12,14 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentMeBinding;
+import com.kisssum.smartcity.databinding.FragmentOrderListBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link OrderListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeFragment extends Fragment {
+public class OrderListFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,9 +30,9 @@ public class MeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentMeBinding binding;
+    private FragmentOrderListBinding binding;
 
-    public MeFragment() {
+    public OrderListFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +42,11 @@ public class MeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MeFragment.
+     * @return A new instance of fragment OrderListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeFragment newInstance(String param1, String param2) {
-        MeFragment fragment = new MeFragment();
+    public static OrderListFragment newInstance(String param1, String param2) {
+        OrderListFragment fragment = new OrderListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +66,7 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMeBinding.inflate(inflater);
+        binding = FragmentOrderListBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -74,9 +74,8 @@ public class MeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.l1.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.l2.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_orderListFragment));
-        binding.l3.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_changePwdFragment));
-        binding.l4.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_opinionFragment));
+        binding.orderListToolbar.setNavigationOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+        });
     }
 }
