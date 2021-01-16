@@ -1,14 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".navigation.allservice.AllServiceFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="allservice" />
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <SearchView
+                android:id="@+id/allServiceSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:iconifiedByDefault="false"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
+
+            </SearchView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧政务" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧服务" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧医疗" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧养老" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧旅游" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧交通" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧环保" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧安防" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧生活" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="智慧教育" />
+
+            <include
+                layout="@layout/home_application_service_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
