@@ -2,13 +2,20 @@ package com.kisssum.smartcity.navigation.news;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kisssum.smartcity.R;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.kisssum.smartcity.databinding.FragmentNewsBinding;
+import com.kisssum.smartcity.navigation.home.HomeNewsViewPagerFragment;
+import com.kisssum.smartcity.navigation.home.HomeTopViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,8 @@ public class NewsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FragmentNewsBinding binding;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -60,7 +69,83 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news, container, false);
+        binding = FragmentNewsBinding.inflate(inflater);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // 轮播图
+        initLunbotu();
+
+        // 新闻专栏
+        initNews();
+    }
+
+    private void initLunbotu() {
+        FragmentStateAdapter topViewAdapter = new FragmentStateAdapter(requireActivity()) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return new HomeTopViewPagerFragment(position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return 5;
+            }
+        };
+        binding.newsMainLunBoPager.setAdapter(topViewAdapter);
+        // 无限滚轮
+        loopTopViewPager();
+    }
+
+    private void loopTopViewPager() {
+        new Handler().postDelayed(() -> {
+            int cIndex = binding.newsMainLunBoPager.getCurrentItem();
+            if (cIndex >= 4) cIndex = 0;
+            else cIndex++;
+
+            binding.newsMainLunBoPager.setCurrentItem(cIndex);
+            loopTopViewPager();
+        }, 3000);
+    }
+
+    private void initNews() {
+        FragmentStateAdapter newsAdapter = new FragmentStateAdapter(requireActivity()) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return new HomeNewsViewPagerFragment(position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return 5;
+            }
+        };
+        binding.newsMainPager.setAdapter(newsAdapter);
+
+        new TabLayoutMediator(binding.newsMainTablayout, binding.newsMainPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("国内");
+                    break;
+                case 1:
+                    tab.setText("国际");
+                    break;
+                case 2:
+                    tab.setText("军事");
+                    break;
+                case 3:
+                    tab.setText("财经");
+                    break;
+                case 4:
+                    tab.setText("娱乐");
+                    break;
+            }
+        }).attach();
     }
 }

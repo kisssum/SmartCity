@@ -13,7 +13,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
@@ -104,9 +103,9 @@ public class HomeFragment extends Fragment {
                 return 5;
             }
         };
-        binding.newsPager.setAdapter(newsAdapter);
+        binding.homeNewsPager.setAdapter(newsAdapter);
 
-        new TabLayoutMediator(binding.newsTablayout, binding.newsPager, (tab, position) -> {
+        new TabLayoutMediator(binding.homeNewsTablayout, binding.homeNewsPager, (tab, position) -> {
             switch (position) {
                 case 0:
                     tab.setText("国内");
@@ -140,14 +139,14 @@ public class HomeFragment extends Fragment {
                 return 5;
             }
         };
-        binding.topViewPager.setAdapter(topViewAdapter);
+        binding.homeTopViewPager.setAdapter(topViewAdapter);
         // 无限滚轮
         loopTopViewPager();
     }
 
     private void initServiceList() {
         // 更多服务跳转
-        binding.serviceList.serviceMore.setOnClickListener(v -> {
+        binding.homeServiceList.serviceMore.setOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
         });
@@ -156,18 +155,18 @@ public class HomeFragment extends Fragment {
     private void initHotTheme() {
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
         HotServiceListAdpater HotServiceAdpater = new HotServiceListAdpater();
-        binding.hotServiceList.setLayoutManager(layoutManager);
-        binding.hotServiceList.setAdapter(HotServiceAdpater);
-        binding.hotServiceList.setNestedScrollingEnabled(false);
+        binding.homeHotServiceList.setLayoutManager(layoutManager);
+        binding.homeHotServiceList.setAdapter(HotServiceAdpater);
+        binding.homeHotServiceList.setNestedScrollingEnabled(false);
     }
 
     private void loopTopViewPager() {
         new Handler().postDelayed(() -> {
-            int cIndex = binding.topViewPager.getCurrentItem();
+            int cIndex = binding.homeTopViewPager.getCurrentItem();
             if (cIndex >= 4) cIndex = 0;
             else cIndex++;
 
-            binding.topViewPager.setCurrentItem(cIndex);
+            binding.homeTopViewPager.setCurrentItem(cIndex);
             loopTopViewPager();
         }, 3000);
     }
