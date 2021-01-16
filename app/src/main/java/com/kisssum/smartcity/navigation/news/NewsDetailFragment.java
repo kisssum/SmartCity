@@ -1,25 +1,26 @@
-package com.kisssum.smartcity.navigation.home;
+package com.kisssum.smartcity.navigation.news;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebViewClient;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentHomeNewsViewPagerBinding;
+import com.kisssum.smartcity.databinding.FragmentNewsDetailBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeNewsViewPagerFragment#newInstance} factory method to
+ * Use the {@link NewsDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeNewsViewPagerFragment extends Fragment {
+public class NewsDetailFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,11 +31,10 @@ public class HomeNewsViewPagerFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentHomeNewsViewPagerBinding binding;
-    private int index = 0;
+    private FragmentNewsDetailBinding binding;
 
-    public HomeNewsViewPagerFragment(int index) {
-        this.index = index;
+    public NewsDetailFragment() {
+        // Required empty public constructor
     }
 
     /**
@@ -43,11 +43,11 @@ public class HomeNewsViewPagerFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeNewsViewPagerFragment.
+     * @return A new instance of fragment NewsDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeNewsViewPagerFragment newInstance(String param1, String param2) {
-        HomeNewsViewPagerFragment fragment = new HomeNewsViewPagerFragment(0);
+    public static NewsDetailFragment newInstance(String param1, String param2) {
+        NewsDetailFragment fragment = new NewsDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,7 +67,7 @@ public class HomeNewsViewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeNewsViewPagerBinding.inflate(inflater);
+        binding = FragmentNewsDetailBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -75,9 +75,16 @@ public class HomeNewsViewPagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(index,requireContext());
-        binding.newsList.setLayoutManager(layoutManager);
-        binding.newsList.setAdapter(adpater);
+        Bundle arguments = getArguments();
+
+        binding.newsDetailToolbar.setNavigationOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+        });
+
+        binding.newsDetailToolbar.setTitle(arguments.getString("title"));
+        binding.newDetailWeb.getSettings().setJavaScriptEnabled(true);
+        binding.newDetailWeb.getSettings().setBuiltInZoomControls(true);
+        binding.newDetailWeb.setWebViewClient(new WebViewClient());
+        binding.newDetailWeb.loadUrl(arguments.getString("url"));
     }
 }

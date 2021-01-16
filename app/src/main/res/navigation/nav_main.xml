@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_navControlFragment_to_orderListFragment"
             app:destination="@id/orderListFragment" />
+        <action
+            android:id="@+id/action_navControlFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -52,4 +55,9 @@
         android:name="com.kisssum.smartcity.navigation.me.OrderListFragment"
         android:label="fragment_order_list"
         tools:layout="@layout/fragment_order_list" />
+    <fragment
+        android:id="@+id/newsDetailFragment"
+        android:name="com.kisssum.smartcity.navigation.news.NewsDetailFragment"
+        android:label="fragment_news_detail"
+        tools:layout="@layout/fragment_news_detail" />
 </navigation>
