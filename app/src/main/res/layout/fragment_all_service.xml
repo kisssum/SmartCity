@@ -36,7 +36,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧政务" />
+                android:text="智慧政务"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -48,7 +51,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧服务" />
+                android:text="智慧服务"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -60,7 +66,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧医疗" />
+                android:text="智慧医疗"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -72,7 +81,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧养老" />
+                android:text="智慧养老"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -84,7 +96,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧旅游" />
+                android:text="智慧旅游"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -96,7 +111,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧交通" />
+                android:text="智慧交通"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -108,7 +126,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧环保" />
+                android:text="智慧环保"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -120,7 +141,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧安防" />
+                android:text="智慧安防"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -132,7 +156,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧生活" />
+                android:text="智慧生活"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"
@@ -144,7 +171,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧教育" />
+                android:text="智慧教育"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 layout="@layout/home_application_service_table"

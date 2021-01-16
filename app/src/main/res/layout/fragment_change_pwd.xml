@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="原密码:"
-        android:textColor="@color/black"
+        android:textColor="?attr/textColorAlertDialogListItem"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/changePwdToolbar" />
@@ -62,7 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="新密码:"
-        android:textColor="@android:color/black"
+        android:textColor="?attr/textColorAlertDialogListItem"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/beforePwd" />
@@ -84,6 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="确定"
+        android:textColor="?attr/textColorAlertDialogListItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

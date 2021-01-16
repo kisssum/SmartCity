@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="12"
                     android:text="头像:"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -81,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="昵称:"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <TextView
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="性别:"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <Switch
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="联系电话:"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <TextView
@@ -197,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="证件号:"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <TextView

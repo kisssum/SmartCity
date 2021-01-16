@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="姓名"
-        android:textColor="@color/black"
+        android:textColor="?attr/textColorAlertDialogListItem"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="12"
                     android:text="个人信息"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="12"
                     android:text="订单列表"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -172,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="12"
                     android:text="修改密码"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -208,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="12"
                     android:text="意见反馈"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -234,6 +234,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="退出"
+        android:textColor="?attr/textColorAlertDialogListItem"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"

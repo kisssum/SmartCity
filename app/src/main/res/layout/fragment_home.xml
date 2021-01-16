@@ -44,7 +44,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="应用服务" />
+                android:text="应用服务"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <include
                 android:id="@+id/service_list"
@@ -58,7 +61,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="热门主题" />
+                android:text="热门主题"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hotServiceList"
@@ -73,7 +79,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="新闻专栏" />
+                android:text="新闻专栏"
+                android:textColor="?attr/textColorAlertDialogListItem"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/newsTablayout"
