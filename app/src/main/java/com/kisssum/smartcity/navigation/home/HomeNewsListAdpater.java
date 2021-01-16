@@ -106,12 +106,12 @@ public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpate
 
         for (int i = 0; i < 10; i++) {
             map = new HashMap<>();
-            int r = random.nextInt(5);
-            map.put("img", imgs[r]);
-            map.put("title", title[r]);
-            map.put("text", text[r]);
-            map.put("comment", comment[r]);
-            map.put("time", time[r]);
+            int type = random.nextInt(5);
+            map.put("img", imgs[type]);
+            map.put("title", title[type]);
+            map.put("text", text[type]);
+            map.put("comment", comment[type]);
+            map.put("time", time[type]);
             list.add(map);
         }
 

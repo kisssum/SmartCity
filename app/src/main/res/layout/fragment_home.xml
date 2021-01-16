@@ -61,6 +61,7 @@
                 android:id="@+id/homeHotServiceList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp">
 
@@ -101,7 +102,8 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/homeNewsPager"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
 

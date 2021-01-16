@@ -157,7 +157,6 @@ public class HomeFragment extends Fragment {
         HotServiceListAdpater HotServiceAdpater = new HotServiceListAdpater();
         binding.homeHotServiceList.setLayoutManager(layoutManager);
         binding.homeHotServiceList.setAdapter(HotServiceAdpater);
-        binding.homeHotServiceList.setNestedScrollingEnabled(false);
     }
 
     private void loopTopViewPager() {
