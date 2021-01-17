@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,6 +78,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // 搜索框
+        initSearch();
+
         // 轮播图
         initLunbotu();
 
@@ -88,6 +92,22 @@ public class HomeFragment extends Fragment {
 
         // 新闻专栏
         initNews();
+    }
+
+    private void initSearch() {
+        binding.homeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                HomeNewsListAdpater adpater = new HomeNewsListAdpater(0, requireContext(), 10);
+                adpater.isAndGoToNewsInformation(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void initNews() {
