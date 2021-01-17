@@ -80,20 +80,25 @@ public class GuidePagesFragment extends Fragment {
 
         binding.ratingBar.setProgress(index + 1);
 
+        int[] imgs = new int[]{
+                R.drawable.guide_pager_1,
+                R.drawable.guide_pager_2,
+                R.drawable.guide_pager_3,
+                R.drawable.guide_pager_4,
+                R.drawable.guide_pager_5
+        };
+        binding.imageView.setImageResource(imgs[index]);
+
         if (index != 4) {
             binding.btnGo.setVisibility(View.INVISIBLE);
         } else {
-            binding.btnGo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 保存
-                    SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                    sp.edit().putBoolean("GuidePage", true).commit();
+            binding.btnGo.setOnClickListener(v -> {
+                // 保存
+                SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                sp.edit().putBoolean("GuidePage", true).commit();
 
-
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
-                }
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
             });
         }
     }
