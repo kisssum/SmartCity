@@ -5,23 +5,23 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentPartyBuildingBinding;
-import com.kisssum.smartcity.navigation.home.HomeTopViewPagerFragment;
+import com.kisssum.smartcity.databinding.FragmentPartyLunBoViewPagerBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PartyBuildingFragment#newInstance} factory method to
+ * Use the {@link PartyLunBoViewPagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PartyBuildingFragment extends Fragment {
+public class PartyLunBoViewPagerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,10 +32,11 @@ public class PartyBuildingFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentPartyBuildingBinding binding;
+    private FragmentPartyLunBoViewPagerBinding binding;
+    private int index;
 
-    public PartyBuildingFragment() {
-        // Required empty public constructor
+    public PartyLunBoViewPagerFragment(int index) {
+        this.index = index;
     }
 
     /**
@@ -44,11 +45,11 @@ public class PartyBuildingFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PartyBuildingFragment.
+     * @return A new instance of fragment PartyLunBoViewPagerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PartyBuildingFragment newInstance(String param1, String param2) {
-        PartyBuildingFragment fragment = new PartyBuildingFragment();
+    public static PartyLunBoViewPagerFragment newInstance(String param1, String param2) {
+        PartyLunBoViewPagerFragment fragment = new PartyLunBoViewPagerFragment(0);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,7 +69,7 @@ public class PartyBuildingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPartyBuildingBinding.inflate(inflater);
+        binding = FragmentPartyLunBoViewPagerBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -76,37 +77,13 @@ public class PartyBuildingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 轮播图
-        initLunbotu();
-    }
+        List<Integer> imgs = new ArrayList<>();
+        imgs.add(R.drawable.party1);
+        imgs.add(R.drawable.party2);
+        imgs.add(R.drawable.party3);
+        imgs.add(R.drawable.party4);
+        imgs.add(R.drawable.party5);
 
-    private void initLunbotu() {
-        FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
-            @NonNull
-            @Override
-            public Fragment createFragment(int position) {
-                return new PartyLunBoViewPagerFragment(position);
-            }
-
-            @Override
-            public int getItemCount() {
-                return 5;
-            }
-        };
-        binding.partyBuildingLunBoViewPager.setAdapter(adapter);
-       
-        // 无限滚轮
-        loopTopViewPager();
-    }
-
-    private void loopTopViewPager() {
-        new Handler().postDelayed(() -> {
-            int cIndex = binding.partyBuildingLunBoViewPager.getCurrentItem();
-            if (cIndex >= 4) cIndex = 0;
-            else cIndex++;
-
-            binding.partyBuildingLunBoViewPager.setCurrentItem(cIndex);
-            loopTopViewPager();
-        }, 3000);
+        binding.partyLunBoImg.setImageResource(imgs.get(index));
     }
 }
