@@ -12,19 +12,39 @@
         tools:layout="@layout/fragment_nav_control" >
         <action
             android:id="@+id/action_navControlFragment_to_meInformationFragment"
-            app:destination="@id/meInformationFragment" />
+            app:destination="@id/meInformationFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
         <action
             android:id="@+id/action_navControlFragment_to_opinionFragment"
-            app:destination="@id/opinionFragment" />
+            app:destination="@id/opinionFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
         <action
             android:id="@+id/action_navControlFragment_to_changePwdFragment"
-            app:destination="@id/changePwdFragment" />
+            app:destination="@id/changePwdFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
         <action
             android:id="@+id/action_navControlFragment_to_orderListFragment"
-            app:destination="@id/orderListFragment" />
+            app:destination="@id/orderListFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
         <action
             android:id="@+id/action_navControlFragment_to_newsDetailFragment"
-            app:destination="@id/newsDetailFragment" />
+            app:destination="@id/newsDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -33,7 +53,11 @@
         tools:layout="@layout/fragment_guide_main" >
         <action
             android:id="@+id/action_guideMainFragment_to_navControlFragment"
-            app:destination="@id/navControlFragment" />
+            app:destination="@id/navControlFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/meInformationFragment"
