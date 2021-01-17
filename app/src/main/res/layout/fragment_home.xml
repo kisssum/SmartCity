@@ -16,9 +16,11 @@
                 android:id="@+id/homeSearchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/search_style"
                 android:iconifiedByDefault="false"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp">
+                android:queryBackground="@android:color/transparent"
+                android:queryHint="搜索">
 
             </SearchView>
 
