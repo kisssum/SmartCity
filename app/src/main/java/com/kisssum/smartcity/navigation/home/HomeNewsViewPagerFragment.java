@@ -76,7 +76,7 @@ public class HomeNewsViewPagerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(index,requireContext());
+        HomeNewsListAdpater adpater = new HomeNewsListAdpater(index,requireContext(),10);
         binding.newsList.setLayoutManager(layoutManager);
         binding.newsList.setAdapter(adpater);
     }

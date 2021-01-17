@@ -25,9 +25,11 @@ public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpate
     List<Map<String, Object>> data;
     private int index = 0;
     private Context context;
+    private int count = 0;
 
-    public HomeNewsListAdpater(int index, Context context) {
+    public HomeNewsListAdpater(int index, Context context, int count) {
         this.index = index;
+        this.count = count;
         this.context = context;
 
         data = getData();
@@ -54,7 +56,12 @@ public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpate
             bundle.putString("text", data.get(position).get("text").toString());
             bundle.putString("url", data.get(position).get("url").toString());
 
-            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
+            if (count == 10)
+                Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
+            else if (count == 3) {
+                Navigation.findNavController(((Activity) context), R.id.fragment_main).popBackStack();
+                Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.newsDetailFragment, bundle);
+            }
         });
     }
 
@@ -93,7 +100,7 @@ public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpate
         List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> map;
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < count; i++) {
             map = new HashMap<>();
             int type = random.nextInt(context.getResources().getStringArray(R.array.title).length);
             map.put("img", imgs[type]);

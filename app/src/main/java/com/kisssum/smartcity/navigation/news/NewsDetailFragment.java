@@ -1,19 +1,20 @@
 package com.kisssum.smartcity.navigation.news;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNewsDetailBinding;
+import com.kisssum.smartcity.navigation.home.HomeNewsListAdpater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,14 +78,22 @@ public class NewsDetailFragment extends Fragment {
 
         Bundle arguments = getArguments();
 
+        // Toolbar
         binding.newsDetailToolbar.setNavigationOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
         });
-
         binding.newsDetailToolbar.setTitle(arguments.getString("title"));
+
+        // webView
         binding.newDetailWeb.getSettings().setJavaScriptEnabled(true);
         binding.newDetailWeb.getSettings().setBuiltInZoomControls(true);
         binding.newDetailWeb.setWebViewClient(new WebViewClient());
         binding.newDetailWeb.loadUrl(arguments.getString("url"));
+
+        // list
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+        HomeNewsListAdpater adpater = new HomeNewsListAdpater(0, requireContext(), 3);
+        binding.newsDetailList.setLayoutManager(layoutManager);
+        binding.newsDetailList.setAdapter(adpater);
     }
 }
