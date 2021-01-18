@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpater.DefaultViewModel> {
     List<Map<String, Object>> data;
@@ -51,18 +52,36 @@ public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpate
         holder.time.setText(data.get(position).get("time").toString());
 
         holder.itemView.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("title", data.get(position).get("title").toString());
-            bundle.putString("text", data.get(position).get("text").toString());
-            bundle.putString("url", data.get(position).get("url").toString());
-
-            if (count == 10)
-                Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
-            else if (count == 3) {
-                Navigation.findNavController(((Activity) context), R.id.fragment_main).popBackStack();
-                Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.newsDetailFragment, bundle);
-            }
+            navNewsInformation(position);
         });
+    }
+
+    private void navNewsInformation(int i) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", data.get(i).get("title").toString());
+        bundle.putString("text", data.get(i).get("text").toString());
+        bundle.putString("url", data.get(i).get("url").toString());
+
+        if (count == 10)
+            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
+        else if (count == 3) {
+            Navigation.findNavController(((Activity) context), R.id.fragment_main).popBackStack();
+            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.newsDetailFragment, bundle);
+        }
+    }
+
+    public void isAndGoToNewsInformation(String title) {
+        String p = ".*" + title + ".*";
+
+        for (int i = 0; i < data.size(); i++) {
+            String map = data.get(i).get("title").toString();
+            boolean is = Pattern.matches(p, map);
+
+            if (is) {
+                navNewsInformation(i);
+                break;
+            }
+        }
     }
 
     @Override

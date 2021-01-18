@@ -1,5 +1,6 @@
 package com.kisssum.smartcity.guidepages;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentGuidePagesBinding;
@@ -80,20 +82,56 @@ public class GuidePagesFragment extends Fragment {
 
         binding.ratingBar.setProgress(index + 1);
 
+        int[] imgs = new int[]{
+                R.drawable.guide_pager_1,
+                R.drawable.guide_pager_2,
+                R.drawable.guide_pager_3,
+                R.drawable.guide_pager_4,
+                R.drawable.guide_pager_5
+        };
+        binding.imageView.setImageResource(imgs[index]);
+
         if (index != 4) {
             binding.btnGo.setVisibility(View.INVISIBLE);
+            binding.btnNetwork.setVisibility(View.INVISIBLE);
         } else {
-            binding.btnGo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 保存
-                    SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                    sp.edit().putBoolean("GuidePage", true).commit();
+            binding.btnGo.setOnClickListener(v -> {
+                // 保存
+                SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+                sp.edit().putBoolean("GuidePage", true).commit();
 
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
+            });
 
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
+            binding.btnNetwork.setOnClickListener(v -> {
+                SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+
+                if (sp.getString("ip", "").equals("") ||
+                        sp.getString("duankou", "").equals("")) {
+                    sp.edit().putString("ip", "192.168.1.10")
+                            .putString("duankou", "8080")
+                            .apply();
                 }
+
+                View view1 = getLayoutInflater().inflate(R.layout.alertdialog_change_ip, null);
+                EditText ip = view1.findViewById(R.id.ip);
+                EditText duankou = view1.findViewById(R.id.duankou);
+                ip.setText(sp.getString("ip", ""));
+                duankou.setText(sp.getString("duankou", ""));
+
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("网络设置")
+                        .setView(view1)
+                        .setPositiveButton("确定", (dialog, which) -> {
+                            sp.edit().putString("ip", ip.getText().toString())
+                                    .putString("duankou", duankou.getText().toString())
+                                    .apply();
+                        })
+                        .setNegativeButton("取消", (dialog, which) -> {
+                        })
+                        .create()
+                        .show();
             });
         }
     }

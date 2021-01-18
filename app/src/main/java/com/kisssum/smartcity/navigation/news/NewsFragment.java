@@ -1,21 +1,19 @@
 package com.kisssum.smartcity.navigation.news;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.databinding.FragmentNewsBinding;
 import com.kisssum.smartcity.navigation.home.HomeNewsViewPagerFragment;
-import com.kisssum.smartcity.navigation.home.HomeTopViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,7 +87,7 @@ public class NewsFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return new HomeTopViewPagerFragment(position);
+                return new NewsTopViewPagerFragment(position);
             }
 
             @Override

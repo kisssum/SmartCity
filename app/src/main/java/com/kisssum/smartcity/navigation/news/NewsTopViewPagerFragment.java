@@ -1,4 +1,4 @@
-package com.kisssum.smartcity.navigation.me;
+package com.kisssum.smartcity.navigation.news;
 
 import android.os.Bundle;
 
@@ -12,14 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentMeBinding;
+import com.kisssum.smartcity.databinding.FragmentNewsTopViewPagerBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link NewsTopViewPagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeFragment extends Fragment {
+public class NewsTopViewPagerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,10 +33,11 @@ public class MeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentMeBinding binding;
+    private int index = 0;
+    private FragmentNewsTopViewPagerBinding binding;
 
-    public MeFragment() {
-        // Required empty public constructor
+    public NewsTopViewPagerFragment(int index) {
+        this.index = index;
     }
 
     /**
@@ -42,11 +46,11 @@ public class MeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MeFragment.
+     * @return A new instance of fragment NewsTopViewPagerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeFragment newInstance(String param1, String param2) {
-        MeFragment fragment = new MeFragment();
+    public static NewsTopViewPagerFragment newInstance(String param1, String param2) {
+        NewsTopViewPagerFragment fragment = new NewsTopViewPagerFragment(0);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +70,7 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMeBinding.inflate(inflater);
+        binding = FragmentNewsTopViewPagerBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -74,12 +78,28 @@ public class MeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.meTop.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.meTitle.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.l1.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        List<Integer> imgs = new ArrayList<>();
+        imgs.add(R.drawable.top_view_pager_1);
+        imgs.add(R.drawable.top_view_pager_2);
+        imgs.add(R.drawable.top_view_pager_3);
+        imgs.add(R.drawable.top_view_pager_4);
+        imgs.add(R.drawable.top_view_pager_5);
 
-        binding.l2.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_orderListFragment));
-        binding.l3.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_changePwdFragment));
-        binding.l4.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_opinionFragment));
+        binding.imageView4.setImageResource(imgs.get(index));
+        binding.textView7.setText(getResources().getStringArray(R.array.title)[index]);
+        binding.cardView4.setOnClickListener(v -> navNewsInformation(index));
+    }
+
+    private void navNewsInformation(int i) {
+        String[] title = getResources().getStringArray(R.array.title);
+        String[] text = getResources().getStringArray(R.array.text);
+        String[] url = getResources().getStringArray(R.array.url);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title[i]);
+        bundle.putString("text", text[i]);
+        bundle.putString("url", url[i]);
+
+        Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
     }
 }
