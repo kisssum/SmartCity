@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,5 +86,19 @@ public class HomeTopViewPagerFragment extends Fragment {
         imgs.add(R.drawable.top_view_pager_5);
 
         binding.imageView2.setImageResource(imgs.get(index));
+        binding.imageView2.setOnClickListener(v -> navNewsInformation(index));
+    }
+
+    private void navNewsInformation(int i) {
+        String[] title = getResources().getStringArray(R.array.title);
+        String[] text = getResources().getStringArray(R.array.text);
+        String[] url = getResources().getStringArray(R.array.url);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", title[i]);
+        bundle.putString("text", text[i]);
+        bundle.putString("url", url[i]);
+
+        Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
     }
 }
