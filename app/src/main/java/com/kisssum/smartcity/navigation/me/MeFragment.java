@@ -74,7 +74,10 @@ public class MeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.meTop.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        binding.meTitle.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
         binding.l1.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
+
         binding.l2.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_orderListFragment));
         binding.l3.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_changePwdFragment));
         binding.l4.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_opinionFragment));
