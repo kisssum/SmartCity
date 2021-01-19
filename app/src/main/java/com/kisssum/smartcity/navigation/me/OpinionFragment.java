@@ -7,6 +7,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +87,22 @@ public class OpinionFragment extends Fragment {
             } else {
                 Toast.makeText(requireContext(), "感谢您的反馈!", Toast.LENGTH_SHORT).show();
                 Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+            }
+        });
+
+        binding.opinionText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                binding.opinionCount.setText(s.toString().length() + "/150");
             }
         });
     }

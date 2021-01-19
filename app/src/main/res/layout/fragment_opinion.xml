@@ -24,28 +24,42 @@
         android:id="@+id/opinionText"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/search_style"
         android:gravity="top|left"
         android:hint="150字以内"
         android:inputType="textMultiLine|textPersonName"
         android:maxLength="150"
         android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/opinionToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/opinionToolbar"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="16dp"
         android:text="提交"
         android:textColor="?attr/textColorAlertDialogListItem"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/opinionText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/opinionCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="0/150"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="@+id/opinionText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
