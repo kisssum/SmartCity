@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     tools:context=".navigation.smartparty.PartyBuildingFragment">
 
     <LinearLayout
@@ -56,5 +57,34 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="党员学习"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <include
+            layout="@layout/party_service_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="组织活动"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <include
+            layout="@layout/party_activity_service_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
