@@ -117,7 +117,9 @@ public class MeInformationFragment extends Fragment {
                         EditText name = view1.findViewById(R.id.editext);
                         if (name.getText().toString().equals(""))
                             Toast.makeText(requireContext(), "电话号码不能为空", Toast.LENGTH_SHORT).show();
-                        else if (name.getText().toString().length() == 11)
+                        else if (name.getText().toString().length() != 11)
+                            Toast.makeText(requireContext(), "电话号码长度不正确", Toast.LENGTH_SHORT).show();
+                        else
                             binding.phone.setText(name.getText().toString());
                     })
                     .setNegativeButton("取消", (dialog, which) -> {
