@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kisssum.smartcity.R;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.databinding.FragmentPartyBuildingBinding;
-import com.kisssum.smartcity.navigation.home.HomeTopViewPagerFragment;
+import com.kisssum.smartcity.navigation.home.HomeNewsViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +78,45 @@ public class PartyBuildingFragment extends Fragment {
 
         // 轮播图
         initLunbotu();
+
+        // 动态
+        initDongTai();
+    }
+
+    private void initDongTai() {
+        FragmentStateAdapter newsAdapter = new FragmentStateAdapter(requireActivity()) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return new PartyBuildingDTViewPagerFragment(position);
+            }
+
+            @Override
+            public int getItemCount() {
+                return 5;
+            }
+        };
+        binding.partyBuildingDongTaiViewPager.setAdapter(newsAdapter);
+
+        new TabLayoutMediator(binding.partyBuildingDTlayout, binding.partyBuildingDongTaiViewPager, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("国内");
+                    break;
+                case 1:
+                    tab.setText("国际");
+                    break;
+                case 2:
+                    tab.setText("军事");
+                    break;
+                case 3:
+                    tab.setText("财经");
+                    break;
+                case 4:
+                    tab.setText("娱乐");
+                    break;
+            }
+        }).attach();
     }
 
     private void initLunbotu() {
@@ -94,7 +133,7 @@ public class PartyBuildingFragment extends Fragment {
             }
         };
         binding.partyBuildingLunBoViewPager.setAdapter(adapter);
-       
+
         // 无限滚轮
         loopTopViewPager();
     }

@@ -62,11 +62,11 @@ public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpate
         bundle.putString("text", data.get(i).get("text").toString());
         bundle.putString("url", data.get(i).get("url").toString());
 
-        if (count == 10)
-            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
-        else if (count == 3) {
+        if (count == 3) {
             Navigation.findNavController(((Activity) context), R.id.fragment_main).popBackStack();
             Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.newsDetailFragment, bundle);
+        } else {
+            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
         }
     }
 
