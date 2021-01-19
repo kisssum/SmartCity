@@ -1,5 +1,7 @@
 package com.kisssum.smartcity.navigation.me;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -73,9 +75,18 @@ public class MeInformationFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private void load() {
+        SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+        binding.name.setText(sp.getString("name", "root"));
+        binding.sex.setChecked(sp.getBoolean("sex", false));
+        binding.phone.setText(sp.getString("phone", "18757799489"));
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        load();
 
         binding.meInformationToolbar.setNavigationOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
@@ -83,9 +94,16 @@ public class MeInformationFragment extends Fragment {
 
         binding.meInformationToolbar.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.item_me_information_change) {
+                SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+                sp.edit().putString("name", binding.name.getText().toString())
+                        .putBoolean("sex", binding.sex.isChecked())
+                        .putString("phone", binding.phone.getText().toString())
+                        .apply();
 
+                Toast.makeText(requireContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
             }
-            return false;
+            return true;
         });
 
         binding.name.setOnClickListener(v -> {

@@ -1,5 +1,7 @@
 package com.kisssum.smartcity.navigation.me;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentMeBinding;
@@ -74,12 +77,31 @@ public class MeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        load();
+
         binding.meTop.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.meTitle.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        binding.userName.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
         binding.l1.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
 
         binding.l2.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_orderListFragment));
         binding.l3.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_changePwdFragment));
         binding.l4.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_opinionFragment));
+
+        binding.btnTuiChu.setOnClickListener(v -> {
+            SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+            sp.edit().putString("name", "root")
+                    .putBoolean("sex", false)
+                    .putString("phone", "18757799489")
+                    .putString("passwd", "")
+                    .apply();
+
+            binding.userName.setText(sp.getString("name", ""));
+            Toast.makeText(requireContext(), "退出成功", Toast.LENGTH_SHORT).show();
+        });
+    }
+
+    private void load() {
+        SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+        binding.userName.setText(sp.getString("name", "root"));
     }
 }

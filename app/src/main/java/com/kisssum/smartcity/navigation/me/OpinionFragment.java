@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentOpinionBinding;
@@ -76,6 +77,15 @@ public class OpinionFragment extends Fragment {
 
         binding.opinionToolbar.setNavigationOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+        });
+
+        binding.btnSubmit.setOnClickListener(v -> {
+            if (binding.opinionText.getText().toString().equals("")) {
+                Toast.makeText(requireContext(), "内容不能为空", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), "感谢您的反馈!", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+            }
         });
     }
 }

@@ -1,9 +1,12 @@
 package com.kisssum.smartcity.navigation.me;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -75,6 +78,26 @@ public class ChangePwdFragment extends Fragment {
 
         binding.changePwdToolbar.setNavigationOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+        });
+
+        binding.btnOk.setOnClickListener(v -> {
+            SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+
+            if (binding.beforePwd.getText().toString().equals(sp.getString("passwd", ""))) {
+                if (binding.beforePwd.getText().toString().equals(binding.newPwd.getText().toString())) {
+                    Toast.makeText(requireContext(), "新密码与旧密码不能相同", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (binding.newPwd.getText().toString().length() == 0) {
+                        Toast.makeText(requireContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
+                    } else {
+                        sp.edit().putString("passwd", binding.newPwd.getText().toString()).apply();
+                        Toast.makeText(requireContext(), "密码修改成功", Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "原密码有误", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
