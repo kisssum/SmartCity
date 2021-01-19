@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     tools:context=".navigation.news.NewsFragment">
 
     <LinearLayout
@@ -16,6 +17,7 @@
             android:id="@+id/newsMainLunBoPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:overScrollMode="never"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
             android:paddingRight="10dp"
@@ -51,7 +53,8 @@
             android:id="@+id/newsMainPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false">
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never">
 
         </androidx.viewpager2.widget.ViewPager2>
 
