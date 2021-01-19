@@ -165,7 +165,51 @@ public class HomeFragment extends Fragment {
     }
 
     private void initServiceList() {
-        // 更多服务跳转
+        binding.homeServiceList.serviceGovernmentAffairs.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceEnvironmrnalProtection.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceSecurity.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceTraffic.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.servicePension.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceEducation.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceMedicalTreatment.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceLife.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
+        binding.homeServiceList.serviceTourism.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+        });
+
         binding.homeServiceList.serviceMore.setOnClickListener(v -> {
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
             Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
