@@ -29,35 +29,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.13" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.03" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.23" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.03" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.97" />
 
     <TextView
         android:id="@+id/userName"
@@ -96,24 +96,24 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="12"
                     android:text="个人信息"
                     android:textColor="?attr/textColorAlertDialogListItem"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                    android:src="@drawable/ic_baseline_navigate_next_24" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:background="?attr/colorButtonNormal" />
 
         </LinearLayout>
@@ -132,24 +132,24 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="12"
                     android:text="订单列表"
                     android:textColor="?attr/textColorAlertDialogListItem"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                    android:src="@drawable/ic_baseline_navigate_next_24" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:background="?attr/colorButtonNormal" />
 
         </LinearLayout>
@@ -168,24 +168,24 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="12"
                     android:text="修改密码"
                     android:textColor="?attr/textColorAlertDialogListItem"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                    android:src="@drawable/ic_baseline_navigate_next_24" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:background="?attr/colorButtonNormal" />
 
         </LinearLayout>
@@ -204,24 +204,24 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="12"
                     android:text="意见反馈"
                     android:textColor="?attr/textColorAlertDialogListItem"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                    android:src="@drawable/ic_baseline_navigate_next_24" />
 
             </LinearLayout>
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
+                android:layout_height="0.1dp"
                 android:background="?attr/colorButtonNormal" />
 
         </LinearLayout>
@@ -234,7 +234,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="退出"
-        android:textColor="?attr/textColorAlertDialogListItem"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
