@@ -96,6 +96,8 @@ public class NewsFragment extends Fragment {
             }
         };
         binding.newsMainLunBoPager.setAdapter(topViewAdapter);
+        binding.newsMainLunBoPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+
         // 无限滚轮
         loopTopViewPager();
     }
@@ -125,6 +127,7 @@ public class NewsFragment extends Fragment {
             }
         };
         binding.newsMainPager.setAdapter(newsAdapter);
+        binding.newsMainPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         new TabLayoutMediator(binding.newsMainTablayout, binding.newsMainPager, (tab, position) -> {
             switch (position) {

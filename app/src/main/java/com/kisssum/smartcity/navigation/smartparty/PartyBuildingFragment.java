@@ -96,7 +96,9 @@ public class PartyBuildingFragment extends Fragment {
                 return 5;
             }
         };
+
         binding.partyBuildingDongTaiViewPager.setAdapter(newsAdapter);
+        binding.partyBuildingDongTaiViewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         new TabLayoutMediator(binding.partyBuildingDTlayout, binding.partyBuildingDongTaiViewPager, (tab, position) -> {
             switch (position) {
@@ -133,6 +135,7 @@ public class PartyBuildingFragment extends Fragment {
             }
         };
         binding.partyBuildingLunBoViewPager.setAdapter(adapter);
+        binding.partyBuildingLunBoViewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // 无限滚轮
         loopTopViewPager();

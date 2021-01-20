@@ -123,7 +123,9 @@ public class HomeFragment extends Fragment {
                 return 5;
             }
         };
+
         binding.homeNewsPager.setAdapter(newsAdapter);
+        binding.homeNewsPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         new TabLayoutMediator(binding.homeNewsTablayout, binding.homeNewsPager, (tab, position) -> {
             switch (position) {
@@ -160,6 +162,8 @@ public class HomeFragment extends Fragment {
             }
         };
         binding.homeTopViewPager.setAdapter(topViewAdapter);
+        binding.homeTopViewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+
         // 无限滚轮
         loopTopViewPager();
     }

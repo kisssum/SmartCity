@@ -78,9 +78,6 @@ public class GuideMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-
         SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
         boolean guidePage = sp.getBoolean("GuidePage", false);
 
@@ -102,7 +99,16 @@ public class GuideMainFragment extends Fragment {
             };
 
             binding.viewPager.setAdapter(adapter);
+            binding.viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        requireActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
     }
 
     @Override

@@ -55,8 +55,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/partyBuildingDongTaiViewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/textView"
