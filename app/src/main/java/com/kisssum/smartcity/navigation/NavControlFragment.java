@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -77,22 +78,38 @@ public class NavControlFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
+            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_detail);
+
             switch (item.getItemId()) {
                 case R.id.item_home:
-                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.homeFragment);
+                    if (controller.getCurrentDestination().getId() != R.id.item_home) {
+                        controller.popBackStack();
+                        controller.navigate(R.id.homeFragment);
+                    }
                     break;
                 case R.id.item_allservice:
-                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+                    if (controller.getCurrentDestination().getId() != R.id.item_allservice) {
+                        controller.popBackStack();
+                        controller.navigate(R.id.allServiceFragment);
+                    }
                     break;
                 case R.id.item_partybuidling:
-                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.partyBuildingFragment);
+                    if (controller.getCurrentDestination().getId() != R.id.item_partybuidling) {
+                        controller.popBackStack();
+                        controller.navigate(R.id.partyBuildingFragment);
+                    }
                     break;
                 case R.id.item_news:
-                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.newsFragment);
+                    if (controller.getCurrentDestination().getId() != R.id.item_news) {
+                        controller.popBackStack();
+                        controller.navigate(R.id.newsFragment);
+                    }
                     break;
                 case R.id.item_me:
-                    Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.meFragment);
+                    if (controller.getCurrentDestination().getId() != R.id.item_me) {
+                        controller.popBackStack();
+                        controller.navigate(R.id.meFragment);
+                    }
                     break;
             }
             return true;
