@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -98,22 +99,25 @@ public class GuidePagesFragment extends Fragment {
             binding.btnGo.setOnClickListener(v -> {
                 // 保存
                 SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                sp.edit().putBoolean("GuidePage", true).commit();
+                sp.edit().putBoolean("GuidePage", true).apply();
 
-                Navigation.findNavController(requireActivity(), R.id.fragment_main).popBackStack();
-                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.navControlFragment);
+                NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+                controller.popBackStack();
+                controller.navigate(R.id.navControlFragment);
             });
 
             binding.btnNetwork.setOnClickListener(v -> {
                 SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
 
+                // 恢复数据
                 if (sp.getString("ip", "").equals("") ||
                         sp.getString("duankou", "").equals("")) {
-                    sp.edit().putString("ip", "192.168.1.10")
+                    sp.edit().putString("ip", "106.12.160.221")
                             .putString("duankou", "8080")
                             .apply();
                 }
 
+                // Dialog
                 View view1 = getLayoutInflater().inflate(R.layout.alertdialog_change_ip, null);
                 EditText ip = view1.findViewById(R.id.ip);
                 EditText duankou = view1.findViewById(R.id.duankou);

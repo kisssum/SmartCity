@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -78,15 +79,11 @@ public class MeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         load();
+        navigationPager();
+        backUser();
+    }
 
-        binding.meTop.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.userName.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.l1.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_meInformationFragment));
-
-        binding.l2.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_orderListFragment));
-        binding.l3.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_changePwdFragment));
-        binding.l4.setOnClickListener(v -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_opinionFragment));
-
+    private void backUser() {
         binding.btnTuiChu.setOnClickListener(v -> {
             SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
             sp.edit().putString("name", "root")
@@ -98,6 +95,20 @@ public class MeFragment extends Fragment {
             binding.userName.setText(sp.getString("name", ""));
             Toast.makeText(requireContext(), "退出成功", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private void navigationPager() {
+        NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+        // 跳转到详细信息页
+        binding.meTop.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        binding.userName.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        binding.l1.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        // 跳转到账单页
+        binding.l2.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_orderListFragment));
+        // 跳转到修改密码页
+        binding.l3.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_changePwdFragment));
+        // 跳转到反馈页
+        binding.l4.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_opinionFragment));
     }
 
     private void load() {
