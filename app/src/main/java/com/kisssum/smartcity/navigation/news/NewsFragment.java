@@ -147,8 +147,7 @@ public class NewsFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-//                return new NewsPagerFragment(position);
-                return new HomeNewsViewPagerFragment(position);
+                return new NewsPagerFragment(position);
             }
 
             @Override

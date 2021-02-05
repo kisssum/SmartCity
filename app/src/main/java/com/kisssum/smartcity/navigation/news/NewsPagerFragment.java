@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNewsPagerBinding;
 import com.kisssum.smartcity.navigation.home.HomeNewsListAdpater;
 
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,14 +76,14 @@ public class NewsPagerFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(type, requireContext(), 10, model);
-        binding.newsList.setLayoutManager(layoutManager);
-        binding.newsList.setAdapter(adpater);
+        NewsListAdpater adpater = new NewsListAdpater(type, requireContext(), 10, model.getData());
+        binding.newsPagerList.setLayoutManager(layoutManager);
+        binding.newsPagerList.setAdapter(adpater);
     }
 }

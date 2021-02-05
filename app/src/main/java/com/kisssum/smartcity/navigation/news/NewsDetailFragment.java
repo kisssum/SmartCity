@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNewsDetailBinding;
-import com.kisssum.smartcity.navigation.home.HomeNewsListAdpater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,7 +94,7 @@ public class NewsDetailFragment extends Fragment {
         NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(0, requireContext(), 3, model);
+        NewsListAdpater adpater = new NewsListAdpater(0, requireContext(), 3, model.getData());
         binding.newsDetailList.setLayoutManager(layoutManager);
         binding.newsDetailList.setAdapter(adpater);
     }

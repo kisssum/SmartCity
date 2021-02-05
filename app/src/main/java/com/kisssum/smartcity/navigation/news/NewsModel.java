@@ -95,6 +95,7 @@ public class NewsModel extends AndroidViewModel {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("page", page);
                 jsonObject.put("limit", limit);
+                jsonObject.put("sort", "desc");
                 MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
                 RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
 

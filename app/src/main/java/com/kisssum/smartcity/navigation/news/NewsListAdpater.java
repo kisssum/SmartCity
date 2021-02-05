@@ -20,19 +20,29 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.DefaultViewModel> {
     private int type = 0;
     private Context context;
     private int count = 0;
     private List<JSONObject> data;
+    private List<Integer> imgs = new ArrayList<>();
+    private static final Random random = new Random(2);
 
     public NewsListAdpater(int type, Context context, int count, List<JSONObject> data) {
         this.type = type;
         this.count = count;
         this.context = context;
-        this.data=data;
+        this.data = data;
+
+        imgs.add(R.drawable.top_view_pager_1);
+        imgs.add(R.drawable.top_view_pager_2);
+        imgs.add(R.drawable.top_view_pager_3);
+        imgs.add(R.drawable.top_view_pager_4);
+        imgs.add(R.drawable.top_view_pager_5);
     }
 
     @NotNull
@@ -43,15 +53,15 @@ public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.Defaul
     }
 
     @Override
-    public void onBindViewHolder(@NonNull @NotNull DefaultViewModel holder, int position) {
-        JSONObject object =data.get(position);
+    public void onBindViewHolder(@NonNull DefaultViewModel holder, int position) {
+        JSONObject object = data.get(position);
 
-        holder.img.setImageResource(R.drawable.top_view_pager_1);
         try {
+            holder.img.setImageResource(imgs.get(random.nextInt(5)));
             holder.title.setText(object.getString("title"));
             holder.text.setText(object.getString("abstract"));
-//            holder.comment.setText(data.get(position).get("comment").toString());
-//            holder.time.setText(data.get(position).get("time").toString());
+            holder.comment.setText("100");
+            holder.time.setText("2020年10月07日 14:21");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -81,7 +91,7 @@ public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.Defaul
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return count == 3 ? 3 : data.size();
     }
 
     static class DefaultViewModel extends RecyclerView.ViewHolder {
