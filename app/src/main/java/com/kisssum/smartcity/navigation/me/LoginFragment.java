@@ -18,8 +18,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentMeBinding;
+import com.kisssum.smartcity.databinding.FragmentLoginBinding;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,10 +34,10 @@ import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * Use the {@link LoginFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MeFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,10 +48,10 @@ public class MeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentMeBinding binding;
+    private FragmentLoginBinding binding;
     private Handler handler;
 
-    public MeFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
@@ -60,11 +61,11 @@ public class MeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MeFragment.
+     * @return A new instance of fragment LoginFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MeFragment newInstance(String param1, String param2) {
-        MeFragment fragment = new MeFragment();
+    public static LoginFragment newInstance(String param1, String param2) {
+        LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,12 +85,12 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMeBinding.inflate(inflater);
+        binding = FragmentLoginBinding.inflate(inflater);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         handler = new Handler() {
@@ -98,51 +99,27 @@ public class MeFragment extends Fragment {
                 super.handleMessage(msg);
 
                 if (msg.what == 0)
-                    setInformation((String) msg.obj);
+                    saveData();
+                else
+                    Toast.makeText(requireContext(), "账号或密码错误", Toast.LENGTH_LONG).show();
             }
         };
 
-        resotre();
-        navigationPager();
-        backUser();
-    }
+        binding.logonGo.setOnClickListener(v -> {
+            String name = binding.loginName.getText().toString();
+            String pwd = binding.loginPwd.getText().toString();
 
-    private void backUser() {
-        binding.btnTuiChu.setOnClickListener(v -> {
-            SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-            sp.edit()
-                    .putString("id", "")
-                    .putString("name", "root")
-                    .putBoolean("sex", false)
-                    .putString("phone", "18757799489")
-                    .putString("passwd", "")
-                    .apply();
-
-            binding.userName.setText(sp.getString("name", ""));
-            Toast.makeText(requireContext(), "退出成功", Toast.LENGTH_SHORT).show();
+            if (name.equals("") || pwd.equals("")) {
+                Toast.makeText(requireContext(), "账号或密码不能为空", Toast.LENGTH_LONG).show();
+            } else {
+                haveId(name);
+            }
         });
     }
 
-    private void navigationPager() {
-        NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
-        // 跳转到详细信息页
-        binding.meTop.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.userName.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.l1.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        // 跳转到账单页
-        binding.l2.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_orderListFragment));
-        // 跳转到修改密码页
-        binding.l3.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_changePwdFragment));
-        // 跳转到反馈页
-        binding.l4.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_opinionFragment));
-    }
-
-    private void resotre() {
-        SharedPreferences spUser = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences spSetting = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-
-        String id = spUser.getString("id", "");
-        String url = "http://" + spSetting.getString("ip", "") + ":" + spSetting.getString("duankou", "") + "/SmartCitySrv/user/user-info/";
+    private void haveId(String id) {
+        SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+        String url = "http://" + sp.getString("ip", "") + ":" + sp.getString("duankou", "") + "/SmartCitySrv/user/user-info/";
 
         new Thread(() -> {
             try {
@@ -160,25 +137,34 @@ public class MeFragment extends Fragment {
                 Response response = client.newCall(request).execute();
                 String doc = response.body().string();
 
-                Message message = new Message();
-                message.what = 0;
-                message.obj = doc;
-                handler.sendMessage(message);
+                if (isUser(doc))
+                    handler.sendEmptyMessage(0);
+                else
+                    handler.sendEmptyMessage(1);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
         }).start();
     }
 
-    private void setInformation(String doc) {
+    private boolean isUser(String doc) {
         try {
             String object = new JSONObject(doc).getString("errMsg");
-            if (object.equals("ok")) {
-                JSONObject information = new JSONObject(doc).getJSONObject("data");
-                binding.userName.setText(information.getString("name"));
-            }
+            return object.equals("ok");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return false;
+    }
+
+    private void saveData() {
+        SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+        sp.edit()
+                .putString("id", binding.loginName.getText().toString())
+                .putString("passwd", binding.loginPwd.getText().toString())
+                .apply();
+
+        NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+        controller.popBackStack();
     }
 }

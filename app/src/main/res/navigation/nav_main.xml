@@ -45,6 +45,13 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -84,4 +91,9 @@
         android:name="com.kisssum.smartcity.navigation.news.NewsDetailFragment"
         android:label="fragment_news_detail"
         tools:layout="@layout/fragment_news_detail" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.kisssum.smartcity.navigation.me.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>

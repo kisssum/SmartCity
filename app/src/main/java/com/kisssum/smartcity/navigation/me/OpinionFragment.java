@@ -102,7 +102,7 @@ public class OpinionFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                binding.opinionCount.setText(s.toString().length() + "/150");
+                binding.opinionCount.setText(String.valueOf(150 - s.length()));
             }
         });
     }

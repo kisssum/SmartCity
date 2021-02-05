@@ -83,20 +83,31 @@ public class ChangePwdFragment extends Fragment {
         binding.btnOk.setOnClickListener(v -> {
             SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
 
-            if (binding.beforePwd.getText().toString().equals(sp.getString("passwd", ""))) {
-                if (binding.beforePwd.getText().toString().equals(binding.newPwd.getText().toString())) {
-                    Toast.makeText(requireContext(), "新密码与旧密码不能相同", Toast.LENGTH_SHORT).show();
-                } else {
-                    if (binding.newPwd.getText().toString().length() == 0) {
-                        Toast.makeText(requireContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
-                    } else {
-                        sp.edit().putString("passwd", binding.newPwd.getText().toString()).apply();
-                        Toast.makeText(requireContext(), "密码修改成功", Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
-                    }
-                }
+            //  都为空
+            if (binding.beforePwd.getText().toString().equals("")
+                    && binding.newPwd.getText().toString().equals("")) {
+                Toast.makeText(requireContext(), "无修改", Toast.LENGTH_SHORT).show();
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+            }
+
+            //  其一为空
+            if (binding.beforePwd.getText().toString().equals("")
+                    || binding.newPwd.getText().toString().equals("")) {
+                Toast.makeText(requireContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
+            }
+
+            // 输入原密码与新密码相同
+            if (binding.beforePwd.getText().toString().equals(binding.newPwd.getText().toString())) {
+                Toast.makeText(requireContext(), "密码不能相同", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(requireContext(), "原密码有误", Toast.LENGTH_SHORT).show();
+                // 原密码与保存密码相同
+                if (sp.getString("passwd", "").equals(binding.beforePwd.getText().toString())) {
+                    sp.edit().putString("passwd", binding.newPwd.getText().toString()).apply();
+                    Toast.makeText(requireContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+                } else {
+                    Toast.makeText(requireContext(), "密码错误", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -1,5 +1,7 @@
 package com.kisssum.smartcity.navigation;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -82,31 +84,28 @@ public class NavControlFragment extends Fragment {
 
             switch (item.getItemId()) {
                 case R.id.item_home:
-                    if (controller.getCurrentDestination().getId() != R.id.item_home) {
-                        controller.popBackStack();
-                        controller.navigate(R.id.homeFragment);
-                    }
+                    controller.popBackStack();
+                    controller.navigate(R.id.homeFragment);
                     break;
                 case R.id.item_allservice:
-                    if (controller.getCurrentDestination().getId() != R.id.item_allservice) {
-                        controller.popBackStack();
-                        controller.navigate(R.id.allServiceFragment);
-                    }
+                    controller.popBackStack();
+                    controller.navigate(R.id.allServiceFragment);
                     break;
                 case R.id.item_partybuidling:
-                    if (controller.getCurrentDestination().getId() != R.id.item_partybuidling) {
-                        controller.popBackStack();
-                        controller.navigate(R.id.partyBuildingFragment);
-                    }
+                    controller.popBackStack();
+                    controller.navigate(R.id.partyBuildingFragment);
                     break;
                 case R.id.item_news:
-                    if (controller.getCurrentDestination().getId() != R.id.item_news) {
-                        controller.popBackStack();
-                        controller.navigate(R.id.newsFragment);
-                    }
+                    controller.popBackStack();
+                    controller.navigate(R.id.newsFragment);
                     break;
                 case R.id.item_me:
-                    if (controller.getCurrentDestination().getId() != R.id.item_me) {
+                    SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+
+                    if (sp.getString("id", "").equals("")) {
+                        NavController controllerMain = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+                        controllerMain.navigate(R.id.action_navControlFragment_to_loginFragment);
+                    } else {
                         controller.popBackStack();
                         controller.navigate(R.id.meFragment);
                     }
