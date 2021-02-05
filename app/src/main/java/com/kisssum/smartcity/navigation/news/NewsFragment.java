@@ -57,6 +57,8 @@ public class NewsFragment extends Fragment {
     private FragmentNewsBinding binding;
     private NewsModel model;
 
+    private final Handler handler = new Handler();
+
     public NewsFragment() {
         // Required empty public constructor
     }
@@ -129,14 +131,11 @@ public class NewsFragment extends Fragment {
     }
 
     private void loopTopViewPager() {
-        new Handler().postDelayed(() -> {
+        handler.postDelayed(() -> {
             int cIndex = binding.newsMainLunBoPager.getCurrentItem();
 
-            if (cIndex >= model.getCount() - 1) {
-                cIndex = 0;
-            } else {
-                cIndex++;
-            }
+            if (cIndex >= model.getCount() - 1) cIndex = 0;
+            else cIndex++;
 
             binding.newsMainLunBoPager.setCurrentItem(cIndex);
             loopTopViewPager();

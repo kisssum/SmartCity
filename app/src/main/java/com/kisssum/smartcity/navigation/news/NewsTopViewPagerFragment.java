@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +39,7 @@ public class NewsTopViewPagerFragment extends Fragment {
 
     private JSONObject index;
     private FragmentNewsTopViewPagerBinding binding;
+    private static final Random random = new Random(2);
 
     public NewsTopViewPagerFragment(JSONObject index) {
         this.index = index;
@@ -88,35 +90,22 @@ public class NewsTopViewPagerFragment extends Fragment {
         imgs.add(R.drawable.top_view_pager_4);
         imgs.add(R.drawable.top_view_pager_5);
 
-        binding.imageView4.setImageResource(imgs.get(0));
-//        binding.textView7.setText(getResources().getStringArray(R.array.title)[index]);
         try {
+            binding.imageView4.setImageResource(imgs.get(random.nextInt(5)));
             binding.textView7.setText(index.getString("title"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         binding.cardView4.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
             try {
+                Bundle bundle = new Bundle();
                 bundle.putString("title", index.getString("title"));
                 bundle.putString("url", index.getString("url"));
+                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
         });
-    }
-
-    private void navNewsInformation(int i) {
-        String[] title = getResources().getStringArray(R.array.title);
-        String[] text = getResources().getStringArray(R.array.text);
-        String[] url = getResources().getStringArray(R.array.url);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("title", title[i]);
-        bundle.putString("text", text[i]);
-        bundle.putString("url", url[i]);
-
-        Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
     }
 }
