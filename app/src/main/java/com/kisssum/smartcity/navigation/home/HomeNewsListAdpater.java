@@ -1,6 +1,7 @@
 package com.kisssum.smartcity.navigation.home;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.kisssum.smartcity.R;
+import com.kisssum.smartcity.navigation.news.NewsModel;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,17 +29,17 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 public class HomeNewsListAdpater extends RecyclerView.Adapter<HomeNewsListAdpater.DefaultViewModel> {
-    List<Map<String, Object>> data;
+    private List<Map<String, Object>> data;
     private int index = 0;
     private Context context;
     private int count = 0;
 
-    public HomeNewsListAdpater(int index, Context context, int count) {
+    public HomeNewsListAdpater(int index, Context context, int count, NewsModel model) {
         this.index = index;
         this.count = count;
         this.context = context;
 
-        data = getData();
+        this.data = getData();
     }
 
     @NonNull

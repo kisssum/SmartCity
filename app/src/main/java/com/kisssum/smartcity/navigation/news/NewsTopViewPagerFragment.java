@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNewsTopViewPagerBinding;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +36,10 @@ public class NewsTopViewPagerFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private int index = 0;
+    private JSONObject index;
     private FragmentNewsTopViewPagerBinding binding;
 
-    public NewsTopViewPagerFragment(int index) {
+    public NewsTopViewPagerFragment(JSONObject index) {
         this.index = index;
     }
 
@@ -50,7 +53,7 @@ public class NewsTopViewPagerFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static NewsTopViewPagerFragment newInstance(String param1, String param2) {
-        NewsTopViewPagerFragment fragment = new NewsTopViewPagerFragment(0);
+        NewsTopViewPagerFragment fragment = new NewsTopViewPagerFragment(new JSONObject());
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -85,9 +88,23 @@ public class NewsTopViewPagerFragment extends Fragment {
         imgs.add(R.drawable.top_view_pager_4);
         imgs.add(R.drawable.top_view_pager_5);
 
-        binding.imageView4.setImageResource(imgs.get(index));
-        binding.textView7.setText(getResources().getStringArray(R.array.title)[index]);
-        binding.cardView4.setOnClickListener(v -> navNewsInformation(index));
+        binding.imageView4.setImageResource(imgs.get(0));
+//        binding.textView7.setText(getResources().getStringArray(R.array.title)[index]);
+        try {
+            binding.textView7.setText(index.getString("title"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        binding.cardView4.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            try {
+                bundle.putString("title", index.getString("title"));
+                bundle.putString("url", index.getString("url"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
+        });
     }
 
     private void navNewsInformation(int i) {

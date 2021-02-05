@@ -1,4 +1,4 @@
-package com.kisssum.smartcity.navigation.home;
+package com.kisssum.smartcity.navigation.news;
 
 import android.os.Bundle;
 
@@ -12,16 +12,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kisssum.smartcity.databinding.FragmentHomeNewsViewPagerBinding;
-import com.kisssum.smartcity.navigation.news.NewsListAdpater;
-import com.kisssum.smartcity.navigation.news.NewsModel;
+import com.kisssum.smartcity.databinding.FragmentNewsPagerBinding;
+import com.kisssum.smartcity.navigation.home.HomeNewsListAdpater;
+
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link HomeNewsViewPagerFragment#newInstance} factory method to
+ * Use the {@link NewsPagerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeNewsViewPagerFragment extends Fragment {
+public class NewsPagerFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,11 +32,11 @@ public class HomeNewsViewPagerFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentHomeNewsViewPagerBinding binding;
-    private int index = 0;
+    private FragmentNewsPagerBinding binding;
+    private int type;
 
-    public HomeNewsViewPagerFragment(int index) {
-        this.index = index;
+    public NewsPagerFragment(int type) {
+        this.type = type;
     }
 
     /**
@@ -45,11 +45,11 @@ public class HomeNewsViewPagerFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeNewsViewPagerFragment.
+     * @return A new instance of fragment NewsPagerFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeNewsViewPagerFragment newInstance(String param1, String param2) {
-        HomeNewsViewPagerFragment fragment = new HomeNewsViewPagerFragment(0);
+    public static NewsPagerFragment newInstance(String param1, String param2) {
+        NewsPagerFragment fragment = new NewsPagerFragment(0);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,7 +69,7 @@ public class HomeNewsViewPagerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentHomeNewsViewPagerBinding.inflate(inflater);
+        binding = FragmentNewsPagerBinding.inflate(inflater);
         return binding.getRoot();
     }
 
@@ -80,7 +80,7 @@ public class HomeNewsViewPagerFragment extends Fragment {
         NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(index, requireContext(), 10,model);
+        HomeNewsListAdpater adpater = new HomeNewsListAdpater(type, requireContext(), 10, model);
         binding.newsList.setLayoutManager(layoutManager);
         binding.newsList.setAdapter(adpater);
     }

@@ -1,7 +1,11 @@
 package com.kisssum.smartcity.navigation.news;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +13,30 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.databinding.FragmentNewsBinding;
 import com.kisssum.smartcity.navigation.home.HomeNewsViewPagerFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +55,7 @@ public class NewsFragment extends Fragment {
     private String mParam2;
 
     private FragmentNewsBinding binding;
+    private NewsModel model;
 
     public NewsFragment() {
         // Required empty public constructor
@@ -75,6 +99,8 @@ public class NewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
+
         // 轮播图
         initLunbotu();
 
@@ -87,12 +113,12 @@ public class NewsFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return new NewsTopViewPagerFragment(position);
+                return new NewsTopViewPagerFragment(model.getData().get(position));
             }
 
             @Override
             public int getItemCount() {
-                return 5;
+                return model.getCount();
             }
         };
         binding.newsMainLunBoPager.setAdapter(topViewAdapter);
@@ -105,8 +131,12 @@ public class NewsFragment extends Fragment {
     private void loopTopViewPager() {
         new Handler().postDelayed(() -> {
             int cIndex = binding.newsMainLunBoPager.getCurrentItem();
-            if (cIndex >= 4) cIndex = 0;
-            else cIndex++;
+
+            if (cIndex >= model.getCount() - 1) {
+                cIndex = 0;
+            } else {
+                cIndex++;
+            }
 
             binding.newsMainLunBoPager.setCurrentItem(cIndex);
             loopTopViewPager();
@@ -114,10 +144,11 @@ public class NewsFragment extends Fragment {
     }
 
     private void initNews() {
-        FragmentStateAdapter newsAdapter = new FragmentStateAdapter(requireActivity()) {
+        FragmentStateAdapter pagerAdapter = new FragmentStateAdapter(requireActivity()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
+//                return new NewsPagerFragment(position);
                 return new HomeNewsViewPagerFragment(position);
             }
 
@@ -126,7 +157,7 @@ public class NewsFragment extends Fragment {
                 return 5;
             }
         };
-        binding.newsMainPager.setAdapter(newsAdapter);
+        binding.newsMainPager.setAdapter(pagerAdapter);
         binding.newsMainPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         new TabLayoutMediator(binding.newsMainTablayout, binding.newsMainPager, (tab, position) -> {

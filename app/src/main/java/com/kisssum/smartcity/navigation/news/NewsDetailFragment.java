@@ -9,6 +9,7 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -91,8 +92,10 @@ public class NewsDetailFragment extends Fragment {
         binding.newDetailWeb.loadUrl(arguments.getString("url"));
 
         // list
+        NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(0, requireContext(), 3);
+        HomeNewsListAdpater adpater = new HomeNewsListAdpater(0, requireContext(), 3, model);
         binding.newsDetailList.setLayoutManager(layoutManager);
         binding.newsDetailList.setAdapter(adpater);
     }
