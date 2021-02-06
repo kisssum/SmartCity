@@ -1,11 +1,10 @@
-package com.kisssum.smartcity.navigation.allservice;
+package com.kisssum.smartcity.navigation.allservice.medical;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
@@ -13,14 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentAllServiceBinding;
+import com.kisssum.smartcity.databinding.FragmentDoctorDetailBinding;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AllServiceFragment#newInstance} factory method to
+ * Use the {@link DoctorDetailFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllServiceFragment extends Fragment {
+public class DoctorDetailFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,9 +32,9 @@ public class AllServiceFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private FragmentAllServiceBinding binding;
+    private FragmentDoctorDetailBinding binding;
 
-    public AllServiceFragment() {
+    public DoctorDetailFragment() {
         // Required empty public constructor
     }
 
@@ -43,11 +44,11 @@ public class AllServiceFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment AllServiceFragment.
+     * @return A new instance of fragment DoctorDetailFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AllServiceFragment newInstance(String param1, String param2) {
-        AllServiceFragment fragment = new AllServiceFragment();
+    public static DoctorDetailFragment newInstance(String param1, String param2) {
+        DoctorDetailFragment fragment = new DoctorDetailFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -67,17 +68,26 @@ public class AllServiceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAllServiceBinding.inflate(inflater);
+        binding = FragmentDoctorDetailBinding.inflate(inflater);
         return binding.getRoot();
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.serviceList.serviceMedicalTreatment.setOnClickListener(v -> {
-            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
-            controller.navigate(R.id.action_navControlFragment_to_medicalFragment);
+        Bundle arguments = getArguments();
+
+        binding.ddName.setText("医生姓名:" + arguments.getString("doctorname"));
+        binding.ddHospitalId.setText("医院ID:" + arguments.getString("hospitalId"));
+        binding.ddDoctorId.setText("医生ID:" + arguments.getString("doctorId"));
+        binding.ddDeptlId.setText("科室ID:" + arguments.getString("deptlId"));
+        binding.ddTag.setText("医生专长:" + arguments.getString("tag"));
+        binding.ddDesc.setText("医生简介:" + arguments.getString("desc"));
+        binding.ddAppTime.setText("预约时间:" + arguments.getString("appTime"));
+
+        binding.ddToolbar.setNavigationOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
         });
     }
 }

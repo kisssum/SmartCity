@@ -45,6 +45,7 @@
                 android:textStyle="bold" />
 
             <include
+                android:id="@+id/serviceList"
                 layout="@layout/home_application_service_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

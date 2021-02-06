@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".navigation.allservice.medical.MedicalFragment" >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/medicalToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/abc_vector_test"
+        app:title="医疗" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/medicalTablayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabIndicatorFullWidth="false"
+        app:tabMode="auto">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Monday" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tuesday" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wednesday" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/medicalViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

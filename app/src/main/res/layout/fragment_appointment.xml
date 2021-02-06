@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".navigation.allservice.medical.AppointmentFragment">
+
+    <LinearLayout
+        android:id="@+id/appPid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="身份证号"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/atPid"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border_style"
+            android:digits="0123456789xyzXYZ"
+            android:ems="10"
+            android:hint="33202419789956222"
+            android:inputType="number"
+            android:maxLength="18"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appPid">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="用户名"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/atName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border_style"
+            android:ems="10"
+            android:hint="张三"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appName">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="电话"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/atPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border_style"
+            android:ems="10"
+            android:hint="13825225689"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appPhone">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="预约时间"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/atTime"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border_style"
+            android:ems="10"
+            android:hint="2021-01-23 14:20:21"
+            android:inputType="date"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/appDoctorId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appTime">
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="医生编号"
+            android:textColor="?attr/textColorAlertDialogListItem"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/atDoctorId"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/border_style"
+            android:ems="10"
+            android:hint="doc13"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/appGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="查询"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appDoctorId" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
