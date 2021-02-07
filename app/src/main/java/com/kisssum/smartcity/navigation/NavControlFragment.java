@@ -11,11 +11,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNavControlBinding;
 

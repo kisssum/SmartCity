@@ -82,7 +82,7 @@
             android:textStyle="bold" />
 
         <include
-            layout="@layout/party_activity_service_table"
+            layout="@layout/party_service_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -20,10 +20,10 @@
 
             <ImageView
                 android:id="@+id/dy_study"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/dy_study" />
+                android:src="@drawable/ic_baseline_slow_motion_video_24" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -42,10 +42,10 @@
 
             <ImageView
                 android:id="@+id/dy_manager"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/dy_manager" />
+                android:src="@drawable/ic_baseline_fact_check_24" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -64,10 +64,10 @@
 
             <ImageView
                 android:id="@+id/dy_history"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/dy_history" />
+                android:src="@drawable/ic_baseline_shutter_speed_24" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -86,10 +86,10 @@
 
             <ImageView
                 android:id="@+id/dy_pj"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/dy_pj" />
+                android:src="@drawable/ic_baseline_engineering_24" />
 
             <TextView
                 android:layout_width="match_parent"
