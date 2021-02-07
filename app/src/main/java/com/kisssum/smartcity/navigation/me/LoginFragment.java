@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentLoginBinding;
+import com.kisssum.smartcity.navigation.NavControlFragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
@@ -164,6 +165,7 @@ public class LoginFragment extends Fragment {
                 .putString("passwd", binding.loginPwd.getText().toString())
                 .apply();
 
+        // 关闭注册页
         NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
         controller.popBackStack();
     }

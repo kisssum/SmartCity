@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
@@ -173,54 +175,47 @@ public class HomeFragment extends Fragment {
     }
 
     private void initServiceList() {
+        BottomNavigationView bottomNavigationView = requireActivity().findViewById(R.id.bottomNavigationView);
+
         binding.homeServiceList.serviceGovernmentAffairs.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceEnvironmrnalProtection.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceSecurity.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceTraffic.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.servicePension.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceEducation.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceMedicalTreatment.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            controller.navigate(R.id.action_navControlFragment_to_medicalFragment);
         });
 
         binding.homeServiceList.serviceLife.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceTourism.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
         binding.homeServiceList.serviceMore.setOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).popBackStack();
-            Navigation.findNavController(requireActivity(), R.id.fragment_detail).navigate(R.id.allServiceFragment);
+            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
     }
 
