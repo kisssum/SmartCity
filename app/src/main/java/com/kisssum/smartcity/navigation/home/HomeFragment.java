@@ -20,6 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
+import com.kisssum.smartcity.navigation.news.NewsListAdpater;
 import com.kisssum.smartcity.navigation.news.NewsModel;
 import com.kisssum.smartcity.navigation.news.NewsPagerFragment;
 
@@ -100,12 +101,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void initSearch() {
-        NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
+        NewsListAdpater adpater = new NewsListAdpater(0, requireContext(), 10);
 
         binding.homeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                HomeNewsListAdpater adpater = new HomeNewsListAdpater(0, requireContext(), 10, model);
                 adpater.isAndGoToNewsInformation(query);
                 return false;
             }

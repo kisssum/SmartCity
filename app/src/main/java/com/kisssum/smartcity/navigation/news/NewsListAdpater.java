@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -195,5 +196,23 @@ public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.Defaul
         }
 
         return rData;
+    }
+
+    public void isAndGoToNewsInformation(String title) {
+        String p = ".*" + title + ".*";
+
+        try {
+            for (int i = 0; i < data.size(); i++) {
+                String map = data.get(i).get("title").toString();
+                boolean is = Pattern.matches(p, map);
+
+                if (is) {
+                    navNewsInformation(i);
+                    break;
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
