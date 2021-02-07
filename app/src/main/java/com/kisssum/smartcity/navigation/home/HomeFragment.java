@@ -222,7 +222,7 @@ public class HomeFragment extends Fragment {
 
     private void initHotTheme() {
         GridLayoutManager layoutManager = new GridLayoutManager(requireContext(), 2);
-        HotServiceListAdpater HotServiceAdpater = new HotServiceListAdpater();
+        HotServiceListAdpater HotServiceAdpater = new HotServiceListAdpater(requireContext());
         binding.homeHotServiceList.setLayoutManager(layoutManager);
         binding.homeHotServiceList.setAdapter(HotServiceAdpater);
     }

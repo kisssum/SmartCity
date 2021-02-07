@@ -1,5 +1,7 @@
 package com.kisssum.smartcity.navigation.home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.kisssum.smartcity.R;
 
 import java.util.ArrayList;
@@ -18,9 +21,11 @@ import java.util.Map;
 
 public class HotServiceListAdpater extends RecyclerView.Adapter<HotServiceListAdpater.DefaultViewMode> {
     List<Map<String, Object>> data;
+    private Context context;
 
-    public HotServiceListAdpater() {
+    public HotServiceListAdpater(Context context) {
         data = getData();
+        this.context = context;
     }
 
     @NonNull
@@ -34,6 +39,11 @@ public class HotServiceListAdpater extends RecyclerView.Adapter<HotServiceListAd
     public void onBindViewHolder(@NonNull DefaultViewMode holder, int position) {
         holder.img.setImageResource((Integer) data.get(position).get("img"));
         holder.name.setText(data.get(position).get("title").toString());
+
+        holder.itemView.setOnClickListener(v -> {
+            BottomNavigationView view = ((Activity) context).findViewById(R.id.bottomNavigationView);
+            view.setSelectedItemId(R.id.item_allservice);
+        });
     }
 
     @Override
