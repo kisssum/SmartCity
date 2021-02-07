@@ -5,16 +5,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNewsPagerBinding;
-import com.kisssum.smartcity.navigation.home.HomeNewsListAdpater;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +33,7 @@ public class NewsPagerFragment extends Fragment {
 
     private FragmentNewsPagerBinding binding;
     private int type;
+    private NewsListAdpater adpater;
 
     public NewsPagerFragment(int type) {
         this.type = type;
@@ -76,14 +74,24 @@ public class NewsPagerFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        adpater.notifyDataSetChanged();
+    }
+
+    @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        NewsListAdpater adpater = new NewsListAdpater(type, requireContext(), 10, model.getData());
+        adpater = new NewsListAdpater(type, requireContext(), 10);
         binding.newsPagerList.setLayoutManager(layoutManager);
         binding.newsPagerList.setAdapter(adpater);
+
+        binding.newsSmart.setOnLoadMoreListener(refreshLayout -> {
+            adpater.loadData(true);
+            refreshLayout.finishLoadMore(100);
+        });
     }
 }

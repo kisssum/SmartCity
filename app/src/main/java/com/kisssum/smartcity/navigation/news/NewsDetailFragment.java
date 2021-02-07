@@ -9,7 +9,6 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -72,6 +71,15 @@ public class NewsDetailFragment extends Fragment {
         return binding.getRoot();
     }
 
+    private NewsListAdpater adpater;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        adpater.notifyDataSetChanged();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -91,11 +99,9 @@ public class NewsDetailFragment extends Fragment {
         binding.newDetailWeb.loadUrl(arguments.getString("url"));
 
         // list
-        NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        NewsListAdpater adpater = new NewsListAdpater(0, requireContext(), 3, model.getData());
         binding.newsDetailList.setLayoutManager(layoutManager);
+        adpater = new NewsListAdpater(0, requireContext(), 3);
         binding.newsDetailList.setAdapter(adpater);
     }
 }

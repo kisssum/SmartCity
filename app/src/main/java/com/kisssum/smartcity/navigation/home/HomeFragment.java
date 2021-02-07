@@ -21,6 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
 import com.kisssum.smartcity.navigation.news.NewsModel;
+import com.kisssum.smartcity.navigation.news.NewsPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,7 +122,7 @@ public class HomeFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return new HomeNewsViewPagerFragment(position);
+                return new NewsPagerFragment(position);
             }
 
             @Override
