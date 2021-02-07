@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.databinding.FragmentMedicalPagerBinding;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -79,11 +82,39 @@ public class MedicalPagerFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.medicalList.setLayoutManager(layoutManager);
 
-        if (type == 0)
-            binding.medicalList.setAdapter(new HospitalListAdpater(requireContext()));
-        else if (type == 1)
-            binding.medicalList.setAdapter(new DeptListAdpater(requireContext()));
-        else if (type == 2)
-            binding.medicalList.setAdapter(new DoctorListAdpater(requireContext()));
+        if (type == 0) {
+            HospitalListAdpater adpater = new HospitalListAdpater(requireContext());
+            binding.medicalList.setAdapter(adpater);
+            binding.medicalListSmart.setOnRefreshListener(refreshLayout -> {
+                adpater.reLoadData();
+                refreshLayout.finishRefresh();
+            });
+            binding.medicalListSmart.setOnLoadMoreListener(refreshLayout -> {
+                adpater.loadData(true);
+                refreshLayout.finishLoadMore(100);
+            });
+        } else if (type == 1) {
+            DeptListAdpater adpater = new DeptListAdpater(requireContext());
+            binding.medicalList.setAdapter(adpater);
+            binding.medicalListSmart.setOnRefreshListener(refreshLayout -> {
+                adpater.reLoadData();
+                refreshLayout.finishRefresh();
+            });
+            binding.medicalListSmart.setOnLoadMoreListener(refreshLayout -> {
+                adpater.loadData(true);
+                refreshLayout.finishLoadMore(100);
+            });
+        } else if (type == 2) {
+            DoctorListAdpater adpater = new DoctorListAdpater(requireContext());
+            binding.medicalList.setAdapter(adpater);
+            binding.medicalListSmart.setOnRefreshListener(refreshLayout -> {
+                adpater.reLoadData();
+                refreshLayout.finishRefresh();
+            });
+            binding.medicalListSmart.setOnLoadMoreListener(refreshLayout -> {
+                adpater.loadData(true);
+                refreshLayout.finishLoadMore(100);
+            });
+        }
     }
 }

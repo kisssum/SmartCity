@@ -129,7 +129,12 @@ public class DeptListAdpater extends RecyclerView.Adapter<DeptListAdpater.Defaul
         return list;
     }
 
-    private void loadData(boolean up) {
+    void reLoadData() {
+        page = 1;
+        loadData(false);
+    }
+
+    void loadData(boolean up) {
         SharedPreferences sp = context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
         String url = "http://" + sp.getString("ip", "") + ":" + sp.getString("duankou", "") + "/SmartCitySrv/hospital/deptList/";
 
