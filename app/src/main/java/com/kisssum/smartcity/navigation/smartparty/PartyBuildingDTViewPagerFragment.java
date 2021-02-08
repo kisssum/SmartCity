@@ -8,12 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.kisssum.smartcity.databinding.FragmentHomeNewsViewPagerBinding;
-import com.kisssum.smartcity.navigation.home.HomeNewsListAdpater;
-import com.kisssum.smartcity.navigation.news.NewsModel;
+import com.kisssum.smartcity.navigation.news.NewsListAdpater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,10 +74,8 @@ public class PartyBuildingDTViewPagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NewsModel model = new ViewModelProvider(requireActivity(), new ViewModelProvider.AndroidViewModelFactory(requireActivity().getApplication())).get(NewsModel.class);
-
+        NewsListAdpater adpater = new NewsListAdpater(0, requireContext(), 10);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        HomeNewsListAdpater adpater = new HomeNewsListAdpater(index,requireContext(),4,model);
         binding.newsList.setLayoutManager(layoutManager);
         binding.newsList.setAdapter(adpater);
     }

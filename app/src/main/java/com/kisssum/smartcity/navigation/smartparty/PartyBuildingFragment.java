@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.databinding.FragmentPartyBuildingBinding;
-import com.kisssum.smartcity.navigation.home.HomeNewsViewPagerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
