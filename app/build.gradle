@@ -4,20 +4,20 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.kisssum.smartcity"
-        minSdkVersion 22
+        minSdkVersion 28
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 10240
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 
     buildTypes {
@@ -49,6 +49,6 @@ dependencies {
 
     // smartRefresh
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
-    implementation  'com.scwang.smart:refresh-header-radar:2.0.3'       //雷达刷新头
-    implementation  'com.scwang.smart:refresh-footer-ball:2.0.3'        //球脉冲加载
+    implementation 'com.scwang.smart:refresh-header-radar:2.0.3'       //雷达刷新头
+    implementation 'com.scwang.smart:refresh-footer-ball:2.0.3'        //球脉冲加载
 }
