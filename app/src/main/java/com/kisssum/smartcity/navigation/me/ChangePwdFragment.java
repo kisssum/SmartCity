@@ -2,6 +2,7 @@ package com.kisssum.smartcity.navigation.me;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,20 @@ public class ChangePwdFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentChangePwdBinding.inflate(inflater);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        requireActivity().getWindow().setStatusBarColor(Color.RED);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Override

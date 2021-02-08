@@ -1,5 +1,6 @@
 package com.kisssum.smartcity.navigation.allservice.medical;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -84,6 +85,20 @@ public class MedicalFragment extends Fragment {
         });
 
         initPager();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        requireActivity().getWindow().setStatusBarColor(Color.RED);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     private void initPager() {

@@ -1,11 +1,14 @@
 package com.kisssum.smartcity.navigation.news;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
+import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -78,6 +81,14 @@ public class NewsDetailFragment extends Fragment {
         super.onResume();
 
         adpater.notifyDataSetChanged();
+        requireActivity().getWindow().setStatusBarColor(Color.RED);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Override
