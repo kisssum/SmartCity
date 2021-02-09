@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,10 +14,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().hide();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().hide();
+        }
         getWindow().setStatusBarColor(Color.TRANSPARENT);
 
-        // 恢复数据
+        // 初始化数据
+        initLocalData();
+    }
+
+    private void initLocalData() {
         SharedPreferences sp = getSharedPreferences("Settings", Context.MODE_PRIVATE);
         if (sp.getString("ip", "").equals("") ||
                 sp.getString("duankou", "").equals("")) {

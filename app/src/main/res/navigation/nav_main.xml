@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/guideMainFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/navControlFragment"
@@ -140,5 +140,14 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.kisssum.smartcity.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_guideMainFragment"
+            app:destination="@id/guideMainFragment" />
     </fragment>
 </navigation>
