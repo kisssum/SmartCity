@@ -1,21 +1,14 @@
 package com.kisssum.smartcity.navigation.home;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,23 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
-import com.kisssum.smartcity.navigation.news.NewsListAdpater;
-import com.kisssum.smartcity.navigation.news.NewsModel;
 import com.kisssum.smartcity.navigation.news.NewsPagerFragment;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,24 +76,9 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private Handler handler;
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        handler = new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
-
-                JSONObject newsInfo = (JSONObject) msg.obj;
-
-                if (msg.what == 1) {
-                    navNewsInformation(newsInfo);
-                }
-            }
-        };
 
         // 搜索框
         initSearch();
@@ -135,78 +97,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void initSearch() {
-        binding.homeSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                findNews(query);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
+        binding.homeSearchView.border.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsSearchFragment);
         });
-    }
-
-    private void navNewsInformation(JSONObject news) {
-        try {
-            Bundle bundle = new Bundle();
-            bundle.putString("title", news.getString("title"));
-            bundle.putString("url", news.getString("url"));
-            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void findNews(String id) {
-        SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        String url = "http://" + sp.getString("ip", "") + ":" + sp.getString("duankou", "") + "/SmartCitySrv/news/news-info/";
-
-        new Thread(() -> {
-            try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("newsId", id);
-                MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
-                RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
-
-                Request request = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
-
-                OkHttpClient client = new OkHttpClient();
-                Response response = client.newCall(request).execute();
-                String doc = response.body().string();
-                JSONObject newsInfo = getNewsInfo(doc);
-
-                Message message = new Message();
-                message.what = 1;
-                message.obj = newsInfo;
-                handler.sendMessage(message);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-        }).start();
-    }
-
-    private JSONObject getNewsInfo(String doc) {
-        JSONObject rData = new JSONObject();
-
-        try {
-            JSONObject main = new JSONObject(doc);
-            String errMsg = main.getString("errMsg");
-
-            if (errMsg.equals("ok")) {
-                rData = main.getJSONObject("data");
-            }
-        } catch (
-                JSONException e) {
-            e.printStackTrace();
-        }
-
-        return rData;
     }
 
     private void initNews() {

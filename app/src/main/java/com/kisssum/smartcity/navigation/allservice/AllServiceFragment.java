@@ -75,6 +75,10 @@ public class AllServiceFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.allServiceSearchView.border.setOnClickListener(v -> {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsSearchFragment);
+        });
+
         binding.serviceList.serviceMedicalTreatment.setOnClickListener(v -> {
             NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
             controller.navigate(R.id.action_navControlFragment_to_medicalFragment);

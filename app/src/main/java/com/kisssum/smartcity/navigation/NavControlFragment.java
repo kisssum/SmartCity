@@ -2,6 +2,7 @@ package com.kisssum.smartcity.navigation;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -111,5 +112,12 @@ public class NavControlFragment extends Fragment {
             }
             return true;
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 }

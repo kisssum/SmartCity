@@ -13,17 +13,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <SearchView
+        <include
             android:id="@+id/homeSearchView"
+            layout="@layout/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/search_style"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
-            android:queryHint="搜索">
-
-        </SearchView>
+            android:layout_margin="10dp" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/homeTopViewPager"

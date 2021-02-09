@@ -9,7 +9,7 @@
         android:id="@+id/navControlFragment"
         android:name="com.kisssum.smartcity.navigation.NavControlFragment"
         android:label="fragment_nav_control"
-        tools:layout="@layout/fragment_nav_control" >
+        tools:layout="@layout/fragment_nav_control">
         <action
             android:id="@+id/action_navControlFragment_to_meInformationFragment"
             app:destination="@id/meInformationFragment"
@@ -59,12 +59,19 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_newsSearchFragment"
+            app:destination="@id/newsSearchFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
         android:name="com.kisssum.smartcity.guidepages.GuideMainFragment"
         android:label="fragment_guide_main"
-        tools:layout="@layout/fragment_guide_main" >
+        tools:layout="@layout/fragment_guide_main">
         <action
             android:id="@+id/action_guideMainFragment_to_navControlFragment"
             app:destination="@id/navControlFragment"
@@ -107,7 +114,7 @@
         android:id="@+id/medicalFragment"
         android:name="com.kisssum.smartcity.navigation.allservice.medical.MedicalFragment"
         android:label="fragment_medical"
-        tools:layout="@layout/fragment_medical" >
+        tools:layout="@layout/fragment_medical">
         <action
             android:id="@+id/action_medicalFragment_to_doctorDetailFragment"
             app:destination="@id/doctorDetailFragment"
@@ -121,4 +128,17 @@
         android:name="com.kisssum.smartcity.navigation.allservice.medical.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
         tools:layout="@layout/fragment_doctor_detail" />
+    <fragment
+        android:id="@+id/newsSearchFragment"
+        android:name="com.kisssum.smartcity.navigation.news.NewsSearchFragment"
+        android:label="fragment_news_search"
+        tools:layout="@layout/fragment_news_search">
+        <action
+            android:id="@+id/action_newsSearchFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
 </navigation>

@@ -1,6 +1,5 @@
 package com.kisssum.smartcity.navigation.news;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentNewsDetailBinding;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +34,7 @@ public class NewsDetailFragment extends Fragment {
     private String mParam2;
 
     private FragmentNewsDetailBinding binding;
+    private NewsListAdpater adpater;
 
     public NewsDetailFragment() {
         // Required empty public constructor
@@ -74,21 +74,12 @@ public class NewsDetailFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private NewsListAdpater adpater;
-
     @Override
     public void onResume() {
         super.onResume();
 
-        adpater.notifyDataSetChanged();
         requireActivity().getWindow().setStatusBarColor(Color.RED);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+        adpater.notifyDataSetChanged();
     }
 
     @Override
