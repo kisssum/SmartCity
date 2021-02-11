@@ -99,13 +99,6 @@ public class NewsSearchFragment extends Fragment {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
-    }
-
-    @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -127,6 +120,7 @@ public class NewsSearchFragment extends Fragment {
             controller.popBackStack();
         });
 
+        binding.newsSearchView.setIconified(false);
         binding.newsSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -152,7 +146,8 @@ public class NewsSearchFragment extends Fragment {
         }
 
         NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
-        controller.navigate(R.id.action_newsSearchFragment_to_newsDetailFragment, bundle);
+        controller.popBackStack();
+        controller.navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
     }
 
     private void findNews(String id) {

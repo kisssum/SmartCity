@@ -92,7 +92,7 @@ public class PartyBuildingFragment extends Fragment {
 
             @Override
             public int getItemCount() {
-                return 5;
+                return 6;
             }
         };
 
@@ -102,18 +102,21 @@ public class PartyBuildingFragment extends Fragment {
         new TabLayoutMediator(binding.partyBuildingDTlayout, binding.partyBuildingDongTaiViewPager, (tab, position) -> {
             switch (position) {
                 case 0:
-                    tab.setText("国内");
+                    tab.setText("社会");
                     break;
                 case 1:
-                    tab.setText("国际");
+                    tab.setText("国内");
                     break;
                 case 2:
-                    tab.setText("军事");
+                    tab.setText("国际");
                     break;
                 case 3:
-                    tab.setText("财经");
+                    tab.setText("军事");
                     break;
                 case 4:
+                    tab.setText("财经");
+                    break;
+                case 5:
                     tab.setText("娱乐");
                     break;
             }

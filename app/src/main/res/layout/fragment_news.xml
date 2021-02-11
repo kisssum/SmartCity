@@ -28,6 +28,7 @@
             android:id="@+id/newsMainTablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:overScrollMode="never"
             app:tabIndicatorFullWidth="false"
             app:tabMode="scrollable">
 

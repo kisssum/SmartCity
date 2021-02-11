@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -107,11 +108,12 @@ public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.Defaul
             e.printStackTrace();
         }
 
+        NavController controller = Navigation.findNavController(((Activity) context), R.id.fragment_main);
         if (count == 3) {
-            Navigation.findNavController(((Activity) context), R.id.fragment_main).popBackStack();
-            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.newsDetailFragment, bundle);
+            controller.popBackStack();
+            controller.navigate(R.id.newsDetailFragment, bundle);
         } else {
-            Navigation.findNavController(((Activity) context), R.id.fragment_main).navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
+            controller.navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
         }
     }
 

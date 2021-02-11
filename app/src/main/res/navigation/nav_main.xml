@@ -132,15 +132,7 @@
         android:id="@+id/newsSearchFragment"
         android:name="com.kisssum.smartcity.navigation.news.NewsSearchFragment"
         android:label="fragment_news_search"
-        tools:layout="@layout/fragment_news_search">
-        <action
-            android:id="@+id/action_newsSearchFragment_to_newsDetailFragment"
-            app:destination="@id/newsDetailFragment"
-            app:enterAnim="@anim/translate_x_from_100_0"
-            app:exitAnim="@anim/translate_x_from_0_f100"
-            app:popEnterAnim="@anim/translate_x_from_f100_0"
-            app:popExitAnim="@anim/translate_x_from_0_100" />
-    </fragment>
+        tools:layout="@layout/fragment_news_search"/>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.kisssum.smartcity.splash.SplashFragment"
