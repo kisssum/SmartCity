@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="政务"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="环保"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +76,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="安防"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,7 +88,7 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/service_traffic"
+                android:id="@+id/service_violationQuery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
@@ -95,8 +98,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="交通"
-                android:textAlignment="center" />
+                android:text="违章查询"
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="养老"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -147,7 +152,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="教育"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -169,7 +175,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="医疗"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -191,7 +198,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="生活"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -213,7 +221,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="旅游"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -235,7 +244,8 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:text="更多"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textSize="12sp" />
         </LinearLayout>
 
     </LinearLayout>

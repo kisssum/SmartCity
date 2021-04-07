@@ -178,8 +178,9 @@ public class HomeFragment extends Fragment {
             bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
-        binding.homeServiceList.serviceTraffic.setOnClickListener(v -> {
-            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
+        binding.homeServiceList.serviceViolationQuery.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            navController.navigate(R.id.action_navControlFragment_to_violationQueryFragment);
         });
 
         binding.homeServiceList.servicePension.setOnClickListener(v -> {

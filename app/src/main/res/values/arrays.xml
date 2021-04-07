@@ -71,4 +71,16 @@
         <item>456评</item>
         <item>623评</item>
     </array>
+
+    <string-array name="card_type">
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+        <item>京</item>
+    </string-array>
 </resources>

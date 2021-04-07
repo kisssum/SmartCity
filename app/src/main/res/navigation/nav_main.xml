@@ -66,6 +66,13 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_violationQueryFragment"
+            app:destination="@id/violationQueryFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -142,4 +149,35 @@
             android:id="@+id/action_splashFragment_to_guideMainFragment"
             app:destination="@id/guideMainFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/violationQueryFragment"
+        android:name="com.kisssum.smartcity.ui.service.violationQuery.ViolationQueryFragment"
+        android:label="fragment_violation_query"
+        tools:layout="@layout/fragment_violation_query" >
+        <action
+            android:id="@+id/action_violationQueryFragment_to_violationRecordsFragment"
+            app:destination="@id/violationRecordsFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/violationRecordsFragment"
+        android:name="com.kisssum.smartcity.ui.service.violationQuery.ViolationRecordsFragment"
+        android:label="fragment_violation_records"
+        tools:layout="@layout/fragment_violation_records" >
+        <action
+            android:id="@+id/action_violationRecordsFragment_to_violationDetailsFragment"
+            app:destination="@id/violationDetailsFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/violationDetailsFragment"
+        android:name="com.kisssum.smartcity.ui.service.violationQuery.ViolationDetailsFragment"
+        android:label="fragment_violation_details"
+        tools:layout="@layout/fragment_violation_details" />
 </navigation>

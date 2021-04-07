@@ -147,8 +147,9 @@ public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.Defaul
                 jsonObject.put("page", page);
                 jsonObject.put("limit", "10");
                 jsonObject.put("sort", "desc");
-                MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
-                RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+//                MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
+//                RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+                RequestBody requestBody = RequestBody.create(null, jsonObject.toString());
 
                 Request request = new Request.Builder()
                         .url(url)
