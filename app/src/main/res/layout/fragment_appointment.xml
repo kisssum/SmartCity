@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context=".navigation.allservice.medical.AppointmentFragment">
+    tools:context=".ui.navigations.allservice.medical.AppointmentFragment">
 
     <LinearLayout
         android:id="@+id/appPid"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="9dp"
-    tools:context=".navigation.smartparty.PartyLunBoViewPagerFragment">
+    tools:context=".ui.navigations.smartparty.PartyLunBoViewPagerFragment">
 
     <ImageView
         android:id="@+id/partyLunBoImg"

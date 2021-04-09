@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navControlFragment"
-        android:name="com.kisssum.smartcity.navigation.NavControlFragment"
+        android:name="com.kisssum.smartcity.ui.NavControlFragment"
         android:label="fragment_nav_control"
         tools:layout="@layout/fragment_nav_control">
         <action
@@ -73,10 +73,17 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_outpatientAppointmentFragment"
+            app:destination="@id/outpatientAppointmentFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
-        android:name="com.kisssum.smartcity.guidepages.GuideMainFragment"
+        android:name="com.kisssum.smartcity.ui.guidepages.GuideMainFragment"
         android:label="fragment_guide_main"
         tools:layout="@layout/fragment_guide_main">
         <action
@@ -89,37 +96,37 @@
     </fragment>
     <fragment
         android:id="@+id/meInformationFragment"
-        android:name="com.kisssum.smartcity.navigation.me.MeInformationFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.MeInformationFragment"
         android:label="fragment_me_information"
         tools:layout="@layout/fragment_me_information" />
     <fragment
         android:id="@+id/opinionFragment"
-        android:name="com.kisssum.smartcity.navigation.me.OpinionFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.OpinionFragment"
         android:label="fragment_opinion"
         tools:layout="@layout/fragment_opinion" />
     <fragment
         android:id="@+id/changePwdFragment"
-        android:name="com.kisssum.smartcity.navigation.me.ChangePwdFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.ChangePwdFragment"
         android:label="fragment_change_pwd"
         tools:layout="@layout/fragment_change_pwd" />
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="com.kisssum.smartcity.navigation.me.OrderListFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.OrderListFragment"
         android:label="fragment_order_list"
         tools:layout="@layout/fragment_order_list" />
     <fragment
         android:id="@+id/newsDetailFragment"
-        android:name="com.kisssum.smartcity.navigation.news.NewsDetailFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.news.NewsDetailFragment"
         android:label="fragment_news_detail"
         tools:layout="@layout/fragment_news_detail" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.kisssum.smartcity.navigation.me.LoginFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/medicalFragment"
-        android:name="com.kisssum.smartcity.navigation.allservice.medical.MedicalFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.medical.MedicalFragment"
         android:label="fragment_medical"
         tools:layout="@layout/fragment_medical">
         <action
@@ -132,17 +139,17 @@
     </fragment>
     <fragment
         android:id="@+id/doctorDetailFragment"
-        android:name="com.kisssum.smartcity.navigation.allservice.medical.DoctorDetailFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.medical.DoctorDetailFragment"
         android:label="fragment_doctor_detail"
         tools:layout="@layout/fragment_doctor_detail" />
     <fragment
         android:id="@+id/newsSearchFragment"
-        android:name="com.kisssum.smartcity.navigation.news.NewsSearchFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.news.NewsSearchFragment"
         android:label="fragment_news_search"
         tools:layout="@layout/fragment_news_search"/>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.kisssum.smartcity.splash.SplashFragment"
+        android:name="com.kisssum.smartcity.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -151,7 +158,7 @@
     </fragment>
     <fragment
         android:id="@+id/violationQueryFragment"
-        android:name="com.kisssum.smartcity.ui.service.violationQuery.ViolationQueryFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.violationQuery.ViolationQueryFragment"
         android:label="fragment_violation_query"
         tools:layout="@layout/fragment_violation_query" >
         <action
@@ -164,7 +171,7 @@
     </fragment>
     <fragment
         android:id="@+id/violationRecordsFragment"
-        android:name="com.kisssum.smartcity.ui.service.violationQuery.ViolationRecordsFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.violationQuery.ViolationRecordsFragment"
         android:label="fragment_violation_records"
         tools:layout="@layout/fragment_violation_records" >
         <action
@@ -177,7 +184,89 @@
     </fragment>
     <fragment
         android:id="@+id/violationDetailsFragment"
-        android:name="com.kisssum.smartcity.ui.service.violationQuery.ViolationDetailsFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.violationQuery.ViolationDetailsFragment"
         android:label="fragment_violation_details"
         tools:layout="@layout/fragment_violation_details" />
+    <fragment
+        android:id="@+id/outpatientAppointmentFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentFragment"
+        android:label="fragment_outpatient_appointment"
+        tools:layout="@layout/fragment_outpatient_appointment" >
+        <action
+            android:id="@+id/action_outpatientAppointmentFragment_to_outpatientAppointmentHospitalIntroductionFragment"
+            app:destination="@id/outpatientAppointmentHospitalIntroductionFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/outpatientAppointmentHospitalIntroductionFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentHospitalIntroductionFragment"
+        android:label="fragment_outpatient_appointment_hospital_introduction"
+        tools:layout="@layout/fragment_outpatient_appointment_hospital_introduction" >
+        <action
+            android:id="@+id/action_outpatientAppointmentHospitalIntroductionFragment_to_outpatientAppointmentPatientCardFragment"
+            app:destination="@id/outpatientAppointmentPatientCardFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/outpatientAppointmentPatientCardFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentPatientCardFragment"
+        android:label="fragment_outpatient_appointment_patient_card"
+        tools:layout="@layout/fragment_outpatient_appointment_patient_card" >
+        <action
+            android:id="@+id/action_outpatientAppointmentPatientCardFragment_to_outpatientAppointmentPerfectPatientInformationFragment"
+            app:destination="@id/outpatientAppointmentPerfectPatientInformationFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_outpatientAppointmentPatientCardFragment_to_outpatientAppointmentDepartmentTriageFragment"
+            app:destination="@id/outpatientAppointmentDepartmentTriageFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/outpatientAppointmentPerfectPatientInformationFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentPerfectPatientInformationFragment"
+        android:label="fragment_outpatient_appointment_perfect_patient_information"
+        tools:layout="@layout/fragment_outpatient_appointment_perfect_patient_information" />
+    <fragment
+        android:id="@+id/outpatientAppointmentDepartmentTriageFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentDepartmentTriageFragment"
+        android:label="fragment_outpatient_appointment_department_triage"
+        tools:layout="@layout/fragment_outpatient_appointment_department_triage" >
+        <action
+            android:id="@+id/action_outpatientAppointmentDepartmentTriageFragment_to_outpatientAppointmentRegisteredFragment"
+            app:destination="@id/outpatientAppointmentRegisteredFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/outpatientAppointmentRegisteredFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentRegisteredFragment"
+        android:label="fragment_outpatient_appointment_registered"
+        tools:layout="@layout/fragment_outpatient_appointment_registered" >
+        <action
+            android:id="@+id/action_outpatientAppointmentRegisteredFragment_to_outpatientAppointmentRegisteredDetailFragment"
+            app:destination="@id/outpatientAppointmentRegisteredDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/outpatientAppointmentRegisteredDetailFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentRegisteredDetailFragment"
+        android:label="fragment_outpatient_appointment_registered_detail"
+        tools:layout="@layout/fragment_outpatient_appointment_registered_detail" />
 </navigation>

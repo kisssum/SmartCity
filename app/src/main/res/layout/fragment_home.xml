@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:overScrollMode="never"
-    tools:context=".navigation.home.HomeFragment">
+    tools:context=".ui.navigations.home.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
 
         <include
             android:id="@+id/homeSearchView"
-            layout="@layout/search"
+            layout="@layout/search_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />

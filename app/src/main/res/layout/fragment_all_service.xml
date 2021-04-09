@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navigation.allservice.AllServiceFragment">
+    tools:context=".ui.navigations.allservice.AllServiceFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
             <include
                 android:id="@+id/allServiceSearchView"
-                layout="@layout/search"
+                layout="@layout/search_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" />

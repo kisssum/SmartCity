@@ -5,7 +5,7 @@
     android:id="@+id/newsSmart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".navigation.news.NewsPagerFragment">
+    tools:context=".ui.navigations.news.NewsPagerFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/newsPagerList"

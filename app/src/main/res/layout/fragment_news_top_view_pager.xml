@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".navigation.news.NewsTopViewPagerFragment">
+    tools:context=".ui.navigations.news.NewsTopViewPagerFragment">
 
     <TextView
         android:id="@+id/textView7"

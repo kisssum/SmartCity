@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".navigation.news.NewsSearchFragment">
+    tools:context=".ui.navigations.news.NewsSearchFragment">
 
 
     <androidx.appcompat.widget.Toolbar

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="9dp"
-    tools:context=".navigation.home.HomeTopViewPagerFragment">
+    tools:context=".ui.navigations.home.HomeTopViewPagerFragment">
 
     <ImageView
         android:id="@+id/imageView2"

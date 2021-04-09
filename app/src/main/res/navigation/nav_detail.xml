@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.kisssum.smartcity.navigation.home.HomeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/allServiceFragment"
-        android:name="com.kisssum.smartcity.navigation.allservice.AllServiceFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.AllServiceFragment"
         android:label="fragment_all_service"
         tools:layout="@layout/fragment_all_service" />
     <fragment
         android:id="@+id/partyBuildingFragment"
-        android:name="com.kisssum.smartcity.navigation.smartparty.PartyBuildingFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.smartparty.PartyBuildingFragment"
         android:label="fragment_party_building"
         tools:layout="@layout/fragment_party_building" />
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.kisssum.smartcity.navigation.news.NewsFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.news.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" />
     <fragment
         android:id="@+id/meFragment"
-        android:name="com.kisssum.smartcity.navigation.me.MeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.MeFragment"
         android:label="fragment_me"
         tools:layout="@layout/fragment_me" />
 </navigation>
