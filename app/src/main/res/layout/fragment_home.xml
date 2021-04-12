@@ -39,7 +39,7 @@
 
         <include
             android:id="@+id/homeServiceList"
-            layout="@layout/home_application_service_table"
+            layout="@layout/service_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

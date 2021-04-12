@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layoutDirection="ltr"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/lsolupepNXian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lsolupepNXianName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="一号线" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/lsolupepStartPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="先谷金融街"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lsolupepNXian"
+        app:layout_constraintStart_toEndOf="@+id/lsolupepNXian"
+        app:layout_constraintTop_toTopOf="@+id/lsolupepNXian" />
+
+    <TextView
+        android:id="@+id/lsolupepTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="——"
+        app:layout_constraintBottom_toBottomOf="@+id/lsolupepStartPlace"
+        app:layout_constraintStart_toEndOf="@+id/lsolupepStartPlace"
+        app:layout_constraintTop_toTopOf="@+id/lsolupepStartPlace" />
+
+    <TextView
+        android:id="@+id/lsolupepEndPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="南湖商厦"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/lsolupepStartPlace"
+        app:layout_constraintStart_toEndOf="@+id/lsolupepTo"
+        app:layout_constraintTop_toTopOf="@+id/lsolupepStartPlace" />
+
+    <TextView
+        android:id="@+id/lssbepTime1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="06:45-19:45"
+        app:layout_constraintBottom_toBottomOf="@+id/lsolupepEndPlace"
+        app:layout_constraintStart_toEndOf="@+id/lsolupepEndPlace"
+        app:layout_constraintTop_toTopOf="@+id/lsolupepEndPlace" />
+
+
+    <TextView
+        android:id="@+id/lssbepTime2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="06:45-19:45"
+        app:layout_constraintEnd_toEndOf="@+id/lssbepTime1"
+        app:layout_constraintStart_toStartOf="@+id/lssbepTime1"
+        app:layout_constraintTop_toBottomOf="@+id/lssbepTime1" />
+
+    <TextView
+        android:id="@+id/lsolupepTicketPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="票价:￥8.0"
+        app:layout_constraintStart_toStartOf="@+id/lsolupepStartPlace"
+        app:layout_constraintTop_toBottomOf="@+id/lsolupepStartPlace" />
+
+    <TextView
+        android:id="@+id/lssbepMileage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="里程:20.0km"
+        app:layout_constraintBottom_toBottomOf="@+id/lsolupepTicketPrice"
+        app:layout_constraintStart_toEndOf="@+id/lsolupepTicketPrice"
+        app:layout_constraintTop_toTopOf="@+id/lsolupepTicketPrice" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -202,8 +202,9 @@ public class HomeFragment extends Fragment {
             controller.navigate(R.id.action_navControlFragment_to_outpatientAppointmentFragment);
         });
 
-        binding.homeServiceList.serviceTourism.setOnClickListener(v -> {
-            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
+        binding.homeServiceList.serviceSmartBus.setOnClickListener(v -> {
+            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            controller.navigate(R.id.action_navControlFragment_to_smartBusFragment);
         });
 
         binding.homeServiceList.serviceMore.setOnClickListener(v -> {

@@ -210,17 +210,17 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/service_tourism"
+                android:id="@+id/service_smartBus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/tourism" />
+                android:src="@drawable/service_smartbus" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="旅游"
+                android:text="智慧巴士"
                 android:textAlignment="center"
                 android:textSize="12sp" />
         </LinearLayout>

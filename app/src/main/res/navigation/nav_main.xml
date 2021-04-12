@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/navControlFragment">
 
     <fragment
         android:id="@+id/navControlFragment"
@@ -80,6 +80,13 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_smartBusFragment"
+            app:destination="@id/smartBusFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -111,7 +118,7 @@
         tools:layout="@layout/fragment_change_pwd" />
     <fragment
         android:id="@+id/orderListFragment"
-        android:name="com.kisssum.smartcity.ui.navigations.me.OrderListFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.orderList.OrderListFragment"
         android:label="fragment_order_list"
         tools:layout="@layout/fragment_order_list" />
     <fragment
@@ -269,4 +276,61 @@
         android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentRegisteredDetailFragment"
         android:label="fragment_outpatient_appointment_registered_detail"
         tools:layout="@layout/fragment_outpatient_appointment_registered_detail" />
+    <fragment
+        android:id="@+id/smartBusFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusFragment"
+        android:label="fragment_smart_bus"
+        tools:layout="@layout/fragment_smart_bus" >
+        <action
+            android:id="@+id/action_smartBusFragment_to_smartBusStep1Fragment"
+            app:destination="@id/smartBusStep1Fragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/smartBusStep1Fragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep1Fragment"
+        android:label="fragment_smart_bus_step1"
+        tools:layout="@layout/fragment_smart_bus_step1" >
+        <action
+            android:id="@+id/action_smartBusStep1Fragment_to_smartBusStep2Fragment"
+            app:destination="@id/smartBusStep2Fragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/smartBusStep2Fragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep2Fragment"
+        android:label="fragment_smart_bus_step2"
+        tools:layout="@layout/fragment_smart_bus_step2" >
+        <action
+            android:id="@+id/action_smartBusStep2Fragment_to_smartBusStep3Fragment"
+            app:destination="@id/smartBusStep3Fragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/smartBusStep3Fragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep3Fragment"
+        android:label="fragment_smart_bus_step3"
+        tools:layout="@layout/fragment_smart_bus_step3" >
+        <action
+            android:id="@+id/action_smartBusStep3Fragment_to_smartBusStep4Fragment"
+            app:destination="@id/smartBusStep4Fragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/smartBusStep4Fragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep4Fragment"
+        android:label="fragment_smart_bus_step4"
+        tools:layout="@layout/fragment_smart_bus_step4" />
 </navigation>
