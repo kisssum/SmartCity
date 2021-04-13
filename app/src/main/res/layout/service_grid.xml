@@ -65,17 +65,17 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/service_security"
+                android:id="@+id/service_real_weather"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/security" />
+                android:src="@drawable/service_real_weather" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="安防"
+                android:text="实时天气"
                 android:textAlignment="center"
                 android:textSize="12sp" />
         </LinearLayout>

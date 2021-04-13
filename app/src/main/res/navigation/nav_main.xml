@@ -94,6 +94,13 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_realWeatherFragment"
+            app:destination="@id/realWeatherFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -395,4 +402,9 @@
         android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesElectricityFeeFragment"
         android:label="fragment_living_expenses_electricity_fee"
         tools:layout="@layout/fragment_living_expenses_electricity_fee" />
+    <fragment
+        android:id="@+id/realWeatherFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.realWeather.RealWeatherFragment"
+        android:label="fragment_real_weather"
+        tools:layout="@layout/fragment_real_weather" />
 </navigation>
