@@ -141,17 +141,17 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/service_education"
+                android:id="@+id/service_living_expenses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/education" />
+                android:src="@drawable/service_living_expenses" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="教育"
+                android:text="生活缴费"
                 android:textAlignment="center"
                 android:textSize="12sp" />
         </LinearLayout>

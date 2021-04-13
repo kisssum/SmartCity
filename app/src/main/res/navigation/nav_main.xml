@@ -87,6 +87,13 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_livingExpensesFragment"
+            app:destination="@id/livingExpensesFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/guideMainFragment"
@@ -153,12 +160,12 @@
         android:id="@+id/newsSearchFragment"
         android:name="com.kisssum.smartcity.ui.navigations.news.NewsSearchFragment"
         android:label="fragment_news_search"
-        tools:layout="@layout/fragment_news_search"/>
+        tools:layout="@layout/fragment_news_search" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.kisssum.smartcity.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_guideMainFragment"
             app:destination="@id/guideMainFragment" />
@@ -167,7 +174,7 @@
         android:id="@+id/violationQueryFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.violationQuery.ViolationQueryFragment"
         android:label="fragment_violation_query"
-        tools:layout="@layout/fragment_violation_query" >
+        tools:layout="@layout/fragment_violation_query">
         <action
             android:id="@+id/action_violationQueryFragment_to_violationRecordsFragment"
             app:destination="@id/violationRecordsFragment"
@@ -180,7 +187,7 @@
         android:id="@+id/violationRecordsFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.violationQuery.ViolationRecordsFragment"
         android:label="fragment_violation_records"
-        tools:layout="@layout/fragment_violation_records" >
+        tools:layout="@layout/fragment_violation_records">
         <action
             android:id="@+id/action_violationRecordsFragment_to_violationDetailsFragment"
             app:destination="@id/violationDetailsFragment"
@@ -198,7 +205,7 @@
         android:id="@+id/outpatientAppointmentFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentFragment"
         android:label="fragment_outpatient_appointment"
-        tools:layout="@layout/fragment_outpatient_appointment" >
+        tools:layout="@layout/fragment_outpatient_appointment">
         <action
             android:id="@+id/action_outpatientAppointmentFragment_to_outpatientAppointmentHospitalIntroductionFragment"
             app:destination="@id/outpatientAppointmentHospitalIntroductionFragment"
@@ -211,7 +218,7 @@
         android:id="@+id/outpatientAppointmentHospitalIntroductionFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentHospitalIntroductionFragment"
         android:label="fragment_outpatient_appointment_hospital_introduction"
-        tools:layout="@layout/fragment_outpatient_appointment_hospital_introduction" >
+        tools:layout="@layout/fragment_outpatient_appointment_hospital_introduction">
         <action
             android:id="@+id/action_outpatientAppointmentHospitalIntroductionFragment_to_outpatientAppointmentPatientCardFragment"
             app:destination="@id/outpatientAppointmentPatientCardFragment"
@@ -224,7 +231,7 @@
         android:id="@+id/outpatientAppointmentPatientCardFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentPatientCardFragment"
         android:label="fragment_outpatient_appointment_patient_card"
-        tools:layout="@layout/fragment_outpatient_appointment_patient_card" >
+        tools:layout="@layout/fragment_outpatient_appointment_patient_card">
         <action
             android:id="@+id/action_outpatientAppointmentPatientCardFragment_to_outpatientAppointmentPerfectPatientInformationFragment"
             app:destination="@id/outpatientAppointmentPerfectPatientInformationFragment"
@@ -249,7 +256,7 @@
         android:id="@+id/outpatientAppointmentDepartmentTriageFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentDepartmentTriageFragment"
         android:label="fragment_outpatient_appointment_department_triage"
-        tools:layout="@layout/fragment_outpatient_appointment_department_triage" >
+        tools:layout="@layout/fragment_outpatient_appointment_department_triage">
         <action
             android:id="@+id/action_outpatientAppointmentDepartmentTriageFragment_to_outpatientAppointmentRegisteredFragment"
             app:destination="@id/outpatientAppointmentRegisteredFragment"
@@ -262,7 +269,7 @@
         android:id="@+id/outpatientAppointmentRegisteredFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.outpatientAppointment.OutpatientAppointmentRegisteredFragment"
         android:label="fragment_outpatient_appointment_registered"
-        tools:layout="@layout/fragment_outpatient_appointment_registered" >
+        tools:layout="@layout/fragment_outpatient_appointment_registered">
         <action
             android:id="@+id/action_outpatientAppointmentRegisteredFragment_to_outpatientAppointmentRegisteredDetailFragment"
             app:destination="@id/outpatientAppointmentRegisteredDetailFragment"
@@ -280,7 +287,7 @@
         android:id="@+id/smartBusFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusFragment"
         android:label="fragment_smart_bus"
-        tools:layout="@layout/fragment_smart_bus" >
+        tools:layout="@layout/fragment_smart_bus">
         <action
             android:id="@+id/action_smartBusFragment_to_smartBusStep1Fragment"
             app:destination="@id/smartBusStep1Fragment"
@@ -293,7 +300,7 @@
         android:id="@+id/smartBusStep1Fragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep1Fragment"
         android:label="fragment_smart_bus_step1"
-        tools:layout="@layout/fragment_smart_bus_step1" >
+        tools:layout="@layout/fragment_smart_bus_step1">
         <action
             android:id="@+id/action_smartBusStep1Fragment_to_smartBusStep2Fragment"
             app:destination="@id/smartBusStep2Fragment"
@@ -306,7 +313,7 @@
         android:id="@+id/smartBusStep2Fragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep2Fragment"
         android:label="fragment_smart_bus_step2"
-        tools:layout="@layout/fragment_smart_bus_step2" >
+        tools:layout="@layout/fragment_smart_bus_step2">
         <action
             android:id="@+id/action_smartBusStep2Fragment_to_smartBusStep3Fragment"
             app:destination="@id/smartBusStep3Fragment"
@@ -319,7 +326,7 @@
         android:id="@+id/smartBusStep3Fragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep3Fragment"
         android:label="fragment_smart_bus_step3"
-        tools:layout="@layout/fragment_smart_bus_step3" >
+        tools:layout="@layout/fragment_smart_bus_step3">
         <action
             android:id="@+id/action_smartBusStep3Fragment_to_smartBusStep4Fragment"
             app:destination="@id/smartBusStep4Fragment"
@@ -333,4 +340,59 @@
         android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep4Fragment"
         android:label="fragment_smart_bus_step4"
         tools:layout="@layout/fragment_smart_bus_step4" />
+    <fragment
+        android:id="@+id/livingExpensesFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesFragment"
+        android:label="fragment_living_expenses"
+        tools:layout="@layout/fragment_living_expenses">
+        <action
+            android:id="@+id/action_livingExpensesFragment_to_livingExpensesAccountManagementFragment"
+            app:destination="@id/livingExpensesAccountManagementFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesFragment_to_livingExpensesFragmentWaterFeeFragment"
+            app:destination="@id/livingExpensesFragmentWaterFeeFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesFragment_to_livingExpensesElectricityFeeFragment"
+            app:destination="@id/livingExpensesElectricityFeeFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/livingExpensesAccountManagementFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesAccountManagementFragment"
+        android:label="fragment_living_expenses_account_management"
+        tools:layout="@layout/fragment_living_expenses_account_management">
+        <action
+            android:id="@+id/action_livingExpensesAccountManagementFragment_to_livingExpensesAccountManagementNewFragment"
+            app:destination="@id/livingExpensesAccountManagementNewFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/livingExpensesAccountManagementNewFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesAccountManagementNewFragment"
+        android:label="fragment_living_expenses_account_management_new"
+        tools:layout="@layout/fragment_living_expenses_account_management_new" />
+    <fragment
+        android:id="@+id/livingExpensesFragmentWaterFeeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesFragmentWaterFeeFragment"
+        android:label="fragment_living_expenses_water_fee"
+        tools:layout="@layout/fragment_living_expenses_water_fee" />
+    <fragment
+        android:id="@+id/livingExpensesElectricityFeeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesElectricityFeeFragment"
+        android:label="fragment_living_expenses_electricity_fee"
+        tools:layout="@layout/fragment_living_expenses_electricity_fee" />
 </navigation>

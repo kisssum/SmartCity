@@ -188,8 +188,9 @@ public class HomeFragment extends Fragment {
             bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
-        binding.homeServiceList.serviceEducation.setOnClickListener(v -> {
-            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
+        binding.homeServiceList.serviceLivingExpenses.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            navController.navigate(R.id.action_navControlFragment_to_livingExpensesFragment);
         });
 
         binding.homeServiceList.serviceMedicalTreatment.setOnClickListener(v -> {
