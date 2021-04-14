@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesFragmentWaterFeeFragment">
+    tools:context=".ui.navigations.allservice.livingExpenses.gasFee.LivingExpensesGasFeeFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/lewfToolbar"
+        android:id="@+id/legfToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/living_expenses_fee_menu"
         app:navigationIcon="@drawable/abc_vector_test"
-        app:title="水缴费" />
+        app:title="燃气缴费" />
 
     <LinearLayout
         android:id="@+id/linearLayout13"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lewfToolbar">
+        app:layout_constraintTop_toBottomOf="@+id/legfToolbar">
 
         <TextView
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
             android:textSize="18sp" />
 
         <Spinner
-            android:id="@+id/lewfChoiceArea"
+            android:id="@+id/legfChoiceArea"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -63,11 +63,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="水费号"
+            android:text="燃气费号"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/lewfWaterNumber"
+            android:id="@+id/legfGasNumber"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -78,7 +78,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/lewfFind"
+        android:id="@+id/legfFind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

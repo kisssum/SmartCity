@@ -1,4 +1,4 @@
-package com.kisssum.smartcity.state
+package com.kisssum.smartcity.state.livingExpenses
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel

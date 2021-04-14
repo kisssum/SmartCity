@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/navControlFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/navControlFragment"
@@ -373,10 +373,24 @@
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
             app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesFragment_to_livingExpensesPhoneFeeFragment"
+            app:destination="@id/livingExpensesPhoneFeeFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesFragment_to_livingExpensesGasFeeFragment"
+            app:destination="@id/livingExpensesGasFeeFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
     </fragment>
     <fragment
         android:id="@+id/livingExpensesAccountManagementFragment"
-        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesAccountManagementFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.accountManagement.LivingExpensesAccountManagementFragment"
         android:label="fragment_living_expenses_account_management"
         tools:layout="@layout/fragment_living_expenses_account_management">
         <action
@@ -389,17 +403,32 @@
     </fragment>
     <fragment
         android:id="@+id/livingExpensesAccountManagementNewFragment"
-        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesAccountManagementNewFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.accountManagement.LivingExpensesAccountManagementNewFragment"
         android:label="fragment_living_expenses_account_management_new"
         tools:layout="@layout/fragment_living_expenses_account_management_new" />
     <fragment
         android:id="@+id/livingExpensesFragmentWaterFeeFragment"
-        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesFragmentWaterFeeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesFragmentWaterFeeFragment"
         android:label="fragment_living_expenses_water_fee"
-        tools:layout="@layout/fragment_living_expenses_water_fee" />
+        tools:layout="@layout/fragment_living_expenses_water_fee">
+        <action
+            android:id="@+id/action_livingExpensesFragmentWaterFeeFragment_to_livingExpensesWaterFeePayFragment"
+            app:destination="@id/livingExpensesWaterFeePayFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesFragmentWaterFeeFragment_to_livingExpensesWaterFeeHistoryFragment"
+            app:destination="@id/livingExpensesWaterFeeHistoryFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
     <fragment
         android:id="@+id/livingExpensesElectricityFeeFragment"
-        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesElectricityFeeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.electricityFee.LivingExpensesElectricityFeeFragment"
         android:label="fragment_living_expenses_electricity_fee"
         tools:layout="@layout/fragment_living_expenses_electricity_fee" />
     <fragment
@@ -407,4 +436,74 @@
         android:name="com.kisssum.smartcity.ui.navigations.allservice.realWeather.RealWeatherFragment"
         android:label="fragment_real_weather"
         tools:layout="@layout/fragment_real_weather" />
+    <fragment
+        android:id="@+id/livingExpensesPhoneFeeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.phoneFee.LivingExpensesPhoneFeeFragment"
+        android:label="fragment_living_expenses_phone_fee"
+        tools:layout="@layout/fragment_living_expenses_phone_fee">
+        <action
+            android:id="@+id/action_livingExpensesPhoneFeeFragment_to_livingExpensesPhoneFeePayFragment"
+            app:destination="@id/livingExpensesPhoneFeePayFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesPhoneFeeFragment_to_livingExpensesPhoneFeeHistoryFragment"
+            app:destination="@id/livingExpensesPhoneFeeHistoryFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/livingExpensesPhoneFeePayFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.phoneFee.LivingExpensesPhoneFeePayFragment"
+        android:label="fragment_living_expenses_phone_fee_pay"
+        tools:layout="@layout/fragment_living_expenses_phone_fee_pay" />
+    <fragment
+        android:id="@+id/livingExpensesPhoneFeeHistoryFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.phoneFee.LivingExpensesPhoneFeeHistoryFragment"
+        android:label="fragment_living_expenses_phone_fee_history"
+        tools:layout="@layout/fragment_living_expenses_phone_fee_history" />
+    <fragment
+        android:id="@+id/livingExpensesWaterFeePayFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesWaterFeePayFragment"
+        android:label="fragment_living_expenses_water_fee_pay"
+        tools:layout="@layout/fragment_living_expenses_water_fee_pay" />
+    <fragment
+        android:id="@+id/livingExpensesWaterFeeHistoryFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesWaterFeeHistoryFragment"
+        android:label="fragment_living_expenses_water_fee_history"
+        tools:layout="@layout/fragment_living_expenses_water_fee_history" />
+    <fragment
+        android:id="@+id/livingExpensesGasFeeFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.gasFee.LivingExpensesGasFeeFragment"
+        android:label="fragment_living_expenses_gas_fee"
+        tools:layout="@layout/fragment_living_expenses_gas_fee">
+        <action
+            android:id="@+id/action_livingExpensesGasFeeFragment_to_livingExpensesGasFeeHistoryFragment"
+            app:destination="@id/livingExpensesGasFeeHistoryFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_livingExpensesGasFeeFragment_to_livingExpensesGasFeePayFragment"
+            app:destination="@id/livingExpensesGasFeePayFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/livingExpensesGasFeeHistoryFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.gasFee.LivingExpensesGasFeeHistoryFragment"
+        android:label="fragment_living_expenses_gas_fee_history"
+        tools:layout="@layout/fragment_living_expenses_gas_fee_history" />
+    <fragment
+        android:id="@+id/livingExpensesGasFeePayFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.gasFee.LivingExpensesGasFeePayFragment"
+        android:label="fragment_living_expenses_gas_fee_pay"
+        tools:layout="@layout/fragment_living_expenses_gas_fee_pay" />
 </navigation>

@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.navigations.allservice.livingExpenses.electricityFee.LivingExpensesElectricityFeeFragment">
+    tools:context=".ui.navigations.allservice.livingExpenses.gasFee.LivingExpensesGasFeeHistoryFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/leefToolbar"
+        android:id="@+id/legfhToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -18,16 +18,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/abc_vector_test"
-        app:title="电缴费" />
+        app:title="交费历史" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/leefList"
+    <ListView
+        android:id="@+id/legfhList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/leefToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/legfhToolbar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

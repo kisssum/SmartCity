@@ -61,6 +61,10 @@ class LivingExpensesFragment : Fragment() {
     }
 
     private fun initFeatures() {
+        binding.lePhoneFee.setOnClickListener {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_livingExpensesFragment_to_livingExpensesPhoneFeeFragment)
+        }
+
         binding.leAccountManagement.setOnClickListener {
             Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_livingExpensesFragment_to_livingExpensesAccountManagementFragment)
         }
@@ -71,6 +75,10 @@ class LivingExpensesFragment : Fragment() {
 
         binding.leElectricityFee.setOnClickListener {
             Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_livingExpensesFragment_to_livingExpensesElectricityFeeFragment)
+        }
+
+        binding.leGasFee.setOnClickListener {
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigate(R.id.action_livingExpensesFragment_to_livingExpensesGasFeeFragment)
         }
     }
 

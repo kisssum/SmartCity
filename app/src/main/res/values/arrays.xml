@@ -83,4 +83,21 @@
         <item>京</item>
         <item>京</item>
     </string-array>
+
+    <array name="operators">
+        <item>中国移动</item>
+        <item>中国联通</item>
+        <item>中国电信</item>
+    </array>
+
+    <string-array name="areas">
+        <item>金山区</item>
+        <item>保定区</item>
+        <item>南湾区</item>
+        <item>长者小镇</item>
+        <item>春江花城</item>
+        <item>东方丽都</item>
+        <item>万科城</item>
+        <item>常青藤小城</item>
+    </string-array>
 </resources>

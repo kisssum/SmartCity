@@ -68,6 +68,32 @@ class SmartBusExtendableListAdapater(
                     this.navigate(R.id.action_smartBusFragment_to_smartBusStep1Fragment, bundle)
                 }
             }
+            this.EndPlace.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("position", p0)
+
+                Navigation.findNavController(context as Activity, R.id.fragment_main).apply {
+                    this.navigate(R.id.action_smartBusFragment_to_smartBusStep1Fragment, bundle)
+                }
+            }
+
+            this.TicketPrice.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("position", p0)
+
+                Navigation.findNavController(context as Activity, R.id.fragment_main).apply {
+                    this.navigate(R.id.action_smartBusFragment_to_smartBusStep1Fragment, bundle)
+                }
+            }
+
+            this.Mileage.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putInt("position", p0)
+
+                Navigation.findNavController(context as Activity, R.id.fragment_main).apply {
+                    this.navigate(R.id.action_smartBusFragment_to_smartBusStep1Fragment, bundle)
+                }
+            }
         }
 
         item.tag = groupViewHolder

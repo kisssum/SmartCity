@@ -1,7 +1,6 @@
-package com.kisssum.smartcity.ui.navigations.allservice.livingExpenses
+package com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.accountManagement
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentLivingExpensesAccountManagementNewBinding
-import com.kisssum.smartcity.state.LivingExpensesAccountManagementModel
+import com.kisssum.smartcity.state.livingExpenses.LivingExpensesAccountManagementModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

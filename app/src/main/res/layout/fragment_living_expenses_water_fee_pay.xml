@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesFragmentWaterFeeFragment">
+    tools:context=".ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesWaterFeePayFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/lewfToolbar"
+        android:id="@+id/lewfpToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -17,12 +18,11 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/living_expenses_fee_menu"
         app:navigationIcon="@drawable/abc_vector_test"
-        app:title="水缴费" />
+        app:title="水交费" />
 
     <LinearLayout
-        android:id="@+id/linearLayout13"
+        android:id="@+id/linearLayout18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -30,33 +30,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lewfToolbar">
+        app:layout_constraintTop_toBottomOf="@+id/lewfpToolbar">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="选择地区"
+            android:gravity="center_vertical"
+            android:text="交费地区"
             android:textSize="18sp" />
 
-        <Spinner
-            android:id="@+id/lewfChoiceArea"
+        <TextView
+            android:id="@+id/lewpfArea"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:entries="@array/areas" />
+            android:gravity="right"
+            android:text="1829128"
+            android:textSize="18sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout14"
+        android:id="@+id/linearLayout19"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout18">
 
         <TextView
             android:layout_width="match_parent"
@@ -66,26 +70,55 @@
             android:text="水费号"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/lewfWaterNumber"
+        <TextView
+            android:id="@+id/lewfpWaterNumber"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/border_style"
-            android:ems="10"
-            android:inputType="phone"
-            android:maxLength="11" />
+            android:gravity="right"
+            android:text="1829128"
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/lewfFind"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout20"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="查询"
+        android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout14" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout19">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="欠费金额"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lewfpMoney"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="1829128"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/lewfpGoPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="去支付"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout20" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

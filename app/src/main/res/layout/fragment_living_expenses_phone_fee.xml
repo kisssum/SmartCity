@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.navigations.allservice.livingExpenses.waterFee.LivingExpensesFragmentWaterFeeFragment">
+    tools:context=".ui.navigations.allservice.livingExpenses.phoneFee.LivingExpensesPhoneFeeFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/lewfToolbar"
+        android:id="@+id/lepfToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/living_expenses_fee_menu"
         app:navigationIcon="@drawable/abc_vector_test"
-        app:title="水缴费" />
+        app:title="手机缴费" />
 
     <LinearLayout
         android:id="@+id/linearLayout13"
@@ -30,21 +30,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lewfToolbar">
+        app:layout_constraintTop_toBottomOf="@+id/lepfToolbar">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="选择地区"
+            android:text="运营商"
             android:textSize="18sp" />
 
         <Spinner
-            android:id="@+id/lewfChoiceArea"
+            android:id="@+id/lepfChoiceOprators"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:entries="@array/areas" />
+            android:entries="@array/operators" />
     </LinearLayout>
 
     <LinearLayout
@@ -63,11 +63,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="水费号"
+            android:text="手机号码"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/lewfWaterNumber"
+            android:id="@+id/lepfPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="1"
@@ -77,8 +77,38 @@
             android:maxLength="11" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout14">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="添加时间"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/lepfDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="2021.4.13"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
     <Button
-        android:id="@+id/lewfFind"
+        android:id="@+id/lepfFind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -86,6 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout14" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout15" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
