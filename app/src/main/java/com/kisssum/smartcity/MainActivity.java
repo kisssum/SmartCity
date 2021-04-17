@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
 
         // 初始化数据
         initLocalData();

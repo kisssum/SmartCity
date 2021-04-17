@@ -2,7 +2,6 @@ package com.kisssum.smartcity.ui.guidepages;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -120,16 +119,5 @@ public class GuideMainFragment extends Fragment {
         super.onDestroyView();
 
         requireActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-
-        if (isDarkTheme(requireContext())) {
-            requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
-        } else {
-            requireActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-    }
-
-    private boolean isDarkTheme(Context context) {
-        int flag = context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        return flag == Configuration.UI_MODE_NIGHT_YES;
     }
 }
