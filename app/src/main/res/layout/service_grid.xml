@@ -42,17 +42,17 @@
             android:padding="10dp">
 
             <ImageView
-                android:id="@+id/service_environmrnal_protection"
+                android:id="@+id/service_film"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:src="@drawable/environmrnal_protection" />
+                android:src="@drawable/service_film" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:text="环保"
+                android:text="在线影院"
                 android:textAlignment="center"
                 android:textSize="12sp" />
         </LinearLayout>

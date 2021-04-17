@@ -86,7 +86,11 @@ public class NewsPagerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        adpater = new NewsListAdpater(type, requireContext(), 10);
+        if (type==-1){
+            adpater = new NewsListAdpater(type, requireContext(), 11);
+        }else{
+            adpater = new NewsListAdpater(type, requireContext(), 10);
+        }
         binding.newsPagerList.setLayoutManager(layoutManager);
         binding.newsPagerList.setAdapter(adpater);
 

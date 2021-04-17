@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/navControlFragment">
 
     <fragment
         android:id="@+id/navControlFragment"
@@ -97,6 +97,13 @@
         <action
             android:id="@+id/action_navControlFragment_to_realWeatherFragment"
             app:destination="@id/realWeatherFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_navControlFragment_to_filmFragment"
+            app:destination="@id/filmFragment"
             app:enterAnim="@anim/translate_x_from_100_0"
             app:exitAnim="@anim/translate_x_from_0_f100"
             app:popEnterAnim="@anim/translate_x_from_f100_0"
@@ -506,4 +513,121 @@
         android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.gasFee.LivingExpensesGasFeePayFragment"
         android:label="fragment_living_expenses_gas_fee_pay"
         tools:layout="@layout/fragment_living_expenses_gas_fee_pay" />
+    <fragment
+        android:id="@+id/filmFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmFragment"
+        android:label="fragment_film"
+        tools:layout="@layout/fragment_film">
+        <action
+            android:id="@+id/action_filmFragment_to_filmDetailFragment"
+            app:destination="@id/filmDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_filmFragment_to_filmChoiceTheaterFragment"
+            app:destination="@id/filmChoiceTheaterFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_filmFragment_to_filmListFragment"
+            app:destination="@id/filmListFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_filmFragment_to_filmChoiceSessionFragment"
+            app:destination="@id/filmChoiceSessionFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_filmFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmDetailFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmDetailFragment"
+        android:label="fragment_film_detail"
+        tools:layout="@layout/fragment_film_detail">
+        <action
+            android:id="@+id/action_filmDetailFragment_to_filmChoiceTheaterFragment"
+            app:destination="@id/filmChoiceTheaterFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmChoiceTheaterFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmChoiceTheaterFragment"
+        android:label="fragment_film_choice_theater"
+        tools:layout="@layout/fragment_film_choice_theater">
+        <action
+            android:id="@+id/action_filmChoiceTheaterFragment_to_filmChoiceSessionFragment"
+            app:destination="@id/filmChoiceSessionFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmChoiceSessionFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmChoiceSessionFragment"
+        android:label="fragment_film_choice_session"
+        tools:layout="@layout/fragment_film_choice_session">
+        <action
+            android:id="@+id/action_filmChoiceSessionFragment_to_filmChoiceSeatFragment"
+            app:destination="@id/filmChoiceSeatFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmChoiceSeatFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmChoiceSeatFragment"
+        android:label="fragment_film_choice_seat"
+        tools:layout="@layout/fragment_film_choice_seat" />
+    <fragment
+        android:id="@+id/filmListFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmListFragment"
+        android:label="fragment_film_list"
+        tools:layout="@layout/fragment_film_list">
+        <action
+            android:id="@+id/action_filmListFragment_to_filmDetailFragment"
+            app:destination="@id/filmDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_filmListFragment_to_filmChoiceTheaterFragment"
+            app:destination="@id/filmChoiceTheaterFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+        <action
+            android:id="@+id/action_filmListFragment_to_filmPlayTrailerFragment"
+            app:destination="@id/filmPlayTrailerFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
+    <fragment
+        android:id="@+id/filmPlayTrailerFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmPlayTrailerFragment"
+        android:label="fragment_film_play_trailer"
+        tools:layout="@layout/fragment_film_play_trailer" />
 </navigation>

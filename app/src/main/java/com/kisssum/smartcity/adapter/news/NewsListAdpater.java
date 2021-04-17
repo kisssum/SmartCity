@@ -111,6 +111,8 @@ public class NewsListAdpater extends RecyclerView.Adapter<NewsListAdpater.Defaul
         if (count == 3) {
             controller.popBackStack();
             controller.navigate(R.id.newsDetailFragment, bundle);
+        } else if (count == 11) {
+            controller.navigate(R.id.action_filmFragment_to_newsDetailFragment, bundle);
         } else {
             controller.navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle);
         }

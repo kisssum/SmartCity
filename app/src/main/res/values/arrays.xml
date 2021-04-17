@@ -100,4 +100,57 @@
         <item>万科城</item>
         <item>常青藤小城</item>
     </string-array>
+
+    <string-array name="cinema_brand">
+        <item>全部</item>
+        <item>德信影城</item>
+        <item>汉鼎宇佑影城</item>
+        <item>博纳国际影城</item>
+        <item>宁波影城</item>
+        <item>百老汇影城</item>
+        <item>SFC上影影城</item>
+    </string-array>
+
+    <string-array name="all_city">
+        <item>全部</item>
+        <item>瑾州区</item>
+        <item>海曙区</item>
+        <item>江北区</item>
+    </string-array>
+
+    <string-array name="cinema_place">
+        <item>价格低</item>
+        <item>距离近</item>
+    </string-array>
+
+    <string-array name="choice_row">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string-array name="choice_column">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+    </string-array>
 </resources>

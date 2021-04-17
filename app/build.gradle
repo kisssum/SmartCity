@@ -53,4 +53,6 @@ dependencies {
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
     implementation 'com.scwang.smart:refresh-header-radar:2.0.3'       //雷达刷新头
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.3'        //球脉冲加载
+
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
 }

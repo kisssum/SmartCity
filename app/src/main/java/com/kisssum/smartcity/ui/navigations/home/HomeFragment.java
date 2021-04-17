@@ -171,8 +171,9 @@ public class HomeFragment extends Fragment {
             bottomNavigationView.setSelectedItemId(R.id.item_allservice);
         });
 
-        binding.homeServiceList.serviceEnvironmrnalProtection.setOnClickListener(v -> {
-            bottomNavigationView.setSelectedItemId(R.id.item_allservice);
+        binding.homeServiceList.serviceFilm.setOnClickListener(v -> {
+            NavController navController = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            navController.navigate(R.id.action_navControlFragment_to_filmFragment);
         });
 
         binding.homeServiceList.serviceRealWeather.setOnClickListener(v -> {
