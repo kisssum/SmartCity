@@ -47,8 +47,8 @@
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="9dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
 
                     <ImageView
                         android:id="@+id/fdImg"
@@ -139,10 +139,11 @@
                     android:id="@+id/linearLayout21"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:orientation="horizontal"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/fdUpDate">
+                    app:layout_constraintStart_toStartOf="@+id/fdUpDate"
+                    app:layout_constraintTop_toBottomOf="@+id/fdScore">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/fdWantSee"

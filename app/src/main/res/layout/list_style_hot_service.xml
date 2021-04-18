@@ -30,6 +30,8 @@
         android:id="@+id/hotName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lines="1"
         android:maxLength="16"
         android:paddingTop="4dp"
         android:paddingBottom="4dp"

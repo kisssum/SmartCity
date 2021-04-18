@@ -13,5 +13,7 @@ object API {
 
     fun getHomeeRotationListUrl(context: Context) = "${getBaseUrl(context)}/userinfo/rotation/list?pageNum=1&pageSize=10&type=45"
 
+    fun getServiceRecommendListUrl(context: Context) = "${getBaseUrl(context)}/service/service/list?pageNum=1&pageSize=10"
 
+    fun getHotThemeListUrl(context: Context) = "${getBaseUrl(context)}/press/press/list?pageNum=1&pageSize=10&pressCategory=48"
 }

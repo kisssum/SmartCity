@@ -39,16 +39,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="应用服务"
+            android:text="推荐服务"
             android:textColor="?attr/textColorAlertDialogListItem"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <include
-            android:id="@+id/homeServiceList"
+            android:id="@+id/homeServiceListMy"
             layout="@layout/service_grid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/homeServiceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:overScrollMode="never"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
         <TextView
             android:layout_width="match_parent"

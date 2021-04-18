@@ -61,6 +61,8 @@ dependencies {
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
+    implementation 'com.android.volley:volley:1.1.1'
+
     // smartRefresh
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
     implementation 'com.scwang.smart:refresh-header-radar:2.0.3'       //雷达刷新头
