@@ -13,6 +13,9 @@ import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,17 @@ import android.view.WindowManager;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentGuideMainBinding;
+import com.kisssum.smartcity.tool.API;
+import com.kisssum.smartcity.tool.DecodeJson;
+
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,10 +48,13 @@ public class GuideMainFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private FragmentGuideMainBinding binding;
+    private Handler handler;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ArrayList<String> imgUrls;
 
     public GuideMainFragment() {
         // Required empty public constructor
@@ -86,48 +103,84 @@ public class GuideMainFragment extends Fragment {
 
         // 判断是否是第一次进入
         if (isFirstEnter) {
-            FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
-                @NonNull
+            handler = new Handler() {
                 @Override
-                public Fragment createFragment(int position) {
-                    return new GuidePagesFragment(position);
-                }
+                public void handleMessage(@NonNull Message msg) {
+                    super.handleMessage(msg);
 
-                @Override
-                public int getItemCount() {
-                    return 5;
+                    imgUrls = (ArrayList<String>) msg.obj;
+                    initViewPager();
                 }
             };
 
-            binding.viewPager.setAdapter(adapter);
-            binding.viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
-            binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                @Override
-                public void onPageSelected(int position) {
-                    binding.guideCard0.setCardBackgroundColor(Color.GRAY);
-                    binding.guideCard1.setCardBackgroundColor(Color.GRAY);
-                    binding.guideCard2.setCardBackgroundColor(Color.GRAY);
-                    binding.guideCard3.setCardBackgroundColor(Color.GRAY);
-                    binding.guideCard4.setCardBackgroundColor(Color.GRAY);
-
-                    if (position == 0) binding.guideCard0.setCardBackgroundColor(Color.WHITE);
-                    else if (position == 1) binding.guideCard1.setCardBackgroundColor(Color.WHITE);
-                    else if (position == 2) binding.guideCard2.setCardBackgroundColor(Color.WHITE);
-                    else if (position == 3) binding.guideCard3.setCardBackgroundColor(Color.WHITE);
-                    else if (position == 4) binding.guideCard4.setCardBackgroundColor(Color.WHITE);
-                }
-            });
-
-            binding.guideCard0.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(0));
-            binding.guideCard1.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(1));
-            binding.guideCard2.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(2));
-            binding.guideCard3.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(3));
-            binding.guideCard4.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(4));
+            loadRotationImgs();
         } else {
             NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
             controller.popBackStack();
             controller.navigate(R.id.navControlFragment);
         }
+    }
+
+    private void loadRotationImgs() {
+        new Thread(() -> {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(API.INSTANCE.getRotationListUrl(requireContext()))
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                String string = response.body().string();
+                ArrayList<String> imgs = DecodeJson.INSTANCE.decodeRotationList(string);
+
+                Message message = new Message();
+                message.obj = imgs;
+                handler.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void initViewPager() {
+        FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
+            @NonNull
+            @Override
+            public Fragment createFragment(int position) {
+                return new GuidePagesFragment(position, imgUrls.get(position));
+            }
+
+            @Override
+            public int getItemCount() {
+                return 5;
+            }
+        };
+
+        binding.viewPager.setAdapter(adapter);
+        binding.viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+        binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                binding.guideCard0.setCardBackgroundColor(Color.GRAY);
+                binding.guideCard1.setCardBackgroundColor(Color.GRAY);
+                binding.guideCard2.setCardBackgroundColor(Color.GRAY);
+                binding.guideCard3.setCardBackgroundColor(Color.GRAY);
+                binding.guideCard4.setCardBackgroundColor(Color.GRAY);
+
+                if (position == 0) binding.guideCard0.setCardBackgroundColor(Color.WHITE);
+                else if (position == 1) binding.guideCard1.setCardBackgroundColor(Color.WHITE);
+                else if (position == 2) binding.guideCard2.setCardBackgroundColor(Color.WHITE);
+                else if (position == 3) binding.guideCard3.setCardBackgroundColor(Color.WHITE);
+                else if (position == 4) binding.guideCard4.setCardBackgroundColor(Color.WHITE);
+            }
+        });
+
+        binding.guideCard0.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(0));
+        binding.guideCard1.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(1));
+        binding.guideCard2.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(2));
+        binding.guideCard3.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(3));
+        binding.guideCard4.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(4));
     }
 
     @Override
