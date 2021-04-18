@@ -126,13 +126,13 @@ public class GuideMainFragment extends Fragment {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(API.INSTANCE.getRotationListUrl(requireContext()))
+                    .url(API.INSTANCE.getGuideRotationListUrl(requireContext()))
                     .build();
 
             try {
                 Response response = client.newCall(request).execute();
                 String string = response.body().string();
-                ArrayList<String> imgs = DecodeJson.INSTANCE.decodeRotationList(string);
+                ArrayList<String> imgs = DecodeJson.INSTANCE.decodeGuideRotationList(string);
 
                 Message message = new Message();
                 message.obj = imgs;

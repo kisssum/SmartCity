@@ -19,14 +19,21 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/homeTopViewPager"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            tools:layout_editor_absoluteX="190dp">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="9dp"
+            app:cardElevation="0dp">
 
-        </androidx.viewpager2.widget.ViewPager2>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/homeTopViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="190dp">
+
+            </androidx.viewpager2.widget.ViewPager2>
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:layout_width="match_parent"

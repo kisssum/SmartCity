@@ -2,6 +2,7 @@ package com.kisssum.smartcity.ui.navigations.home;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,16 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.adapter.home.HotServiceListAdpater;
 import com.kisssum.smartcity.databinding.FragmentHomeBinding;
+import com.kisssum.smartcity.tool.API;
+import com.kisssum.smartcity.tool.DecodeJson;
 import com.kisssum.smartcity.ui.navigations.news.NewsPagerFragment;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,6 +48,10 @@ public class HomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Handler handler;
+    private final int Home_Rotation = 0;
+    private ArrayList<String> homeRotationUrls;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -81,12 +95,24 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        handler = new Handler() {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+
+                if (msg.what == Home_Rotation) {
+                    homeRotationUrls = (ArrayList<String>) msg.obj;
+
+                    initLunbotu();
+                }
+            }
+        };
+
+        getLunbotuUrl();
+
         // 搜索框
         initSearch();
-
-        // 轮播图
-        initLunbotu();
-
+        
         // 服务列表
         initServiceList();
 
@@ -149,12 +175,12 @@ public class HomeFragment extends Fragment {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
-                return new HomeTopViewPagerFragment(position);
+                return new HomeTopViewPagerFragment(position, homeRotationUrls.get(position));
             }
 
             @Override
             public int getItemCount() {
-                return 5;
+                return 4;
             }
         };
         binding.homeTopViewPager.setAdapter(topViewAdapter);
@@ -162,6 +188,29 @@ public class HomeFragment extends Fragment {
 
         // 无限滚轮
         loopTopViewPager();
+    }
+
+    private void getLunbotuUrl() {
+        new Thread(() -> {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(API.INSTANCE.getHomeeRotationListUrl(requireContext()))
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                String string = response.body().string();
+                ArrayList<String> imgs = DecodeJson.INSTANCE.decodeHomeRotationList(string);
+
+                Message message = new Message();
+                message.what = Home_Rotation;
+                message.obj = imgs;
+                handler.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void initServiceList() {

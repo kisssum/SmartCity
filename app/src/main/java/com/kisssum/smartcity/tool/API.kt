@@ -9,5 +9,9 @@ object API {
         return "http://${sp.getString("ip", "")}:${sp.getString("duankou", "")}"
     }
 
-    fun getRotationListUrl(context: Context) = "${getBaseUrl(context)}/userinfo/rotation/lists?pageNum=1&pageSize=10&type=47"
+    fun getGuideRotationListUrl(context: Context) = "${getBaseUrl(context)}/userinfo/rotation/lists?pageNum=1&pageSize=10&type=47"
+
+    fun getHomeeRotationListUrl(context: Context) = "${getBaseUrl(context)}/userinfo/rotation/list?pageNum=1&pageSize=10&type=45"
+
+
 }

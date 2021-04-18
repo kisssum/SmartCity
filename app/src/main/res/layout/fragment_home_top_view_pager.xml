@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="9dp"
+    app:cardElevation="0dp"
     tools:context=".ui.navigations.home.HomeTopViewPagerFragment">
 
     <ImageView
@@ -12,5 +13,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:src="@drawable/top_view_pager_1" />
+        android:scaleType="centerCrop" />
 </androidx.cardview.widget.CardView>

@@ -1,5 +1,7 @@
 package com.kisssum.smartcity.ui.navigations.home;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,15 +9,24 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kisssum.smartcity.R;
 import com.kisssum.smartcity.databinding.FragmentHomeTopViewPagerBinding;
+import com.kisssum.smartcity.tool.API;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,9 +46,12 @@ public class HomeTopViewPagerFragment extends Fragment {
 
     private FragmentHomeTopViewPagerBinding binding;
     private int index = 0;
+    private String url;
+    private Handler handler;
 
-    public HomeTopViewPagerFragment(int index) {
+    public HomeTopViewPagerFragment(int index, String url) {
         this.index = index;
+        this.url = url;
     }
 
     /**
@@ -50,7 +64,7 @@ public class HomeTopViewPagerFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static HomeTopViewPagerFragment newInstance(String param1, String param2) {
-        HomeTopViewPagerFragment fragment = new HomeTopViewPagerFragment(0);
+        HomeTopViewPagerFragment fragment = new HomeTopViewPagerFragment(0, "");
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -78,15 +92,40 @@ public class HomeTopViewPagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Integer> imgs = new ArrayList<>();
-        imgs.add(R.drawable.top_view_pager_1);
-        imgs.add(R.drawable.top_view_pager_2);
-        imgs.add(R.drawable.top_view_pager_3);
-        imgs.add(R.drawable.top_view_pager_4);
-        imgs.add(R.drawable.top_view_pager_5);
+        handler = new Handler() {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
 
-        binding.imageView2.setImageResource(imgs.get(index));
-        binding.imageView2.setOnClickListener(v -> navNewsInformation(index));
+                Bitmap steam = (Bitmap) msg.obj;
+                binding.imageView2.setImageBitmap(steam);
+                binding.imageView2.setOnClickListener(v -> navNewsInformation(index));
+            }
+        };
+
+        getImg();
+    }
+
+    private void getImg() {
+        new Thread(() -> {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(API.INSTANCE.getBaseUrl(requireContext()) + url)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                InputStream stream = response.body().byteStream();
+                Bitmap bitmap = BitmapFactory.decodeStream(stream);
+
+                Message message = new Message();
+                message.obj = bitmap;
+                handler.sendMessage(message);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     private void navNewsInformation(int i) {
