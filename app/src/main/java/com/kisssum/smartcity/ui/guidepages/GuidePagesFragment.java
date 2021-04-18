@@ -38,6 +38,13 @@ public class GuidePagesFragment extends Fragment {
     private String mParam2;
 
     private int index;
+    private final int[] guideImgs = new int[]{
+            R.drawable.guide_pager_1,
+            R.drawable.guide_pager_2,
+            R.drawable.guide_pager_3,
+            R.drawable.guide_pager_4,
+            R.drawable.guide_pager_5
+    };
 
     public GuidePagesFragment(int index) {
         this.index = index;
@@ -81,62 +88,45 @@ public class GuidePagesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.ratingBar.setProgress(index + 1);
+        binding.imageView.setImageResource(guideImgs[index]);
+        if (index == guideImgs.length - 1) initFeatures();
+    }
 
-        int[] imgs = new int[]{
-                R.drawable.guide_pager_1,
-                R.drawable.guide_pager_2,
-                R.drawable.guide_pager_3,
-                R.drawable.guide_pager_4,
-                R.drawable.guide_pager_5
-        };
-        binding.imageView.setImageResource(imgs[index]);
+    private void initFeatures() {
+        binding.btnGo.setVisibility(View.VISIBLE);
+        binding.btnNetwork.setVisibility(View.VISIBLE);
 
-        if (index != 4) {
-            binding.btnGo.setVisibility(View.INVISIBLE);
-            binding.btnNetwork.setVisibility(View.INVISIBLE);
-        } else {
-            binding.btnGo.setOnClickListener(v -> {
-                // 保存
-                SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-                sp.edit().putBoolean("GuidePage", true).apply();
+        SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
 
-                NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
-                controller.popBackStack();
-                controller.navigate(R.id.navControlFragment);
-            });
+        binding.btnGo.setOnClickListener(v -> {
+            // 保存
+            sp.edit().putBoolean("isFirstEnter", false).apply();
 
-            binding.btnNetwork.setOnClickListener(v -> {
-                SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
+            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            controller.popBackStack();
+            controller.navigate(R.id.navControlFragment);
+        });
 
-                // 恢复数据
-                if (sp.getString("ip", "").equals("") ||
-                        sp.getString("duankou", "").equals("")) {
-                    sp.edit().putString("ip", "106.12.160.221")
-                            .putString("duankou", "8080")
-                            .apply();
-                }
+        binding.btnNetwork.setOnClickListener(v -> {
+            View view1 = getLayoutInflater().inflate(R.layout.alertdialog_change_ip, null);
+            EditText ip = view1.findViewById(R.id.ip);
+            EditText duankou = view1.findViewById(R.id.duankou);
+            ip.setText(sp.getString("ip", ""));
+            duankou.setText(sp.getString("duankou", ""));
 
-                // Dialog
-                View view1 = getLayoutInflater().inflate(R.layout.alertdialog_change_ip, null);
-                EditText ip = view1.findViewById(R.id.ip);
-                EditText duankou = view1.findViewById(R.id.duankou);
-                ip.setText(sp.getString("ip", ""));
-                duankou.setText(sp.getString("duankou", ""));
-
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("网络设置")
-                        .setView(view1)
-                        .setPositiveButton("确定", (dialog, which) -> {
-                            sp.edit().putString("ip", ip.getText().toString())
-                                    .putString("duankou", duankou.getText().toString())
-                                    .apply();
-                        })
-                        .setNegativeButton("取消", (dialog, which) -> {
-                        })
-                        .create()
-                        .show();
-            });
-        }
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("网络设置")
+                    .setView(view1)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        sp.edit()
+                                .putString("ip", ip.getText().toString())
+                                .putString("duankou", duankou.getText().toString())
+                                .apply();
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                    })
+                    .create()
+                    .show();
+        });
     }
 }

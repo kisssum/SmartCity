@@ -23,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initLocalData() {
         SharedPreferences sp = getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        if (sp.getString("ip", "").equals("") ||
-                sp.getString("duankou", "").equals("")) {
-            sp.edit().putString("ip", "106.12.160.221")
+        
+        if (sp.getString("ip", "").equals("") || sp.getString("duankou", "").equals("")) {
+            sp.edit()
+                    .putString("ip", "106.12.160.221")
                     .putString("duankou", "8080")
                     .apply();
         }

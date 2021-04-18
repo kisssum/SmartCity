@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        kisssum {
+            storeFile file('/home/sea/Documents/Android/KEY/kisssum.jks')
+            storePassword 'wsadqezxc'
+            keyAlias 'kisssum'
+            keyPassword 'wsadqezxc0859'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -15,6 +23,7 @@ android {
         versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.kisssum
     }
 
     buildFeatures {
@@ -26,6 +35,9 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    lintOptions {
+        abortOnError false
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

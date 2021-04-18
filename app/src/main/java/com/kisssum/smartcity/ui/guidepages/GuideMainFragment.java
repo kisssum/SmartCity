@@ -2,6 +2,7 @@ package com.kisssum.smartcity.ui.guidepages;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,15 +81,11 @@ public class GuideMainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 判断是否是第一次进入
         SharedPreferences sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-        boolean guidePage = sp.getBoolean("GuidePage", false);
+        boolean isFirstEnter = sp.getBoolean("isFirstEnter", true);
 
-        if (guidePage) {
-            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
-            controller.popBackStack();
-            controller.navigate(R.id.navControlFragment);
-        } else {
+        // 判断是否是第一次进入
+        if (isFirstEnter) {
             FragmentStateAdapter adapter = new FragmentStateAdapter(requireActivity()) {
                 @NonNull
                 @Override
@@ -103,6 +101,32 @@ public class GuideMainFragment extends Fragment {
 
             binding.viewPager.setAdapter(adapter);
             binding.viewPager.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+            binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    binding.guideCard0.setCardBackgroundColor(Color.GRAY);
+                    binding.guideCard1.setCardBackgroundColor(Color.GRAY);
+                    binding.guideCard2.setCardBackgroundColor(Color.GRAY);
+                    binding.guideCard3.setCardBackgroundColor(Color.GRAY);
+                    binding.guideCard4.setCardBackgroundColor(Color.GRAY);
+
+                    if (position == 0) binding.guideCard0.setCardBackgroundColor(Color.WHITE);
+                    else if (position == 1) binding.guideCard1.setCardBackgroundColor(Color.WHITE);
+                    else if (position == 2) binding.guideCard2.setCardBackgroundColor(Color.WHITE);
+                    else if (position == 3) binding.guideCard3.setCardBackgroundColor(Color.WHITE);
+                    else if (position == 4) binding.guideCard4.setCardBackgroundColor(Color.WHITE);
+                }
+            });
+
+            binding.guideCard0.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(0));
+            binding.guideCard1.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(1));
+            binding.guideCard2.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(2));
+            binding.guideCard3.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(3));
+            binding.guideCard4.setOnClickListener(view1 -> binding.viewPager.setCurrentItem(4));
+        } else {
+            NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+            controller.popBackStack();
+            controller.navigate(R.id.navControlFragment);
         }
     }
 

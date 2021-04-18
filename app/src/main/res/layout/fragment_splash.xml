@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:cardBackgroundColor="@color/material_on_primary_emphasis_medium"
+        app:cardBackgroundColor="#eee"
         app:cardCornerRadius="9dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline21"
@@ -48,7 +48,8 @@
             android:paddingRight="10dp"
             android:paddingBottom="5dp"
             android:text="3s"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.Guideline
