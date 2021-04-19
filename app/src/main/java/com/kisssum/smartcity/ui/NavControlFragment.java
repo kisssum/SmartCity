@@ -100,15 +100,15 @@ public class NavControlFragment extends Fragment {
                     controller.navigate(R.id.newsFragment);
                     break;
                 case R.id.item_me:
-                    SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+//                    SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
 
-                    if (sp.getString("id", "").equals("")) {
-                        NavController controllerMain = Navigation.findNavController(requireActivity(), R.id.fragment_main);
-                        controllerMain.navigate(R.id.action_navControlFragment_to_loginFragment);
-                    } else {
+//                    if (sp.getString("id", "").equals("")) {
+//                        NavController controllerMain = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+//                        controllerMain.navigate(R.id.action_navControlFragment_to_loginFragment);
+//                    } else {
                         controller.popBackStack();
                         controller.navigate(R.id.meFragment);
-                    }
+//                    }
                     break;
             }
             return true;

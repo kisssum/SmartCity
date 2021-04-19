@@ -74,9 +74,9 @@ public class PartyBuildingDTViewPagerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        NewsListAdpater adpater = new NewsListAdpater(0, requireContext(), 10);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        binding.newsList.setLayoutManager(layoutManager);
-        binding.newsList.setAdapter(adpater);
+//        NewsListAdpater adpater = new NewsListAdpater(0, requireContext(), 10);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
+//        binding.newsList.setLayoutManager(layoutManager);
+//        binding.newsList.setAdapter(adpater);
     }
 }

@@ -1,184 +1,148 @@
-package com.kisssum.smartcity.ui.navigations.me;
+package com.kisssum.smartcity.ui.navigations.me
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
-import android.os.Handler;
-import android.os.Message;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentMeBinding;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import android.content.Context
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
+import com.kisssum.smartcity.R
+import com.kisssum.smartcity.databinding.FragmentMeBinding
+import com.kisssum.smartcity.tool.API
+import com.kisssum.smartcity.tool.DecodeJson
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MeFragment#newInstance} factory method to
+ * A simple [Fragment] subclass.
+ * Use the [MeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-public class MeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+class MeFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private var mParam1: String? = null
+    private var mParam2: String? = null
+    private lateinit var binding: FragmentMeBinding
+    private var handler: Handler? = null
 
-    private FragmentMeBinding binding;
-    private Handler handler;
-
-    public MeFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MeFragment newInstance(String param1, String param2) {
-        MeFragment fragment = new MeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null) {
+            mParam1 = arguments?.getString(ARG_PARAM1)
+            mParam2 = arguments?.getString(ARG_PARAM2)
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentMeBinding.inflate(inflater);
-        return binding.getRoot();
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentMeBinding.inflate(inflater)
+        return binding.root
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        handler = new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
+        handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
+                if (msg.what == 0) {
+                    val map = DecodeJson.decodeUserInfo(msg.obj as String)
+                    binding.userName.text = map["nickName"].toString()
 
-                if (msg.what == 0)
-                    setInformation((String) msg.obj);
+                    Glide
+                            .with(requireActivity())
+                            .load(API.getBaseUrl(requireContext()) + map["avatar"])
+                            .into(binding.meTop)
+
+                    requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE).edit().putInt("userId", map["userId"].toString().toInt()).apply()
+                }
             }
-        };
+        }
 
-        resotre();
-        navigationPager();
-        backUser();
+        resotre()
+        navigationPager()
+        backUser()
     }
 
-    private void backUser() {
-        binding.btnTuiChu.setOnClickListener(v -> {
-            SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-            sp.edit()
-                    .putString("id", "")
-                    .putString("name", "root")
-                    .putBoolean("sex", false)
-                    .putString("phone", "18757799489")
-                    .putString("passwd", "")
-                    .apply();
+    private fun backUser() {
+        binding.btnTuiChu.setOnClickListener { v: View? ->
+            val sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
+            sp.edit().clear().apply()
 
-            binding.userName.setText(sp.getString("name", ""));
-            Toast.makeText(requireContext(), "退出成功", Toast.LENGTH_SHORT).show();
-        });
+            Toast.makeText(requireContext(), "退出成功", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private void navigationPager() {
-        NavController controller = Navigation.findNavController(requireActivity(), R.id.fragment_main);
+    private fun navigationPager() {
+        val controller = Navigation.findNavController(requireActivity(), R.id.fragment_main)
         // 跳转到详细信息页
-        binding.meTop.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.userName.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
-        binding.l1.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment));
+        binding.meTop.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment) }
+        binding.userName.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment) }
+        binding.l1.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment) }
         // 跳转到账单页
-        binding.l2.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_orderListFragment));
+        binding.l2.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_orderListFragment) }
         // 跳转到修改密码页
-        binding.l3.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_changePwdFragment));
+        binding.l3.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_changePwdFragment) }
         // 跳转到反馈页
-        binding.l4.setOnClickListener(v -> controller.navigate(R.id.action_navControlFragment_to_opinionFragment));
+        binding.l4.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_opinionFragment) }
     }
 
-    private void resotre() {
-        SharedPreferences spUser = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences spSetting = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-
-        String id = spUser.getString("id", "");
-        String url = "http://" + spSetting.getString("ip", "") + ":" + spSetting.getString("duankou", "") + "/SmartCitySrv/user/user-info/";
-
-        new Thread(() -> {
+    private fun resotre() {
+        Thread {
             try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("userId", id);
-                MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
-                RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+                val request = Request.Builder()
+                        .url(API.getUserInfoUrl(requireContext()))
+                        .header("Authorization", API.getToken(requireContext()))
+                        .build()
 
-                Request request = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
+                val client = OkHttpClient()
+                val response = client.newCall(request).execute()
+                val doc = response.body!!.string()
 
-                OkHttpClient client = new OkHttpClient();
-                Response response = client.newCall(request).execute();
-                String doc = response.body().string();
-
-                Message message = new Message();
-                message.what = 0;
-                message.obj = doc;
-                handler.sendMessage(message);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+                val message = Message()
+                message.what = 0
+                message.obj = doc
+                handler!!.sendMessage(message)
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        }).start();
+        }.start()
     }
 
-    private void setInformation(String doc) {
-        try {
-            String object = new JSONObject(doc).getString("errMsg");
-            if (object.equals("ok")) {
-                JSONObject information = new JSONObject(doc).getJSONObject("data");
-                binding.userName.setText(information.getString("name"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    companion object {
+        // TODO: Rename parameter arguments, choose names that match
+        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment MeFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        fun newInstance(param1: String?, param2: String?): MeFragment {
+            val fragment = MeFragment()
+            val args = Bundle()
+            args.putString(ARG_PARAM1, param1)
+            args.putString(ARG_PARAM2, param2)
+            fragment.arguments = args
+            return fragment
         }
     }
 }

@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
     private var homeRotationUrls: ArrayList<String>? = null
     private lateinit var hotThemeUrl: ArrayList<Map<String, Any>>
     private var serviceRecommendMaps: ArrayList<Map<String, Any>>? = null
+    private lateinit var newsType: ArrayList<Map<String, Any>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -92,7 +93,18 @@ class HomeFragment : Fragment() {
         initSearch()
 
         // 新闻专栏
-        initNews()
+        Volley.newRequestQueue(requireContext()).apply {
+            val newsTypeString = StringRequest(
+                    API.getNewsTypeUrl(requireContext()),
+                    {
+                        newsType = DecodeJson.decodeNewsType(it)
+                        initNews()
+                    },
+                    {}
+            )
+
+            this.add(newsTypeString)
+        }
     }
 
 
@@ -136,27 +148,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun initNews() {
-        val newsAdapter: FragmentStateAdapter = object : FragmentStateAdapter(requireActivity()) {
-            override fun createFragment(position: Int): Fragment {
-                return NewsPagerFragment(position)
+        binding.homeNewsPager.apply {
+            this.adapter = object : FragmentStateAdapter(requireActivity()) {
+                override fun createFragment(position: Int) = NewsPagerFragment(newsType[position]["dictCode"].toString().toInt())
+                override fun getItemCount() = newsType.size
             }
 
-            override fun getItemCount(): Int {
-                return 6
-            }
+            this.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
+
+            TabLayoutMediator(binding.homeNewsTablayout, binding.homeNewsPager) { tab: TabLayout.Tab, position: Int -> tab.text = newsType[position]["dictLabel"].toString() }.attach()
         }
-        binding.homeNewsPager.adapter = newsAdapter
-        binding.homeNewsPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
-        TabLayoutMediator(binding.homeNewsTablayout, binding.homeNewsPager) { tab: TabLayout.Tab, position: Int ->
-            when (position) {
-                0 -> tab.text = "社会"
-                1 -> tab.text = "国内"
-                2 -> tab.text = "国际"
-                3 -> tab.text = "军事"
-                4 -> tab.text = "财经"
-                5 -> tab.text = "娱乐"
-            }
-        }.attach()
     }
 
     private fun initLunbotu() {

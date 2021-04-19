@@ -1,279 +1,229 @@
-package com.kisssum.smartcity.ui.navigations.me;
+package com.kisssum.smartcity.ui.navigations.me
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import android.os.Handler;
-import android.os.Message;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.Toast;
-
-import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentMeInformationBinding;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import android.content.Context
+import android.content.DialogInterface
+import android.graphics.Color
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.bumptech.glide.Glide
+import com.kisssum.smartcity.R
+import com.kisssum.smartcity.databinding.FragmentMeInformationBinding
+import com.kisssum.smartcity.tool.API
+import com.kisssum.smartcity.tool.DecodeJson
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.IOException
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MeInformationFragment#newInstance} factory method to
+ * A simple [Fragment] subclass.
+ * Use the [MeInformationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-public class MeInformationFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+class MeInformationFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private var mParam1: String? = null
+    private var mParam2: String? = null
+    private lateinit var binding: FragmentMeInformationBinding
+    private lateinit var handler: Handler
+    private lateinit var userInfo: Map<String, Any>
 
-    private FragmentMeInformationBinding binding;
-    private Handler handler;
+    private val RESTORE = 0
+    private val SAVE = 1
 
-    public MeInformationFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MeInformationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MeInformationFragment newInstance(String param1, String param2) {
-        MeInformationFragment fragment = new MeInformationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null) {
+            mParam1 = arguments?.getString(ARG_PARAM1)
+            mParam2 = arguments?.getString(ARG_PARAM2)
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentMeInformationBinding.inflate(inflater);
-        return binding.getRoot();
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentMeInformationBinding.inflate(inflater)
+        return binding.root
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        requireActivity().getWindow().setStatusBarColor(Color.RED);
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.statusBarColor = Color.RED
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().window.statusBarColor = Color.TRANSPARENT
     }
 
-    private void resotre() {
-        SharedPreferences spUser = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences spSetting = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-
-        String id = spUser.getString("id", "");
-        String url = "http://" + spSetting.getString("ip", "") + ":" + spSetting.getString("duankou", "") + "/SmartCitySrv/user/user-info/";
-
-        new Thread(() -> {
+    private fun resotre() {
+        Thread {
             try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("userId", id);
-                MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
-                RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+                val request = Request.Builder()
+                        .url(API.getUserInfoUrl(requireContext()))
+                        .header("Authorization", API.getToken(requireContext()))
+                        .build()
 
-                Request request = new Request.Builder()
-                        .url(url)
-                        .post(requestBody)
-                        .build();
+                val client = OkHttpClient()
+                val response = client.newCall(request).execute()
+                val doc = response.body!!.string()
 
-                OkHttpClient client = new OkHttpClient();
-                Response response = client.newCall(request).execute();
-                String doc = response.body().string();
-
-                Message message = new Message();
-                message.what = RESTORE;
-                message.obj = doc;
-                handler.sendMessage(message);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+                val message = Message()
+                message.what = RESTORE
+                message.obj = doc
+                handler.sendMessage(message)
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        }).start();
+        }.start()
     }
 
-    private boolean isSave(String doc) {
-        try {
-            String object = new JSONObject(doc).getString("errMsg");
-            return object.equals("ok");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    private void setInformation(String doc) {
-        try {
-            String object = new JSONObject(doc).getString("errMsg");
-            if (object.equals("ok")) {
-                JSONObject information = new JSONObject(doc).getJSONObject("data");
-                binding.name.setText(information.getString("name"));
-                binding.sex.setChecked(information.getInt("gender") != 1);
-                binding.phone.setText(information.getString("phone"));
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
+        handler = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+                if (msg.what == RESTORE) {
+                    userInfo = DecodeJson.decodeUserInfoInformation(msg.obj as String)
 
-        handler = new Handler() {
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                super.handleMessage(msg);
+                    Glide
+                            .with(requireActivity())
+                            .load(API.getBaseUrl(requireContext()) + userInfo["avatar"].toString())
+                            .into(binding.miImg)
 
-                if (msg.what == RESTORE)
-                    setInformation((String) msg.obj);
-                else if (msg.what == SAVE) {
-                    if (isSave((String) msg.obj)) {
-                        Toast.makeText(requireContext(), "保存成功", Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
-                    } else
-                        Toast.makeText(requireContext(), "保存保存失败", Toast.LENGTH_SHORT).show();
+                    binding.miName.text = userInfo["nickName"].toString()
+                    binding.miSex.isChecked = when (userInfo["sex"].toString().toInt()) {
+                        0 -> false
+                        else -> true
+                    }
+                    binding.miPhone.text = userInfo["phonenumber"].toString()
+                } else if (msg.what == SAVE) {
+                    val jsonObject = JSONObject(msg.obj as String)
+                    if (jsonObject.getInt("code") == 200) {
+                        Toast.makeText(requireContext(), "修改成功", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "修改失败", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-        };
+        }
 
-        resotre();
-        initBtn();
+        resotre()
+        initBtn()
     }
 
-    private void save() {
-        SharedPreferences spUser = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
-        SharedPreferences spSetting = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE);
-
-        String id = spUser.getString("id", "");
-        String url = "http://" + spSetting.getString("ip", "") + ":" + spSetting.getString("duankou", "") + "/SmartCitySrv/user/save";
-
-        new Thread(() -> {
+    private fun save() {
+        Thread {
             try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id", id);
-                jsonObject.put("name", binding.name.getText());
-                jsonObject.put("phone", binding.phone.getText());
-                jsonObject.put("avatar", "666.jpg");
-                jsonObject.put("gender", binding.sex.isChecked() ? 1 : 0);
-                MediaType mediaType = MediaType.parse("application/json;charset=utf-8");
-                RequestBody requestBody = RequestBody.create(mediaType, jsonObject.toString());
+                val json = JSONObject().apply {
+                    this.put("userId", userInfo["userId"])
+                    this.put("nickName", binding.miName.text.toString())
+                    this.put("sex", binding.miSex.isChecked)
+                    this.put("phonenumber", binding.miPhone.text.toString())
+                }
 
-                Request request = new Request.Builder()
-                        .url(url)
+                val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
+                val requestBody = RequestBody.create(mediaType, json.toString())
+
+                val request = Request.Builder()
+                        .url(API.getUserUpdata(requireContext()))
                         .post(requestBody)
-                        .build();
+                        .header("Authorization", API.getToken(requireContext()))
+                        .build()
 
-                OkHttpClient client = new OkHttpClient();
-                Response response = client.newCall(request).execute();
-                String doc = response.body().string();
+                val client = OkHttpClient()
+                val response = client.newCall(request).execute()
+                val doc = response.body!!.string()
 
-                Message message = new Message();
-                message.what = SAVE;
-                message.obj = doc;
-                handler.sendMessage(message);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+                val message = Message()
+                message.what = SAVE
+                message.obj = doc
+                handler.sendMessage(message)
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        }).start();
+        }.start()
     }
 
-    private final int RESTORE = 1;
-    private final int SAVE = 2;
+    private fun initBtn() {
+        binding.meInformationToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
+        binding.meInformationToolbar.setOnMenuItemClickListener { item: MenuItem ->
+            if (item.itemId == R.id.item_me_information_change) save()
+            true
+        }
 
-    private void initBtn() {
-        binding.meInformationToolbar.setNavigationOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
-        });
-
-        binding.meInformationToolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.item_me_information_change) save();
-            return true;
-        });
-
-        binding.name.setOnClickListener(v -> {
-            View view1 = getLayoutInflater().inflate(R.layout.alertdialog_change_name, null);
-
-            new AlertDialog.Builder(requireActivity())
+        binding.miName.setOnClickListener { v: View? ->
+            val view1 = layoutInflater.inflate(R.layout.alertdialog_change_name, null)
+            AlertDialog.Builder(requireActivity())
                     .setTitle("修改昵称")
                     .setView(view1)
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        EditText name = view1.findViewById(R.id.editext);
-                        if (name.getText().toString().equals(""))
-                            Toast.makeText(requireContext(), "昵称不能为空", Toast.LENGTH_SHORT).show();
-                        else
-                            binding.name.setText(name.getText().toString());
-                    })
-                    .setNegativeButton("取消", (dialog, which) -> {
-                    })
+                    .setPositiveButton("确定") { dialog: DialogInterface?, which: Int ->
+                        val name = view1.findViewById<EditText>(R.id.editext)
+                        if (name.text.toString() == "") Toast.makeText(requireContext(), "昵称不能为空", Toast.LENGTH_SHORT).show()
+                        else binding.miName.text = name.text.toString()
+                    }
+                    .setNegativeButton("取消") { dialog: DialogInterface?, which: Int -> }
                     .create()
-                    .show();
-        });
+                    .show()
+        }
 
-        binding.phone.setOnClickListener(v -> {
-            View view1 = getLayoutInflater().inflate(R.layout.alertdialog_change_phone, null);
-
-            new AlertDialog.Builder(requireActivity())
+        binding.miPhone.setOnClickListener { v: View? ->
+            val view1 = layoutInflater.inflate(R.layout.alertdialog_change_phone, null)
+            AlertDialog.Builder(requireActivity())
                     .setTitle("修改电话")
                     .setView(view1)
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        EditText name = view1.findViewById(R.id.editext);
-                        if (name.getText().toString().equals(""))
-                            Toast.makeText(requireContext(), "电话号码不能为空", Toast.LENGTH_SHORT).show();
-                        else if (name.getText().toString().length() != 11)
-                            Toast.makeText(requireContext(), "电话号码长度不正确", Toast.LENGTH_SHORT).show();
-                        else
-                            binding.phone.setText(name.getText().toString());
-                    })
-                    .setNegativeButton("取消", (dialog, which) -> {
-                    })
+                    .setPositiveButton("确定") { dialog: DialogInterface?, which: Int ->
+                        val name = view1.findViewById<EditText>(R.id.editext)
+                        when {
+                            name.text.toString() == "" -> Toast.makeText(requireContext(), "电话号码不能为空", Toast.LENGTH_SHORT).show()
+                            name.text.toString().length != 11 -> Toast.makeText(requireContext(), "电话号码长度不正确", Toast.LENGTH_SHORT).show()
+                            else -> binding.miPhone.text = name.text.toString()
+                        }
+                    }
+                    .setNegativeButton("取消") { dialog: DialogInterface?, which: Int -> }
                     .create()
-                    .show();
-        });
+                    .show()
+        }
+    }
+
+    companion object {
+        // TODO: Rename parameter arguments, choose names that match
+        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment MeInformationFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        fun newInstance(param1: String?, param2: String?): MeInformationFragment {
+            val fragment = MeInformationFragment()
+            val args = Bundle()
+            args.putString(ARG_PARAM1, param1)
+            args.putString(ARG_PARAM2, param2)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

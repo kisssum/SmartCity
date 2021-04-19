@@ -1,5 +1,6 @@
 package com.kisssum.smartcity.tool
 
+import android.util.Log
 import org.json.JSONObject
 
 object DecodeJson {
@@ -110,5 +111,88 @@ object DecodeJson {
         }
 
         return data
+    }
+
+    fun decodeNewsType(json: String): ArrayList<Map<String, Any>> {
+        val data = ArrayList<Map<String, Any>>()
+        var map: HashMap<String, Any>
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            val jsonArray = jsonObject.getJSONArray("data")
+
+            for (i in 0 until jsonArray.length()) {
+                jsonArray.getJSONObject(i).apply {
+                    map = HashMap()
+                    map["dictCode"] = this.getInt("dictCode")
+                    map["dictLabel"] = this.getString("dictLabel")
+                    map["dictType"] = this.getString("dictType")
+
+                    data.add(map)
+                }
+            }
+        }
+
+        return data
+    }
+
+    fun decodeNewsTypeList(json: String): ArrayList<Map<String, Any>> {
+        val data = ArrayList<Map<String, Any>>()
+        var map: HashMap<String, Any>
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            val jsonArray = jsonObject.getJSONArray("rows")
+
+            for (i in 0 until jsonArray.length()) {
+                jsonArray.getJSONObject(i).apply {
+                    map = HashMap()
+                    map["id"] = this.getInt("id")
+                    map["title"] = this.getString("title")
+                    map["content"] = this.getString("content")
+                    map["imgUrl"] = this.getString("imgUrl")
+                    map["pressCategory"] = this.getString("pressCategory")
+                    map["likeNumber"] = this.getInt("likeNumber")
+                    map["viewsNumber"] = this.getInt("viewsNumber")
+                    map["createTime"] = this.getString("createTime")
+
+                    data.add(map)
+                }
+            }
+        }
+
+        return data
+    }
+
+    fun decodeUserInfo(json: String): Map<String, Any> {
+        val map = HashMap<String, Any>()
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            jsonObject.getJSONObject("user").apply {
+                map["userId"] = this.getInt("userId")
+                map["nickName"] = this.getInt("nickName")
+                map["avatar"] = this.getString("avatar")
+            }
+        }
+
+        return map
+    }
+
+    fun decodeUserInfoInformation(json: String): Map<String, Any> {
+        val map = HashMap<String, Any>()
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            jsonObject.getJSONObject("user").apply {
+                map["userId"] = this.getInt("userId")
+                map["avatar"] = this.getString("avatar")
+                map["nickName"] = this.getInt("nickName")
+                map["sex"] = this.getInt("sex")
+                map["phonenumber"] = this.getString("phonenumber")
+            }
+        }
+
+        return map
     }
 }

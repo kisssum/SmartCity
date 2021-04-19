@@ -1,129 +1,134 @@
-package com.kisssum.smartcity.ui.navigations.me;
+package com.kisssum.smartcity.ui.navigations.me
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import com.kisssum.smartcity.R;
-import com.kisssum.smartcity.databinding.FragmentChangePwdBinding;
+import android.content.Context
+import android.graphics.Color
+import android.os.Bundle
+import android.os.Handler
+import android.os.Message
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.kisssum.smartcity.R
+import com.kisssum.smartcity.databinding.FragmentChangePwdBinding
+import com.kisssum.smartcity.tool.API
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONObject
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChangePwdFragment#newInstance} factory method to
+ * A simple [Fragment] subclass.
+ * Use the [ChangePwdFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-public class ChangePwdFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+class ChangePwdFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private FragmentChangePwdBinding binding;
-
-    public ChangePwdFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChangePwdFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChangePwdFragment newInstance(String param1, String param2) {
-        ChangePwdFragment fragment = new ChangePwdFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    private var mParam1: String? = null
+    private var mParam2: String? = null
+    private lateinit var binding: FragmentChangePwdBinding
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments != null) {
+            mParam1 = arguments?.getString(ARG_PARAM1)
+            mParam2 = arguments?.getString(ARG_PARAM2)
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentChangePwdBinding.inflate(inflater);
-        return binding.getRoot();
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentChangePwdBinding.inflate(inflater)
+        return binding.root
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        requireActivity().getWindow().setStatusBarColor(Color.RED);
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.statusBarColor = Color.RED
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        requireActivity().getWindow().setStatusBarColor(Color.TRANSPARENT);
+    override fun onDestroy() {
+        super.onDestroy()
+        requireActivity().window.statusBarColor = Color.TRANSPARENT
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        binding.changePwdToolbar.setNavigationOnClickListener(v -> {
-            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
-        });
+        val hander = object : Handler() {
+            override fun handleMessage(msg: Message) {
+                super.handleMessage(msg)
 
-        binding.btnOk.setOnClickListener(v -> {
-            SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
+                val s = msg.obj as String
 
-            //  都为空
-            if (binding.beforePwd.getText().toString().equals("")
-                    && binding.newPwd.getText().toString().equals("")) {
-                Toast.makeText(requireContext(), "无修改", Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
-            }
+                val jsonObject = JSONObject(s)
 
-            //  其一为空
-            if (binding.beforePwd.getText().toString().equals("")
-                    || binding.newPwd.getText().toString().equals("")) {
-                Toast.makeText(requireContext(), "密码不能为空", Toast.LENGTH_SHORT).show();
-            }
-
-            // 输入原密码与新密码相同
-            if (binding.beforePwd.getText().toString().equals(binding.newPwd.getText().toString())) {
-                Toast.makeText(requireContext(), "密码不能相同", Toast.LENGTH_SHORT).show();
-            } else {
-                // 原密码与保存密码相同
-                if (sp.getString("passwd", "").equals(binding.beforePwd.getText().toString())) {
-                    sp.edit().putString("passwd", binding.newPwd.getText().toString()).apply();
-                    Toast.makeText(requireContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp();
+                if (jsonObject.getInt("code") == 200) {
+                    Toast.makeText(requireContext(), "密码修改成功", Toast.LENGTH_SHORT).show()
+                    requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE).edit().putString("password", binding.newPwd.text.toString())
                 } else {
-                    Toast.makeText(requireContext(), "密码错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "密码修改失败", Toast.LENGTH_SHORT).show()
                 }
             }
-        });
+        }
+
+        binding.changePwdToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
+        binding.btnOk.setOnClickListener { v: View? ->
+            run {
+                Thread {
+                    OkHttpClient().apply {
+                        val jsonObject = JSONObject().apply {
+                            this.put("userId", API.getUserId(requireContext()).toString())
+                            this.put("oldPwd", binding.beforePwd.text.toString())
+                            this.put("password", binding.newPwd.text.toString())
+                        }
+
+                        val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
+                        val requestBody = RequestBody.create(mediaType, jsonObject.toString())
+
+                        val build = Request.Builder()
+                                .url(API.getUserResetPwd(requireContext()))
+                                .put(requestBody)
+                                .header("Authorization", API.getToken(requireContext()))
+                                .build()
+
+                        val string = this.newCall(build).execute().body?.string()
+
+                        val message = Message()
+                        message.obj = string
+                        hander.sendMessage(message)
+                    }
+                }.start()
+            }
+        }
+    }
+
+    companion object {
+        // TODO: Rename parameter arguments, choose names that match
+        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private const val ARG_PARAM1 = "param1"
+        private const val ARG_PARAM2 = "param2"
+
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment ChangePwdFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        fun newInstance(param1: String?, param2: String?): ChangePwdFragment {
+            val fragment = ChangePwdFragment()
+            val args = Bundle()
+            args.putString(ARG_PARAM1, param1)
+            args.putString(ARG_PARAM2, param2)
+            fragment.arguments = args
+            return fragment
+        }
     }
 }

@@ -50,6 +50,7 @@
                     android:textSize="20sp" />
 
                 <ImageView
+                    android:id="@+id/miImg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -85,7 +86,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/name"
+                    android:id="@+id/miName"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -122,14 +123,14 @@
                     android:textSize="20sp" />
 
                 <Switch
-                    android:id="@+id/sex"
+                    android:id="@+id/miSex"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:checked="false"
                     android:showText="true"
-                    android:textOff="男"
-                    android:textOn="女" />
+                    android:textOff="女"
+                    android:textOn="男" />
 
             </LinearLayout>
 
@@ -161,7 +162,7 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/phone"
+                    android:id="@+id/miPhone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -99,7 +99,7 @@ public class HomeTopViewPagerFragment extends Fragment {
 
                 Bitmap steam = (Bitmap) msg.obj;
                 binding.imageView2.setImageBitmap(steam);
-                binding.imageView2.setOnClickListener(v -> navNewsInformation(index));
+//                binding.imageView2.setOnClickListener(v -> navNewsInformation(index));
             }
         };
 

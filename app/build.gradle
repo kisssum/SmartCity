@@ -61,6 +61,8 @@ dependencies {
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
 
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+
     implementation 'com.android.volley:volley:1.1.1'
 
     // smartRefresh

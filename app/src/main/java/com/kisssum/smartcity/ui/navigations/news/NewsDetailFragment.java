@@ -104,7 +104,7 @@ public class NewsDetailFragment extends Fragment {
         // list
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         binding.newsDetailList.setLayoutManager(layoutManager);
-        adpater = new NewsListAdpater(0, requireContext(), 3);
-        binding.newsDetailList.setAdapter(adpater);
+//        adpater = new NewsListAdpater(0, requireContext(), 3);
+//        binding.newsDetailList.setAdapter(adpater);
     }
 }
