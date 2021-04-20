@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -200,7 +199,7 @@ class HomeFragment : Fragment() {
 
     private fun initServiceList() {
         binding.homeServiceList.layoutManager = GridLayoutManager(requireContext(), 5)
-        val serviceRecommendAdapater = ServiceRecommendAdapater(requireActivity(), serviceRecommendMaps!!)
+        val serviceRecommendAdapater = ServiceRecommendAdapater(requireActivity(), serviceRecommendMaps!!, true)
         binding.homeServiceList.adapter = serviceRecommendAdapater
 
         // old

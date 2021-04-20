@@ -30,156 +30,30 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp" />
 
-            <TextView
+            <ListView
+                android:id="@+id/asFirstList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧政务"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/serviceList"
-                layout="@layout/service_grid"
+            </ListView>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
+                android:layout_height="0.5dp"
+                android:background="@android:color/darker_gray" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="智慧服务"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:text="服务"
+                android:textSize="18sp" />
 
-            <include
-                layout="@layout/service_grid"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/asNextList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧医疗"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧养老"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧旅游"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧交通"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧环保"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧安防"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧生活"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="智慧教育"
-                android:textColor="?attr/textColorAlertDialogListItem"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <include
-                layout="@layout/service_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:visibility="gone" />
+                android:background="#eee" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

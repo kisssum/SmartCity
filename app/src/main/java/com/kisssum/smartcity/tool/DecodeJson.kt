@@ -1,6 +1,5 @@
 package com.kisssum.smartcity.tool
 
-import android.util.Log
 import org.json.JSONObject
 
 object DecodeJson {
@@ -194,5 +193,56 @@ object DecodeJson {
         }
 
         return map
+    }
+
+    fun decodeServiceFirst(json: String): ArrayList<Map<String, Any>> {
+        val data = ArrayList<Map<String, Any>>()
+        var map: HashMap<String, Any>
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            val jsonArray = jsonObject.getJSONArray("data")
+
+            for (i in 0 until jsonArray.length()) {
+                jsonArray.getJSONObject(i).apply {
+                    map = HashMap()
+                    map["dictLabel"] = this.getString("dictLabel")
+                    map["dictValue"] = this.getString("dictValue")
+
+                    data.add(map)
+                }
+            }
+        }
+
+        return data
+    }
+
+    fun decodeServiceAllList(json: String, serviceType: String): ArrayList<Map<String, Any>> {
+        val data = ArrayList<Map<String, Any>>()
+        var map: HashMap<String, Any>
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            val jsonArray = jsonObject.getJSONArray("rows")
+
+            for (i in 0 until jsonArray.length()) {
+                jsonArray.getJSONObject(i).apply {
+                    if (this["serviceType"] == serviceType) {
+                        map = HashMap()
+                        map["id"] = this.getInt("id")
+                        map["serviceName"] = this.getString("serviceName")
+                        map["serviceDesc"] = this.getString("serviceDesc")
+                        map["serviceType"] = this.getString("serviceType")
+                        map["imgUrl"] = this.getString("imgUrl")
+                        map["pid"] = this.getInt("pid")
+                        map["link"] = this.getString("link")
+
+                        data.add(map)
+                    }
+                }
+            }
+        }
+
+        return data
     }
 }

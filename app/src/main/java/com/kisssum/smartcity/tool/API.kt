@@ -31,4 +31,6 @@ object API {
     fun getUserUpdata(context: Context) = "${getBaseUrl(context)}/system/user/updata"
     fun getUserResetPwd(context: Context) = "${getBaseUrl(context)}/system/user/resetPwd"
     fun getUserAddFeedBack(context: Context) = "${getBaseUrl(context)}/userinfo/feedback"
+    fun getServiceFirst(context: Context) = "${getBaseUrl(context)}/system/dict/data/type/sys_service"
+    fun getServiceAllList(context: Context) = "${getBaseUrl(context)}/service/service/list"
 }
