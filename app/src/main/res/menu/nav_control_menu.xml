@@ -11,10 +11,6 @@
         android:icon="@drawable/ic_baseline_home_repair_service_24"
         android:title="全部服务" />
     <item
-        android:id="@+id/item_partybuidling"
-        android:icon="@drawable/ic_baseline_construction_24"
-        android:title="智慧党建" />
-    <item
         android:id="@+id/item_news"
         android:icon="@drawable/ic_baseline_text_snippet_24"
         android:title="新闻" />

@@ -39,7 +39,7 @@ class ServiceRecommendAdapater(val context: Context, val data: ArrayList<Map<Str
         } else {
             Volley.newRequestQueue(context).apply {
                 val imageRequest = ImageRequest(
-                        API.getBaseUrl(context) + data[position]["imgUrl"],
+                        API.getBaseUrl() + data[position]["imgUrl"],
                         {
                             holder.img.setImageBitmap(it)
                         },

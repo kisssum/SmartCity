@@ -8,8 +8,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../Android/SDK/platforms/android-30/data/res/layout/simple_list_item_1.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/alertdialog_change_name.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/layout/fragment_all_service.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_guide_main.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.33041191936897457" />
+        <entry key="app/src/main/res/layout/fragment_home_top_view_pager.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_me.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_me_information.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_medical_pager.xml" value="0.2722222222222222" />
+        <entry key="app/src/main/res/layout/fragment_news.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_news_detail.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_news_search.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_news_top_view_pager.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_opinion.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/list_style_home_service_list.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/list_style_hot_service.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/news_comments_list.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/news_list.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/news_list2.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/search_style.xml" value="0.19635416666666666" />
+        <entry key="app/src/main/res/layout/service_grid.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/menu/nav_control_menu.xml" value="0.35885416666666664" />
       </map>
     </option>
   </component>

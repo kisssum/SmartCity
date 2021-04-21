@@ -5,19 +5,25 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
+import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentNewsBinding
 import com.kisssum.smartcity.state.NewsModel
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
+import com.kisssum.smartcity.tool.MRString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -28,9 +34,7 @@ class NewsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
-    private var binding: FragmentNewsBinding? = null
-    private var model: NewsModel? = null
-    private val handler = Handler()
+    private lateinit var binding: FragmentNewsBinding
     private lateinit var newsType: ArrayList<Map<String, Any>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,70 +44,49 @@ class NewsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentNewsBinding.inflate(inflater)
         return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model = ViewModelProvider(requireActivity(), AndroidViewModelFactory(requireActivity().application)).get(NewsModel::class.java)
 
-        // 轮播图
-        initLunbotu()
+        // 搜索框
+        initSearch()
 
-        // 新闻专栏
-        Volley.newRequestQueue(requireContext()).apply {
-            val newsTypeString = StringRequest(
-                    API.getNewsTypeUrl(requireContext()),
-                    {
-                        newsType = DecodeJson.decodeNewsType(it)
-                        initNews()
-                    },
-                    {}
-            )
+        GlobalScope.launch(Dispatchers.Main) {
+            val newsCategoryListString =
+                withContext(Dispatchers.IO) { MRString.getHomeNewsCategoryList() }
+            val newsCategoryListObj = DecodeJson.decodeNewsCategoryList(newsCategoryListString)
+            binding.newsMainPager.apply {
+                this.adapter = object : FragmentStateAdapter(requireActivity()) {
+                    override fun createFragment(position: Int) =
+                        NewsPagerFragment(newsCategoryListObj[position]["id"]!!.toInt(), true)
 
-            this.add(newsTypeString)
-        }
-    }
+                    override fun getItemCount() = newsCategoryListObj.size
+                }
+                this.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
 
-    private fun initLunbotu() {
-        val topViewAdapter: FragmentStateAdapter = object : FragmentStateAdapter(requireActivity()) {
-            override fun createFragment(position: Int): Fragment {
-                return NewsTopViewPagerFragment(model!!.data[position])
-            }
-
-            override fun getItemCount(): Int {
-                return model!!.count
+                TabLayoutMediator(
+                    binding.newsMainTablayout,
+                    binding.newsMainPager
+                ) { tab: TabLayout.Tab, position: Int ->
+                    tab.text = newsCategoryListObj[position]["name"]
+                }.attach()
             }
         }
-        binding!!.newsMainLunBoPager.adapter = topViewAdapter
-        binding!!.newsMainLunBoPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
-
-        // 无限滚轮
-        loopTopViewPager()
     }
 
-    private fun loopTopViewPager() {
-        handler.postDelayed({
-            var cIndex = binding!!.newsMainLunBoPager.currentItem
-            if (cIndex >= model!!.count - 1) cIndex = 0 else cIndex++
-            binding!!.newsMainLunBoPager.currentItem = cIndex
-            loopTopViewPager()
-        }, 3000)
-    }
-
-    private fun initNews() {
-        binding!!.newsMainPager.apply {
-            this.adapter = object : FragmentStateAdapter(requireActivity()) {
-                override fun createFragment(position: Int) = NewsPagerFragment(newsType[position]["dictCode"].toString().toInt(), false)
-                override fun getItemCount() = newsType.size
-            }
-
-            this.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
-
-            TabLayoutMediator(binding!!.newsMainTablayout, binding!!.newsMainPager) { tab: TabLayout.Tab, position: Int -> tab.text = newsType[position]["dictLabel"].toString() }.attach()
+    private fun initSearch() {
+        binding.newsSearchView.border.setOnClickListener { v: View? ->
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.fragment_main
+            ).navigate(R.id.action_navControlFragment_to_newsSearchFragment)
         }
     }
 

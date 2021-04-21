@@ -6,49 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".ui.navigations.allservice.AllServiceFragment">
 
-    <androidx.core.widget.NestedScrollView
+    <include
+        android:id="@+id/allServiceSearchView"
+        layout="@layout/search_style"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:overScrollMode="never"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <ListView
+        android:id="@+id/allServiceTypeList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allServiceSearchView">
 
+    </ListView>
 
-            <include
-                android:id="@+id/allServiceSearchView"
-                layout="@layout/search_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/asNextList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline29"
+        app:layout_constraintTop_toTopOf="@+id/allServiceTypeList" />
 
-            <ListView
-                android:id="@+id/asFirstList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
 
-            </ListView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@android:color/darker_gray" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/asNextList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#eee" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    <View
+        android:id="@+id/view7"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:background="#eee"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline29"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

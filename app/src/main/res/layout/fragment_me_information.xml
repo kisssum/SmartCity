@@ -42,19 +42,19 @@
                 android:paddingBottom="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:text="头像:"
                     android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
                 <ImageView
                     android:id="@+id/miImg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/service_real_weather" />
 
             </LinearLayout>
 
@@ -85,11 +85,12 @@
                     android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/miName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/search_style"
                     android:text="好啊"
                     android:textAlignment="textEnd" />
 
@@ -129,8 +130,8 @@
                     android:layout_weight="1"
                     android:checked="false"
                     android:showText="true"
-                    android:textOff="女"
-                    android:textOn="男" />
+                    android:textOff="男"
+                    android:textOn="女" />
 
             </LinearLayout>
 
@@ -161,12 +162,52 @@
                     android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/miPhone"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/search_style"
+                    android:text="18757799489"
+                    android:textAlignment="textEnd" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:background="?attr/colorButtonNormal" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp">
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="18757799489"
+                    android:text="邮箱:"
+                    android:textColor="?attr/textColorAlertDialogListItem"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/miEmail"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/search_style"
+                    android:inputType="textEmailAddress"
+                    android:text=""
                     android:textAlignment="textEnd" />
 
             </LinearLayout>
@@ -201,11 +242,12 @@
                     android:textColor="?attr/textColorAlertDialogListItem"
                     android:textSize="20sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/zjNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:background="@drawable/search_style"
                     android:text="33************082X"
                     android:textAlignment="textEnd" />
 

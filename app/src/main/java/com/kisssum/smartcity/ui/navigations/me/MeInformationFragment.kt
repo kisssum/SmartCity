@@ -1,20 +1,18 @@
 package com.kisssum.smartcity.ui.navigations.me
 
-import android.content.Context
+import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
-import android.util.Log
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
@@ -22,11 +20,16 @@ import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentMeInformationBinding
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
+import com.kisssum.smartcity.tool.MRString
+import com.kisssum.smartcity.tool.UpdateUI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
+import java.util.jar.Manifest
 
 /**
  * A simple [Fragment] subclass.
@@ -43,6 +46,8 @@ class MeInformationFragment : Fragment() {
 
     private val RESTORE = 0
     private val SAVE = 1
+    private val IS_SELECTIMG = 3
+    private val IS_CAPTURE = 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,141 +74,125 @@ class MeInformationFragment : Fragment() {
     }
 
     private fun resotre() {
-        Thread {
-            try {
-                val request = Request.Builder()
-                        .url(API.getUserInfoUrl(requireContext()))
-                        .header("Authorization", API.getToken(requireContext()))
-                        .build()
+        GlobalScope.launch(Dispatchers.Main) {
+            val userInfoString = withContext(Dispatchers.IO) { MRString.getUserInfo(requireContext()) }
+            val userInfoObj = DecodeJson.decodeUserInfo(userInfoString)
 
-                val client = OkHttpClient()
-                val response = client.newCall(request).execute()
-                val doc = response.body!!.string()
+            if (userInfoObj["avatar"] != "")
+                Glide.with(requireActivity()).load(userInfoObj["avatar"]).into(binding.miImg)
 
-                val message = Message()
-                message.what = RESTORE
-                message.obj = doc
-                handler.sendMessage(message)
-            } catch (e: IOException) {
-                e.printStackTrace()
+            binding.miName.setText(userInfoObj["nickName"])
+            binding.miSex.isChecked = when (userInfoObj["sex"]) {
+                "0" -> false
+                else -> true
             }
-        }.start()
+            binding.miPhone.setText(userInfoObj["phonenumber"])
+            binding.miEmail.setText(userInfoObj["email"])
+            binding.zjNumber.setText(userInfoObj["idCard"])
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handler = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-
-                if (msg.what == RESTORE) {
-                    userInfo = DecodeJson.decodeUserInfoInformation(msg.obj as String)
-
-                    Glide
-                            .with(requireActivity())
-                            .load(API.getBaseUrl(requireContext()) + userInfo["avatar"].toString())
-                            .into(binding.miImg)
-
-                    binding.miName.text = userInfo["nickName"].toString()
-                    binding.miSex.isChecked = when (userInfo["sex"].toString().toInt()) {
-                        0 -> false
-                        else -> true
-                    }
-                    binding.miPhone.text = userInfo["phonenumber"].toString()
-                } else if (msg.what == SAVE) {
-                    val jsonObject = JSONObject(msg.obj as String)
-                    if (jsonObject.getInt("code") == 200) {
-                        Toast.makeText(requireContext(), "修改成功", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(requireContext(), "修改失败", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }
-        }
-
         resotre()
         initBtn()
     }
 
-    private fun save() {
-        Thread {
-            try {
-//                val json = JSONObject().apply {
-//                    this.put("userId", userInfo["userId"])
-//                    this.put("nickName", binding.miName.text.toString())
-////                    this.put("sex", binding.miSex.isChecked)
-////                    this.put("phonenumber", binding.miPhone.text.toString())
-//                }
-//
-//                val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
-//                val requestBody = RequestBody.create(mediaType, json.toString())
-
-                val f = FormBody.Builder()
-                        .add("userId", userInfo["userId"].toString())
-                        .add("nickName", binding.miName.text.toString())
-                        .build()
-
-//                Log.d("QT", json.toString())
-                val request = Request.Builder()
-                        .url(API.getUserUpdata(requireContext()))
-                        .post(f)
-                        .header("Authorization", API.getToken(requireContext()))
-                        .build()
-
-                val client = OkHttpClient()
-                val response = client.newCall(request).execute()
-                val doc = response.body!!.string()
-                Log.d("QT", doc)
-
-                val message = Message()
-                message.what = SAVE
-                message.obj = doc
-                handler.sendMessage(message)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }.start()
-    }
-
     private fun initBtn() {
         binding.meInformationToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
+
         binding.meInformationToolbar.setOnMenuItemClickListener { item: MenuItem ->
-            if (item.itemId == R.id.item_me_information_change) save()
+            if (item.itemId == R.id.item_me_information_change) {
+                GlobalScope.launch(Dispatchers.Main) {
+                    val email = binding.miEmail.text.toString()
+                    val idCard = binding.zjNumber.text.toString()
+                    val nickname = binding.miName.text.toString()
+                    val miPhone = binding.miPhone.text.toString()
+                    val sex = when (binding.miSex.isChecked) {
+                        false -> "1"
+                        else -> "0"
+                    }
+
+                    val userUpdateString = withContext(Dispatchers.IO) { MRString.getUserUpdate(requireContext(), email, idCard, nickname, miPhone, sex) }
+                    val userUpdateObj = DecodeJson.decodeUserUpdate(userUpdateString)
+
+                    if (userUpdateObj == "") {
+                        UpdateUI.toastUi(requireContext(), "修改失败!")
+                    } else {
+                        UpdateUI.toastUi(requireContext(), "修改成功!")
+                    }
+                }
+            }
             true
         }
 
-        binding.miName.setOnClickListener { v: View? ->
-            val view1 = layoutInflater.inflate(R.layout.alertdialog_change_name, null)
-            AlertDialog.Builder(requireActivity())
-                    .setTitle("修改昵称")
-                    .setView(view1)
-                    .setPositiveButton("确定") { dialog: DialogInterface?, which: Int ->
-                        val name = view1.findViewById<EditText>(R.id.editext)
-                        if (name.text.toString() == "") Toast.makeText(requireContext(), "昵称不能为空", Toast.LENGTH_SHORT).show()
-                        else binding.miName.text = name.text.toString()
+        binding.miImg.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                    .setTitle("头像")
+                    .setMessage("选择方式")
+                    .setPositiveButton("图库") { dialogInterface: DialogInterface, i: Int ->
+                        run {
+                            if (requireActivity().checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                                goSelectImg()
+                            } else {
+                                requireActivity().requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), IS_SELECTIMG)
+                            }
+                        }
                     }
-                    .setNegativeButton("取消") { dialog: DialogInterface?, which: Int -> }
+                    .setNegativeButton("拍照") { dialogInterface: DialogInterface, i: Int ->
+                        run {
+                            if (requireActivity().checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                                goCapture()
+                            } else {
+                                requireActivity().requestPermissions(arrayOf(android.Manifest.permission.CAMERA), IS_CAPTURE)
+                            }
+                        }
+                    }
                     .create()
                     .show()
         }
+    }
 
-        binding.miPhone.setOnClickListener { v: View? ->
-            val view1 = layoutInflater.inflate(R.layout.alertdialog_change_phone, null)
-            AlertDialog.Builder(requireActivity())
-                    .setTitle("修改电话")
-                    .setView(view1)
-                    .setPositiveButton("确定") { dialog: DialogInterface?, which: Int ->
-                        val name = view1.findViewById<EditText>(R.id.editext)
-                        when {
-                            name.text.toString() == "" -> Toast.makeText(requireContext(), "电话号码不能为空", Toast.LENGTH_SHORT).show()
-                            name.text.toString().length != 11 -> Toast.makeText(requireContext(), "电话号码长度不正确", Toast.LENGTH_SHORT).show()
-                            else -> binding.miPhone.text = name.text.toString()
-                        }
-                    }
-                    .setNegativeButton("取消") { dialog: DialogInterface?, which: Int -> }
-                    .create()
-                    .show()
+    private fun goSelectImg() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, IS_SELECTIMG)
+    }
+
+    private fun goCapture() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, IS_CAPTURE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        when (requestCode) {
+            IS_SELECTIMG -> {
+                val d = data?.data
+                binding.miImg.setImageURI(d)
+            }
+            IS_CAPTURE -> {
+                val d = data?.extras?.get("data") as Bitmap
+                binding.miImg.setImageBitmap(d)
+            }
+            else -> ""
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            IS_SELECTIMG -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goSelectImg()
+                }
+            }
+            IS_CAPTURE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    goCapture()
+                }
+            }
+            else -> ""
         }
     }
 

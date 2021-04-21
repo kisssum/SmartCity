@@ -29,4 +29,9 @@
         android:queryHint="搜索">
 
     </SearchView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsSearchList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

@@ -3,30 +3,25 @@ package com.kisssum.smartcity.ui.navigations.news
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SimpleAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.kisssum.smartcity.R
-import com.kisssum.smartcity.adapter.news.NewsListAdpater
+import com.kisssum.smartcity.adapter.news.NewsCommentsListAdpater
 import com.kisssum.smartcity.databinding.FragmentNewsDetailBinding
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import org.json.JSONObject
+import com.kisssum.smartcity.tool.MRString
+import com.kisssum.smartcity.tool.UpdateUI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -38,7 +33,6 @@ class NewsDetailFragment : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     private lateinit var binding: FragmentNewsDetailBinding
-    private val adpater: NewsListAdpater? = null
     private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +43,12 @@ class NewsDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentNewsDetailBinding.inflate(inflater)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onResume() {
@@ -63,122 +59,76 @@ class NewsDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val arguments = arguments
+        val id = requireArguments().getInt("id", 0)
 
-        handler = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
+        GlobalScope.launch(Dispatchers.Main) {
+            val newsDetailString =
+                withContext(Dispatchers.IO) { MRString.getNewsDetail(id) }
+            val newsDetailObj = DecodeJson.decodeNewsDetail(newsDetailString)
+            binding.newsDetailTitle.text = newsDetailObj["title"]
+            binding.newsDetailsubTitle.text = newsDetailObj["subTitle"]
+            Glide.with(requireActivity()).load(API.getBaseUrl() + newsDetailObj["cover"])
+                .into(binding.newsDetailImg)
+            binding.newsDetailPublichDate.text = newsDetailObj["publishDate"]
+            binding.newsDetailContent.text = newsDetailObj["content"]
 
-                val string = msg.obj as String
-                if (JSONObject(string).getInt("code") == 200) {
-                    Toast.makeText(requireContext(), "评论成功", Toast.LENGTH_SHORT).show()
+            val newsCommentString =
+                withContext(Dispatchers.IO) { MRString.getNewsComments(id) }
+            val newsCommentObj = DecodeJson.decodeNewsCommentsList(newsCommentString)
+            binding.newsDetailCommentSize.text = newsCommentObj.size.toString()
+            binding.newsDetailcommentList.apply {
+                this.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+                val dAdapter = NewsCommentsListAdpater(requireContext(), newsCommentObj)
+                this.adapter = dAdapter
+            }
+        }
+
+        binding.newsDetailAdd.setOnClickListener {
+            val content = binding.newsDetailCommentcotent.text.toString()
+
+            GlobalScope.launch(Dispatchers.Main) {
+                val newsCommentAddString: String =
+                    withContext(Dispatchers.IO) {
+                        MRString.getNewsCommentAdd(
+                            requireContext(),
+                            id,
+                            content
+                        )
+                    }
+                val newsCommentAddObj = DecodeJson.decodeCommentAdd(newsCommentAddString)
+
+                if (newsCommentAddObj == "") {
+                    UpdateUI.toastUi(requireContext(), "发布失败!")
                 } else {
-                    Toast.makeText(requireContext(), "评论失败", Toast.LENGTH_SHORT).show()
-                }
+                    UpdateUI.toastUi(requireContext(), "发布成功!")
 
-                Toast.makeText(requireContext(), JSONObject(string).toString(), Toast.LENGTH_SHORT).show()
-                Log.d("QT", JSONObject(string).toString())
+                    val newsCommentString =
+                        withContext(Dispatchers.IO) { MRString.getNewsComments(id) }
+                    val newsCommentObj = DecodeJson.decodeNewsCommentsList(newsCommentString)
+                    binding.newsDetailCommentSize.text = newsCommentObj.size.toString()
+                    binding.newsDetailcommentList.apply {
+                        this.layoutManager =
+                            LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+
+                        val dAdapter = NewsCommentsListAdpater(requireContext(), newsCommentObj)
+                        this.adapter = dAdapter
+                    }
+                }
             }
         }
 
         // Toolbar
-        binding.newsDetailToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
-        binding.newsDetailToolbar.title = arguments!!.getString("title")
-
-        Glide.with(requireActivity()).load(API.getBaseUrl(requireContext()) + arguments.getString("imgUrl")).into(binding.newsDetailImg)
-        binding.newsDetailContent.text = arguments.getString("content")
-        initNews()
-
-        initCommendList()
-
-        initNewsCommentAdd()
-
-        // webView
-//        binding!!.newDetailWeb.settings.javaScriptEnabled = true
-//        binding!!.newDetailWeb.settings.builtInZoomControls = true
-//        binding!!.newDetailWeb.webViewClient = WebViewClient()
-//        binding!!.newDetailWeb.loadUrl(arguments.getString("url")!!)
-
-        // list
-//        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-//        binding!!.newsDetailList.layoutManager = layoutManager
-        //        adpater = new NewsListAdpater(0, requireContext(), 3);
-//        binding.newsDetailList.setAdapter(adpater);
-    }
-
-    private fun initNewsCommentAdd() {
-        binding.newsDetailAdd.setOnClickListener {
-            Thread {
-                OkHttpClient().apply {
-                    val jsonObject = JSONObject().apply {
-                        this.put("userId", API.getUserId(requireContext()))
-                        this.put("pressId", arguments?.getInt("id")!!)
-                        this.put("content", binding.newsDetailContent.text.toString())
-                    }
-
-                    val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
-                    val requestBody = RequestBody.create(mediaType, jsonObject.toString())
-
-                    val request = Request.Builder()
-                            .url(API.getNewsCommentAdd(requireContext()))
-                            .post(requestBody)
-                            .header("Authorization", API.getToken(requireContext()))
-                            .build()
-
-                    val sring = this.newCall(request).execute().body!!.string()
-
-                    val message = Message()
-                    message.obj = sring
-                    handler.sendMessage(message)
-                }
-            }.start()
-        }
-    }
-
-    private fun initCommendList() {
-        Volley.newRequestQueue(requireContext()).apply {
-//            Log.d("QT", API.getNewsCommentList(requireContext(), arguments?.getInt("id")!!))
-            val stringRequest = StringRequest(
-                    API.getNewsCommentList(requireContext(), arguments?.getInt("id")!!),
-                    {
-                        val comments = DecodeJson.decodeNewsCommentList(it)
-                        Log.d("QT", comments.size.toString())
-                        Log.d("QT", API.getNewsCommentList(requireContext(), arguments?.getInt("id")!!))
-
-                        binding.newsDetailCommentSize.text = comments.size.toString()
-
-                        binding.newsDetailcommentList.apply {
-                            this.adapter = SimpleAdapter(requireContext(), comments,
-                                    R.layout.list_style_news_detail_comment_list,
-                                    arrayOf("nickName", "content"),
-                                    intArrayOf(R.id.lsndclName, R.id.lsndclText))
-                        }
-                    },
-                    {}
-            )
-
-            this.add(stringRequest)
-        }
-    }
-
-    private fun initNews() {
-        binding.newsDetailList.apply {
-            this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-            val l = ArrayList<Map<String, Any>>()
-            val map = HashMap<String, Any>().apply {
-                this["id"] = arguments?.getInt("id")!!
-                this["title"] = arguments?.getString("title")!!
-                this["content"] = arguments?.getString("content")!!
-                this["imgUrl"] = arguments?.getString("imgUrl")!!
-                this["viewsNumber"] = arguments?.getString("viewsNumber")!!
-                this["likeNumber"] = arguments?.getString("likeNumber")!!
-                this["createTime"] = arguments?.getString("createTime")!!
-            }
-            l.add(map)
-
-            val dAdapter = NewsListAdpater(requireContext(), l, isHome = true, isDetail = true)
-            this.adapter = dAdapter
+        binding.newsDetailToolbar.setNavigationOnClickListener { v: View? ->
+            Navigation.findNavController(
+                requireActivity(),
+                R.id.fragment_main
+            ).navigateUp()
         }
     }
 

@@ -15,6 +15,7 @@ import androidx.navigation.Navigation
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentChangePwdBinding
 import com.kisssum.smartcity.tool.API
+import com.kisssum.smartcity.tool.UpdateUI
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
@@ -59,52 +60,55 @@ class ChangePwdFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val hander = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-
-                val s = msg.obj as String
-
-                val jsonObject = JSONObject(s)
-
-                if (jsonObject.getInt("code") == 200) {
-                    Toast.makeText(requireContext(), "密码修改成功", Toast.LENGTH_SHORT).show()
-                    requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE).edit().putString("password", binding.newPwd.text.toString())
-                } else {
-                    Toast.makeText(requireContext(), "密码修改失败", Toast.LENGTH_SHORT).show()
-                }
-            }
+        binding.btnOk.setOnClickListener {
+            UpdateUI.toastUi(requireContext(),"接口未提供")
         }
-
-        binding.changePwdToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
-        binding.btnOk.setOnClickListener { v: View? ->
-            run {
-                Thread {
-                    OkHttpClient().apply {
-                        val jsonObject = JSONObject().apply {
-                            this.put("userId", API.getUserId(requireContext()).toString())
-                            this.put("oldPwd", binding.beforePwd.text.toString())
-                            this.put("password", binding.newPwd.text.toString())
-                        }
-
-                        val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
-                        val requestBody = RequestBody.create(mediaType, jsonObject.toString())
-
-                        val build = Request.Builder()
-                                .url(API.getUserResetPwd(requireContext()))
-                                .put(requestBody)
-                                .header("Authorization", API.getToken(requireContext()))
-                                .build()
-
-                        val string = this.newCall(build).execute().body?.string()
-
-                        val message = Message()
-                        message.obj = string
-                        hander.sendMessage(message)
-                    }
-                }.start()
-            }
-        }
+//        val hander = object : Handler() {
+//            override fun handleMessage(msg: Message) {
+//                super.handleMessage(msg)
+//
+//                val s = msg.obj as String
+//
+//                val jsonObject = JSONObject(s)
+//
+//                if (jsonObject.getInt("code") == 200) {
+//                    Toast.makeText(requireContext(), "密码修改成功", Toast.LENGTH_SHORT).show()
+//                    requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE).edit().putString("password", binding.newPwd.text.toString())
+//                } else {
+//                    Toast.makeText(requireContext(), "密码修改失败", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//        }
+//
+//        binding.changePwdToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
+//        binding.btnOk.setOnClickListener { v: View? ->
+//            run {
+//                Thread {
+//                    OkHttpClient().apply {
+//                        val jsonObject = JSONObject().apply {
+//                            this.put("userId", API.getUserId(requireContext()).toString())
+//                            this.put("oldPwd", binding.beforePwd.text.toString())
+//                            this.put("password", binding.newPwd.text.toString())
+//                        }
+//
+//                        val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
+//                        val requestBody = RequestBody.create(mediaType, jsonObject.toString())
+//
+//                        val build = Request.Builder()
+//                                .url(API.getUserResetPwd(requireContext()))
+//                                .put(requestBody)
+//                                .header("Authorization", API.getToken(requireContext()))
+//                                .build()
+//
+//                        val string = this.newCall(build).execute().body?.string()
+//
+//                        val message = Message()
+//                        message.obj = string
+//                        hander.sendMessage(message)
+//                    }
+//                }.start()
+//            }
+//        }
     }
 
     companion object {

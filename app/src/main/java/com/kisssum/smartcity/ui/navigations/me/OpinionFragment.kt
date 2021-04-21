@@ -2,8 +2,6 @@ package com.kisssum.smartcity.ui.navigations.me
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -14,12 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentOpinionBinding
-import com.kisssum.smartcity.tool.API
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import org.json.JSONObject
+import com.kisssum.smartcity.tool.DecodeJson
+import com.kisssum.smartcity.tool.MRString
+import com.kisssum.smartcity.tool.UpdateUI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -59,60 +58,35 @@ class OpinionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val hander = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
+        binding.opinionToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
 
-                val s = msg.obj as String
-                val jsonObject = JSONObject(s)
+        binding.btnSubmit.setOnClickListener { v: View? ->
+            if (binding.opinionTitle.text.toString() == "" || binding.opinionContent.text.toString() == "") {
+                Toast.makeText(requireContext(), "标题和内容不能为空!", Toast.LENGTH_SHORT).show()
+            } else {
+                GlobalScope.launch(Dispatchers.Main) {
+                    val title = binding.opinionTitle.text.toString()
+                    val content = binding.opinionContent.text.toString()
 
-                if (jsonObject.getInt("code") == 200) {
-                    Toast.makeText(requireContext(), "感谢您的反馈!", Toast.LENGTH_SHORT).show()
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp()
-                } else {
-                    Toast.makeText(requireContext(), "反馈失败", Toast.LENGTH_SHORT).show()
+                    val feedBackString = withContext(Dispatchers.IO) { MRString.getFeedBack(requireContext(), title, content) }
+                    val feedBackObj = DecodeJson.decodeFeedBack(feedBackString)
+
+                    if (feedBackObj == "") {
+                        UpdateUI.toastUi(requireContext(), "提交出错!")
+                    } else {
+                        UpdateUI.toastUi(requireContext(), "提交成功!")
+                    }
                 }
             }
+
+            binding.opinionContent.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    binding.opinionCount.text = (150 - s.length).toString()
+                }
+            })
         }
-
-        binding.opinionToolbar.setNavigationOnClickListener { v: View? -> Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp() }
-        binding.btnSubmit.setOnClickListener { v: View? ->
-            if (binding.opinionText.text.toString() == "") {
-                Toast.makeText(requireContext(), "内容不能为空", Toast.LENGTH_SHORT).show()
-            } else {
-                Thread {
-                    OkHttpClient().apply {
-                        val jsonObject = JSONObject().apply {
-                            this.put("userId", API.getUserId(requireContext()).toString())
-                            this.put("content", binding.opinionText.text.toString())
-                        }
-
-                        val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
-                        val requestBody = RequestBody.create(mediaType, jsonObject.toString())
-
-                        val build = Request.Builder()
-                                .url(API.getUserAddFeedBack(requireContext()))
-                                .post(requestBody)
-                                .header("Authorization", API.getToken(requireContext()))
-                                .build()
-
-                        val string = this.newCall(build).execute().body?.string()
-
-                        val message = Message()
-                        message.obj = string
-                        hander.sendMessage(message)
-                    }
-                }.start()
-            }
-        }
-
-        binding.opinionText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                binding.opinionCount.text = (150 - s.length).toString()
-            }
-        })
     }
 
     companion object {

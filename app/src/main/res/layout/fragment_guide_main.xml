@@ -19,25 +19,12 @@
     </com.youth.banner.Banner>
 
     <Button
-        android:id="@+id/guideNetwork"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="网络设置"
-        android:textColor="@color/white"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/guideGo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/guideGo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
         android:text="进入主页"
         android:textColor="@color/white"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

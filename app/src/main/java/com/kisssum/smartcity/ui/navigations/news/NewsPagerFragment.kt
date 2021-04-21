@@ -6,26 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.kisssum.smartcity.adapter.news.NewsListAdpater
 import com.kisssum.smartcity.databinding.FragmentNewsPagerBinding
-import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
+import com.kisssum.smartcity.tool.MRString
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
  * Use the [NewsPagerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class NewsPagerFragment(private val type: Int, val isHome: Boolean) : Fragment() {
+class NewsPagerFragment(private val type: Int, private val isHome: Boolean) : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
 
     private lateinit var binding: FragmentNewsPagerBinding
-    private var adpater: NewsListAdpater? = null
-    private lateinit var newsTypeListData: ArrayList<Map<String, Any>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +35,10 @@ class NewsPagerFragment(private val type: Int, val isHome: Boolean) : Fragment()
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+    ): View {
         binding = FragmentNewsPagerBinding.inflate(inflater)
         return binding.root
     }
@@ -44,23 +46,16 @@ class NewsPagerFragment(private val type: Int, val isHome: Boolean) : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Volley.newRequestQueue(requireContext()).apply {
-            val newsListRequst = StringRequest(
-                    API.getNewsTypeListUrl(requireContext(), type),
-                    {
-                        newsTypeListData = DecodeJson.decodeNewsTypeList(it)
+        GlobalScope.launch(Dispatchers.Main) {
+            val newsTypeListString = withContext(Dispatchers.IO) { MRString.getHomeNewsTypeList(type) }
+            val newsTypeListObj = DecodeJson.decodeNewsTypeList(newsTypeListString)
+            
+            binding.newsPagerList.apply {
+                this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-                        binding.newsPagerList.apply {
-                            this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-                            val dAdapter = NewsListAdpater(requireContext(), newsTypeListData, isHome, false)
-                            this.adapter = dAdapter
-                        }
-                    },
-                    {}
-            )
-
-            this.add(newsListRequst)
+                val dAdapter = NewsListAdpater(requireContext(), newsTypeListObj, isHome, false)
+                this.adapter = dAdapter
+            }
         }
     }
 

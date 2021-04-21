@@ -45,36 +45,16 @@
             android:id="@+id/homeServiceListMy"
             layout="@layout/service_grid"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/homeServiceList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#eee"
             android:overScrollMode="never"
             android:paddingLeft="5dp"
             android:paddingRight="5dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="热门主题"
-            android:textColor="?attr/textColorAlertDialogListItem"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/homeHotServiceList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
             android:layout_width="match_parent"
@@ -85,34 +65,10 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/homeNewsTablayout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/homeNewsList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            app:tabIndicatorFullWidth="false"
-            app:tabMode="scrollable">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tuesday" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wednesday" />
-        </com.google.android.material.tabs.TabLayout>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/homeNewsPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:nestedScrollingEnabled="false" />
 
     </LinearLayout>

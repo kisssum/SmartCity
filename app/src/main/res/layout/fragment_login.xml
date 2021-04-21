@@ -79,13 +79,20 @@
         app:layout_constraintGuide_percent="0.85" />
 
     <Button
-        android:id="@+id/logonGo"
+        android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="登录"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline12"
+        app:layout_constraintTop_toBottomOf="@+id/loginPwd" />
+
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="注册"
+        app:layout_constraintEnd_toStartOf="@+id/guideline13"
         app:layout_constraintTop_toBottomOf="@+id/loginPwd" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,24 +20,19 @@ android {
         minSdkVersion 28
         targetSdkVersion 30
         versionCode 10240
-        versionName "2.0"
+        versionName "3.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.kisssum
     }
-
     buildFeatures {
         viewBinding true
     }
-
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-    }
-    lintOptions {
-        abortOnError false
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,27 +45,29 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.navigation:navigation-fragment:2.3.2'
-    implementation 'androidx.navigation:navigation-ui:2.3.2'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    // Banner
     implementation 'com.youth.banner:banner:1.4.10'
-
     // OkHttp
     implementation("com.squareup.okhttp3:okhttp:4.9.0")
-
+    // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-
-    implementation 'com.android.volley:volley:1.1.1'
-
+    // Volley
+    implementation 'com.android.volley:volley:1.2.0'
     // smartRefresh
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.3'
     implementation 'com.scwang.smart:refresh-header-radar:2.0.3'       //雷达刷新头
     implementation 'com.scwang.smart:refresh-footer-ball:2.0.3'        //球脉冲加载
-
+    // Zxing
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    // 协程
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9'
 }

@@ -48,10 +48,7 @@
         <action
             android:id="@+id/action_navControlFragment_to_loginFragment"
             app:destination="@id/loginFragment"
-            app:enterAnim="@anim/translate_x_from_100_0"
-            app:exitAnim="@anim/translate_x_from_0_f100"
-            app:popEnterAnim="@anim/translate_x_from_f100_0"
-            app:popExitAnim="@anim/translate_x_from_0_100" />
+            app:popUpTo="@id/navControlFragment" />
         <action
             android:id="@+id/action_navControlFragment_to_medicalFragment"
             app:destination="@id/medicalFragment"
@@ -146,16 +143,16 @@
         android:id="@+id/newsDetailFragment"
         android:name="com.kisssum.smartcity.ui.navigations.news.NewsDetailFragment"
         android:label="fragment_news_detail"
-        tools:layout="@layout/fragment_news_detail" >
-        <action
-            android:id="@+id/action_newsDetailFragment_self"
-            app:destination="@id/newsDetailFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_news_detail" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.kisssum.smartcity.ui.navigations.me.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/medicalFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.medical.MedicalFragment"
@@ -178,7 +175,15 @@
         android:id="@+id/newsSearchFragment"
         android:name="com.kisssum.smartcity.ui.navigations.news.NewsSearchFragment"
         android:label="fragment_news_search"
-        tools:layout="@layout/fragment_news_search" />
+        tools:layout="@layout/fragment_news_search" >
+        <action
+            android:id="@+id/action_newsSearchFragment_to_newsDetailFragment"
+            app:destination="@id/newsDetailFragment"
+            app:enterAnim="@anim/translate_x_from_100_0"
+            app:exitAnim="@anim/translate_x_from_0_f100"
+            app:popEnterAnim="@anim/translate_x_from_f100_0"
+            app:popExitAnim="@anim/translate_x_from_0_100" />
+    </fragment>
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.kisssum.smartcity.ui.splash.SplashFragment"
@@ -638,4 +643,9 @@
         android:name="com.kisssum.smartcity.ui.navigations.allservice.film.FilmPlayTrailerFragment"
         android:label="fragment_film_play_trailer"
         tools:layout="@layout/fragment_film_play_trailer" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.kisssum.smartcity.ui.navigations.me.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
 </navigation>

@@ -2,28 +2,21 @@ package com.kisssum.smartcity.ui.navigations.me
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentMeBinding
-import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
+import com.kisssum.smartcity.tool.MRString
+import com.kisssum.smartcity.tool.UpdateUI
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -35,7 +28,6 @@ class MeFragment : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     private lateinit var binding: FragmentMeBinding
-    private var handler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,38 +46,24 @@ class MeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handler = object : Handler() {
-            override fun handleMessage(msg: Message) {
-                super.handleMessage(msg)
-                if (msg.what == 0) {
-                    val map = DecodeJson.decodeUserInfo(msg.obj as String)
-                    binding.userName.text = map["nickName"].toString()
-
-                    Glide
-                            .with(requireActivity())
-                            .load(API.getBaseUrl(requireContext()) + map["avatar"])
-                            .into(binding.meTop)
-
-                    requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE).edit().putInt("userId", map["userId"].toString().toInt()).apply()
-                }
-            }
-        }
-
-        resotre()
-        navigationPager()
-        backUser()
+        initBtn()
     }
 
-    private fun backUser() {
-        binding.btnTuiChu.setOnClickListener { v: View? ->
-            val sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE)
-            sp.edit().clear().apply()
+    override fun onResume() {
+        super.onResume()
 
-            Toast.makeText(requireContext(), "退出成功", Toast.LENGTH_SHORT).show()
+        GlobalScope.launch(Dispatchers.Main) {
+            val userInfoString = withContext(Dispatchers.IO) { MRString.getUserInfo(requireContext()) }
+            val userInfoObj = DecodeJson.decodeUserInfo(userInfoString)
+
+            if (userInfoObj["avatar"] != "")
+                Glide.with(requireActivity()).load(userInfoObj["avatar"]).into(binding.meTop)
+            binding.userName.text = userInfoObj["nickName"]
         }
     }
 
-    private fun navigationPager() {
+
+    private fun initBtn() {
         val controller = Navigation.findNavController(requireActivity(), R.id.fragment_main)
         // 跳转到详细信息页
         binding.meTop.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_meInformationFragment) }
@@ -97,28 +75,19 @@ class MeFragment : Fragment() {
         binding.l3.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_changePwdFragment) }
         // 跳转到反馈页
         binding.l4.setOnClickListener { v: View? -> controller.navigate(R.id.action_navControlFragment_to_opinionFragment) }
-    }
 
-    private fun resotre() {
-        Thread {
-            try {
-                val request = Request.Builder()
-                        .url(API.getUserInfoUrl(requireContext()))
-                        .header("Authorization", API.getToken(requireContext()))
-                        .build()
+        binding.btnTuiChu.setOnClickListener { v: View? ->
+            val sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE)
+            sp.edit()
+                    .putString("token", "")
+                    .putString("userName", "")
+                    .apply()
 
-                val client = OkHttpClient()
-                val response = client.newCall(request).execute()
-                val doc = response.body!!.string()
+            UpdateUI.toastUi(requireContext(), "退出成功")
 
-                val message = Message()
-                message.what = 0
-                message.obj = doc
-                handler!!.sendMessage(message)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }.start()
+            val controller = Navigation.findNavController(requireActivity(), R.id.fragment_main)
+            controller.navigate(R.id.action_navControlFragment_to_loginFragment)
+        }
     }
 
     companion object {

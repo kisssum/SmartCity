@@ -16,11 +16,6 @@
         android:label="fragment_all_service"
         tools:layout="@layout/fragment_all_service" />
     <fragment
-        android:id="@+id/partyBuildingFragment"
-        android:name="com.kisssum.smartcity.ui.navigations.smartparty.PartyBuildingFragment"
-        android:label="fragment_party_building"
-        tools:layout="@layout/fragment_party_building" />
-    <fragment
         android:id="@+id/newsFragment"
         android:name="com.kisssum.smartcity.ui.navigations.news.NewsFragment"
         android:label="fragment_news"

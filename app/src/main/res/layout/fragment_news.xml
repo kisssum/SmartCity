@@ -12,17 +12,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/newsMainLunBoPager"
+        <include
+            android:id="@+id/newsSearchView"
+            layout="@layout/search_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingTop="5dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="5dp">
-
-        </androidx.viewpager2.widget.ViewPager2>
+            android:layout_margin="10dp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/newsMainTablayout"

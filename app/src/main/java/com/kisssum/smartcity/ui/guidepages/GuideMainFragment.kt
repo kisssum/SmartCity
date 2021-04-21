@@ -1,26 +1,25 @@
 package com.kisssum.smartcity.ui.guidepages
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.EditText
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import androidx.viewpager.widget.ViewPager
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentGuideMainBinding
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
+import com.kisssum.smartcity.tool.MRString
 import com.youth.banner.loader.ImageLoader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * A simple [Fragment] subclass.
@@ -56,87 +55,37 @@ class GuideMainFragment : Fragment() {
 
         // 判断是否是第一次进入
         if (isFirstEnter) {
-            loadRotationImgs()
+            GlobalScope.launch(Dispatchers.Main) {
+                val rotationList = withContext(Dispatchers.IO) { MRString.getGuideRotationList(requireContext()) }
+                val rotationObj = DecodeJson.decodeGuideRotationList(rotationList)
+
+                binding.guideBanner.apply {
+                    this.setImageLoader(object : ImageLoader() {
+                        override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
+                            Glide.with(requireActivity()).load(API.getBaseUrl() + path.toString()).into(imageView!!)
+                        }
+                    })
+                    this.setImages(rotationObj)
+                    this.setDelayTime(2000)
+                    this.isAutoPlay(false)
+                    this.start()
+                }
+            }
+
+            binding.guideGo.setOnClickListener { v ->
+                // 保存
+                sp.edit().putBoolean("isFirstEnter", false).apply()
+                navigation()
+            }
         } else {
-            val controller = Navigation.findNavController(requireActivity(), R.id.fragment_main)
-            controller.popBackStack()
-            controller.navigate(R.id.navControlFragment)
+            navigation()
         }
     }
 
-    private fun loadRotationImgs() {
-        val sp = requireActivity().getSharedPreferences("Settings", Context.MODE_PRIVATE)
-
-        Volley.newRequestQueue(requireContext()).apply {
-            val stirngRequest = StringRequest(
-                    API.getGuideRotationListUrl(requireContext()),
-                    {
-                        val urls = DecodeJson.decodeGuideRotationList(it)
-
-                        binding.guideBanner.apply {
-                            this.setImageLoader(object : ImageLoader() {
-                                override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
-                                    Glide.with(context!!).load(API.getBaseUrl(context) + path.toString()).into(imageView!!)
-                                }
-                            })
-                            this.setImages(urls)
-                            this.isAutoPlay(false)
-                            this.start()
-                            
-                            this.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
-                                }
-
-                                override fun onPageSelected(position: Int) {
-                                    if (position == urls.size - 1) {
-                                        binding.guideNetwork.visibility = View.VISIBLE
-                                        binding.guideGo.visibility = View.VISIBLE
-
-                                        binding.guideGo.setOnClickListener { v ->
-                                            // 保存
-                                            sp.edit().putBoolean("isFirstEnter", false).apply()
-                                            val controller = Navigation.findNavController(requireActivity(), R.id.fragment_main)
-                                            controller.popBackStack()
-                                            controller.navigate(R.id.navControlFragment)
-                                        }
-
-                                        binding.guideNetwork.setOnClickListener { v ->
-                                            val view1 = layoutInflater.inflate(R.layout.alertdialog_change_ip, null)
-                                            val ip = view1.findViewById<EditText>(R.id.ip)
-                                            val duankou = view1.findViewById<EditText>(R.id.duankou)
-                                            ip.setText(sp.getString("ip", ""))
-                                            duankou.setText(sp.getString("duankou", ""))
-                                            AlertDialog.Builder(requireContext())
-                                                    .setTitle("网络设置")
-                                                    .setView(view1)
-                                                    .setPositiveButton("保存") { dialog: DialogInterface?, which: Int ->
-                                                        sp.edit()
-                                                                .putString("ip", ip.text.toString())
-                                                                .putString("duankou", duankou.text.toString())
-                                                                .apply()
-                                                    }
-                                                    .setNegativeButton("取消") { dialog: DialogInterface?, which: Int -> }
-                                                    .create()
-                                                    .show()
-                                        }
-                                    } else {
-                                        binding.guideNetwork.visibility = View.INVISIBLE
-                                        binding.guideGo.visibility = View.INVISIBLE
-                                    }
-                                }
-
-                                override fun onPageScrollStateChanged(state: Int) {
-
-                                }
-                            })
-                        }
-                    },
-                    {}
-            )
-
-            this.add(stirngRequest)
-        }
+    private fun navigation() {
+        val controller = Navigation.findNavController(requireActivity(), R.id.fragment_main)
+        controller.popBackStack()
+        controller.navigate(R.id.navControlFragment)
     }
 
     override fun onResume() {
