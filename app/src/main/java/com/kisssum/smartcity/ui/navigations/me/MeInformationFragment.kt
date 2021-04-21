@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -21,11 +22,8 @@ import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentMeInformationBinding
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
-import okhttp3.MediaType
+import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -131,25 +129,32 @@ class MeInformationFragment : Fragment() {
     private fun save() {
         Thread {
             try {
-                val json = JSONObject().apply {
-                    this.put("userId", userInfo["userId"])
-                    this.put("nickName", binding.miName.text.toString())
-                    this.put("sex", binding.miSex.isChecked)
-                    this.put("phonenumber", binding.miPhone.text.toString())
-                }
+//                val json = JSONObject().apply {
+//                    this.put("userId", userInfo["userId"])
+//                    this.put("nickName", binding.miName.text.toString())
+////                    this.put("sex", binding.miSex.isChecked)
+////                    this.put("phonenumber", binding.miPhone.text.toString())
+//                }
+//
+//                val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
+//                val requestBody = RequestBody.create(mediaType, json.toString())
 
-                val mediaType = "application/json;charset=utf-8".toMediaTypeOrNull()
-                val requestBody = RequestBody.create(mediaType, json.toString())
+                val f = FormBody.Builder()
+                        .add("userId", userInfo["userId"].toString())
+                        .add("nickName", binding.miName.text.toString())
+                        .build()
 
+//                Log.d("QT", json.toString())
                 val request = Request.Builder()
                         .url(API.getUserUpdata(requireContext()))
-                        .post(requestBody)
+                        .post(f)
                         .header("Authorization", API.getToken(requireContext()))
                         .build()
 
                 val client = OkHttpClient()
                 val response = client.newCall(request).execute()
                 val doc = response.body!!.string()
+                Log.d("QT", doc)
 
                 val message = Message()
                 message.what = SAVE

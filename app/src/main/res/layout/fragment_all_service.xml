@@ -42,13 +42,6 @@
                 android:layout_height="0.5dp"
                 android:background="@android:color/darker_gray" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="服务"
-                android:textSize="18sp" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/asNextList"
                 android:layout_width="match_parent"

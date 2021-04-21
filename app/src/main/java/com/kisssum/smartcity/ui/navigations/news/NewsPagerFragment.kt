@@ -12,14 +12,13 @@ import com.kisssum.smartcity.adapter.news.NewsListAdpater
 import com.kisssum.smartcity.databinding.FragmentNewsPagerBinding
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
-import com.scwang.smart.refresh.layout.api.RefreshLayout
 
 /**
  * A simple [Fragment] subclass.
  * Use the [NewsPagerFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class NewsPagerFragment(private val type: Int) : Fragment() {
+class NewsPagerFragment(private val type: Int, val isHome: Boolean) : Fragment() {
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
@@ -54,7 +53,7 @@ class NewsPagerFragment(private val type: Int) : Fragment() {
                         binding.newsPagerList.apply {
                             this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
-                            val dAdapter = NewsListAdpater(requireContext(), newsTypeListData)
+                            val dAdapter = NewsListAdpater(requireContext(), newsTypeListData, isHome, false)
                             this.adapter = dAdapter
                         }
                     },
@@ -81,7 +80,7 @@ class NewsPagerFragment(private val type: Int) : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         fun newInstance(param1: String?, param2: String?): NewsPagerFragment {
-            val fragment = NewsPagerFragment(0)
+            val fragment = NewsPagerFragment(0, false)
             val args = Bundle()
             args.putString(ARG_PARAM1, param1)
             args.putString(ARG_PARAM2, param2)

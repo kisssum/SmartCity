@@ -79,6 +79,11 @@ class SmartBusStep4Fragment : Fragment() {
 
             Toast.makeText(requireContext(), "提交成功!", Toast.LENGTH_SHORT).show()
             binding.sbs4Commit.isEnabled = false
+
+            val control = Navigation.findNavController(requireActivity(), R.id.fragment_main)
+            control.setGraph(R.navigation.nav_main)
+            control.navigate(R.id.smartBusFragment)
+            control.navigate(R.id.orderListFragment)
         }
     }
 

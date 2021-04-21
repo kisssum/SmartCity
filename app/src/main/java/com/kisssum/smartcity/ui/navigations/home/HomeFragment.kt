@@ -149,7 +149,7 @@ class HomeFragment : Fragment() {
     private fun initNews() {
         binding.homeNewsPager.apply {
             this.adapter = object : FragmentStateAdapter(requireActivity()) {
-                override fun createFragment(position: Int) = NewsPagerFragment(newsType[position]["dictCode"].toString().toInt())
+                override fun createFragment(position: Int) = NewsPagerFragment(newsType[position]["dictCode"].toString().toInt(), true)
                 override fun getItemCount() = newsType.size
             }
 

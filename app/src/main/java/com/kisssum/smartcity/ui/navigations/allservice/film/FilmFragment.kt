@@ -119,7 +119,7 @@ class FilmFragment : Fragment() {
 
             override fun createFragment(position: Int) = when (position) {
                 0 -> FilmSurroundingTheaterFragment()
-                else -> NewsPagerFragment(-1)
+                else -> NewsPagerFragment(-1, false)
 //                else -> FilmStarNewsFragment()
             }
         }

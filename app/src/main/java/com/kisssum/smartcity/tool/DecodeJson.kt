@@ -1,6 +1,10 @@
 package com.kisssum.smartcity.tool
 
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 object DecodeJson {
     fun decodeGuideRotationList(json: String): ArrayList<String> {
@@ -160,6 +164,20 @@ object DecodeJson {
             }
         }
 
+        for (i in 0 until data.size - 1) {
+            for (j in 0 until data.size - i - 1) {
+                val d = SimpleDateFormat("yyyy-mm-dd hh:mm:ss")
+                val d1 = d.parse(data[j]["createTime"].toString()).time
+                val d2 = d.parse(data[j + 1]["createTime"].toString()).time
+
+                if (d1 < d2) {
+                    val k = data[j]
+                    data[j] = data[j + 1]
+                    data[j + 1] = k
+                }
+            }
+        }
+
         return data
     }
 
@@ -245,4 +263,31 @@ object DecodeJson {
 
         return data
     }
+
+    fun decodeNewsCommentList(json: String): ArrayList<Map<String, Any>> {
+        val data = ArrayList<Map<String, Any>>()
+        var map: HashMap<String, Any>
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            val jsonArray = jsonObject.getJSONArray("rows")
+
+            for (i in 0 until jsonArray.length()) {
+                jsonArray.getJSONObject(i).apply {
+                    map = HashMap()
+                    map["pressId"] = this.getInt("pressId")
+                    map["createTime"] = this.getString("createTime")
+                    map["content"] = this.getString("content")
+                    map["nickName"] = this.getString("nickName")
+                    map["userName"] = this.getString("userName")
+                    map["avatar"] = this.getString("avatar")
+
+                    data.add(map)
+                }
+            }
+        }
+
+        return data
+    }
+
 }

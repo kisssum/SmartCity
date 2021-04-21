@@ -146,7 +146,11 @@
         android:id="@+id/newsDetailFragment"
         android:name="com.kisssum.smartcity.ui.navigations.news.NewsDetailFragment"
         android:label="fragment_news_detail"
-        tools:layout="@layout/fragment_news_detail" />
+        tools:layout="@layout/fragment_news_detail" >
+        <action
+            android:id="@+id/action_newsDetailFragment_self"
+            app:destination="@id/newsDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.kisssum.smartcity.ui.navigations.me.LoginFragment"
@@ -353,7 +357,11 @@
         android:id="@+id/smartBusStep4Fragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.smartBus.SmartBusStep4Fragment"
         android:label="fragment_smart_bus_step4"
-        tools:layout="@layout/fragment_smart_bus_step4" />
+        tools:layout="@layout/fragment_smart_bus_step4" >
+        <action
+            android:id="@+id/action_smartBusStep4Fragment_to_navControlFragment"
+            app:destination="@id/navControlFragment" />
+    </fragment>
     <fragment
         android:id="@+id/livingExpensesFragment"
         android:name="com.kisssum.smartcity.ui.navigations.allservice.livingExpenses.LivingExpensesFragment"

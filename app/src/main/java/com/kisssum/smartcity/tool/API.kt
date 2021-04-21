@@ -33,4 +33,6 @@ object API {
     fun getUserAddFeedBack(context: Context) = "${getBaseUrl(context)}/userinfo/feedback"
     fun getServiceFirst(context: Context) = "${getBaseUrl(context)}/system/dict/data/type/sys_service"
     fun getServiceAllList(context: Context) = "${getBaseUrl(context)}/service/service/list"
+    fun getNewsCommentList(context: Context, pressId: Int) = "${getBaseUrl(context)}/press/comments/list?pageNum=1&pageSize=10&pressId=${pressId}"
+    fun getNewsCommentAdd(context: Context) = "${getBaseUrl(context)}/press/pressComment"
 }
