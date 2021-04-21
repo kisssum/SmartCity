@@ -1,17 +1,23 @@
 package com.kisssum.smartcity.ui.navigations.home
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.android.volley.toolbox.ImageLoader
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -47,6 +53,7 @@ class HomeFragment : Fragment() {
     private val Service_Recommend = 1
     private val Service_Recommend_Img = 2
     private var homeRotationUrls: ArrayList<String>? = null
+    private lateinit var lunbotuUrl: ArrayList<String>
     private lateinit var hotThemeUrl: ArrayList<Map<String, Any>>
     private var serviceRecommendMaps: ArrayList<Map<String, Any>>? = null
     private lateinit var newsType: ArrayList<Map<String, Any>>
@@ -69,10 +76,8 @@ class HomeFragment : Fragment() {
         handler = object : Handler() {
             override fun handleMessage(msg: Message) {
                 super.handleMessage(msg)
-                if (msg.what == Home_Rotation) {
-                    homeRotationUrls = msg.obj as ArrayList<String>
-                    initLunbotu()
-                } else if (msg.what == Service_Recommend) {
+
+                if (msg.what == Service_Recommend) {
                     serviceRecommendMaps = msg.obj as ArrayList<Map<String, Any>>
                     initServiceList()
                 }
@@ -80,7 +85,7 @@ class HomeFragment : Fragment() {
         }
 
         // 轮播图
-        lunbotuUrl
+        getLunbotuUrl()
 
         // 服务列表
         serviceRecommendUrl
@@ -159,43 +164,31 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun initLunbotu() {
-        val topViewAdapter: FragmentStateAdapter = object : FragmentStateAdapter(requireActivity()) {
-            override fun createFragment(position: Int): Fragment {
-                return HomeTopViewPagerFragment(position, homeRotationUrls!![position])
-            }
+    private fun getLunbotuUrl() {
+        Volley.newRequestQueue(requireContext()).apply {
+            val stringRequest = StringRequest(
+                    API.getHomeeRotationListUrl(requireContext()),
+                    {
+                        lunbotuUrl = DecodeJson.decodeHomeRotationList(it)
 
-            override fun getItemCount(): Int {
-                return 4
-            }
+                        binding.homeBanner.apply {
+                            this.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
+                                override fun displayImage(context: Context?, path: Any?, imageView: ImageView?) {
+                                    Glide.with(requireActivity()).load(API.getBaseUrl(requireContext()) + path.toString()).into(imageView!!)
+                                }
+                            })
+
+                            this.setDelayTime(2000)
+                            this.setImages(lunbotuUrl)
+                            this.start()
+                        }
+                    },
+                    {}
+            )
+
+            this.add(stringRequest)
         }
-        binding.homeTopViewPager.adapter = topViewAdapter
-        binding.homeTopViewPager.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
-
-        // 无限滚轮
-        loopTopViewPager()
     }
-
-    private val lunbotuUrl: Unit
-        private get() {
-            Thread {
-                val client = OkHttpClient()
-                val request: Request = Request.Builder()
-                        .url(getHomeeRotationListUrl(requireContext()))
-                        .build()
-                try {
-                    val response = client.newCall(request).execute()
-                    val string = response.body!!.string()
-                    val imgs = decodeHomeRotationList(string)
-                    val message = Message()
-                    message.what = Home_Rotation
-                    message.obj = imgs
-                    handler!!.sendMessage(message)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }.start()
-        }
 
     private fun initServiceList() {
         binding.homeServiceList.layoutManager = GridLayoutManager(requireContext(), 5)
@@ -222,15 +215,6 @@ class HomeFragment : Fragment() {
         val HotServiceAdpater = HotServiceListAdpater(requireContext(), hotThemeUrl)
         binding.homeHotServiceList.layoutManager = layoutManager
         binding.homeHotServiceList.adapter = HotServiceAdpater
-    }
-
-    private fun loopTopViewPager() {
-        Handler().postDelayed({
-            var cIndex = binding.homeTopViewPager.currentItem
-            if (cIndex >= 4) cIndex = 0 else cIndex++
-            binding.homeTopViewPager.currentItem = cIndex
-            loopTopViewPager()
-        }, 3000)
     }
 
     companion object {

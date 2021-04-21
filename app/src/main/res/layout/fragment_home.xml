@@ -26,13 +26,10 @@
             app:cardCornerRadius="9dp"
             app:cardElevation="0dp">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/homeTopViewPager"
+            <com.youth.banner.Banner
+                android:id="@+id/homeBanner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:layout_editor_absoluteX="190dp">
-
-            </androidx.viewpager2.widget.ViewPager2>
+                android:layout_height="200dp" />
         </androidx.cardview.widget.CardView>
 
         <TextView

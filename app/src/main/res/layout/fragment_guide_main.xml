@@ -6,102 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.guidepages.GuideMainFragment">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <com.youth.banner.Banner
+        android:id="@+id/guideBanner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.viewpager2.widget.ViewPager2>
+    </com.youth.banner.Banner>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/guideNetwork"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="24dp"
+        android:text="网络设置"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/guideGo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/guideGo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
+        android:text="进入主页"
+        android:textColor="@color/white"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/guideCard0"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            app:cardBackgroundColor="@android:color/darker_gray"
-            app:cardCornerRadius="90dp"
-            app:cardElevation="0dp">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/guideCard1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            app:cardBackgroundColor="@android:color/darker_gray"
-            app:cardCornerRadius="90dp"
-            app:cardElevation="0dp">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/guideCard2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            app:cardBackgroundColor="@android:color/darker_gray"
-            app:cardCornerRadius="90dp"
-            app:cardElevation="0dp">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/guideCard3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            app:cardBackgroundColor="@android:color/darker_gray"
-            app:cardCornerRadius="90dp"
-            app:cardElevation="0dp">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp" />
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/guideCard4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            app:cardBackgroundColor="@android:color/darker_gray"
-            app:cardCornerRadius="90dp"
-            app:cardElevation="0dp">
-
-            <View
-                android:layout_width="10dp"
-                android:layout_height="10dp" />
-        </androidx.cardview.widget.CardView>
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

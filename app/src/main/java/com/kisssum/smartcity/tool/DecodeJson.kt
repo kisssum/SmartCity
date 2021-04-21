@@ -2,7 +2,6 @@ package com.kisssum.smartcity.tool
 
 import org.json.JSONObject
 import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
