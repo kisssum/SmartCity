@@ -28,11 +28,12 @@ class NewsCommentsListAdpater(
 
     override fun onBindViewHolder(holder: DefaultViewModel, position: Int) {
         val map = data[position]
+        var like = map["likeNum"].toString().toInt()
 
         holder.nclUserName.text = "用户:${map["userName"].toString()}"
         holder.nclContent.text = map["content"].toString()
         holder.nclTime.text = map["commentDate"].toString()
-        holder.nclLike.text = "点赞${map["likeNum"].toString()}"
+        holder.nclLike.text = "赞${like}"
 
         holder.nclLike.setOnClickListener {
             val toInt = map["id"].toString().toInt()
@@ -44,7 +45,8 @@ class NewsCommentsListAdpater(
                 if (newsCommentObj == "") {
                     UpdateUI.toastUi(context, "点赞失败!")
                 } else {
-                    UpdateUI.toastUi(context, "点赞+1")
+                    UpdateUI.toastUi(context, "+1")
+                    holder.nclLike.text = "赞${++like}"
                 }
             }
         }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.kisssum.smartcity.R
-import com.kisssum.smartcity.adapter.home.HomeServiceListAdpater
+import com.kisssum.smartcity.adapter.allservice.ServiceListAdpater
 import com.kisssum.smartcity.adapter.news.NewsListAdpater
 import com.kisssum.smartcity.databinding.FragmentHomeBinding
 import com.kisssum.smartcity.tool.API
@@ -27,6 +27,8 @@ import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private var newsPage: Int = 1
+    private val newsData = ArrayList<Map<String, String>>()
 
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
@@ -51,75 +53,101 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        init()
-    }
-
-    private fun init() {
-        GlobalScope.launch(Dispatchers.Main) {
-            val rotationListString =
-                withContext(Dispatchers.IO) { MRString.getHomeRotationList() }
-            val rotationListObj = DecodeJson.decodeHomeRotationList(rotationListString)
-            val imgUrl = ArrayList<String>()
-            rotationListObj.forEach {
-                imgUrl.add(it["advImg"].toString())
-            }
-
-            binding.homeBanner.apply {
-                this.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
-                    override fun displayImage(
-                        context: Context?,
-                        path: Any?,
-                        imageView: ImageView?
-                    ) {
-                        Glide.with(requireActivity())
-                            .load(API.getBaseUrl() + path.toString())
-                            .into(imageView!!)
-                    }
-                })
-
-                this.setDelayTime(2000)
-                this.setImages(imgUrl)
-                this.start()
-                this.setOnBannerListener {
-                    val id = rotationListObj[it]["targetId"]
-
-                    val bundle = Bundle()
-                    bundle.putInt("id", id!!.toInt())
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main)
-                        .navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle)
-                }
-            }
-
-            val serviceListString =
-                withContext(Dispatchers.IO) { MRString.getHomeServiceList() }
-            val serviceListObj = DecodeJson.decodeServiceList(serviceListString).apply {
-                val map = HashMap<String, String>()
-                map["id"] = "-1"
-                map["serviceName"] = "更多服务"
-                this.add(map)
-            }
-            binding.homeServiceList.apply {
-                this.layoutManager = GridLayoutManager(requireContext(), 5)
-                this.adapter = HomeServiceListAdpater(
-                    requireContext(),
-                    serviceListObj,
-                    true
-                )
-            }
-
-            val newsListString = withContext(Dispatchers.IO) { MRString.getNewsList() }
-            val newsListObj = DecodeJson.decodeNewsTypeList(newsListString)
-            binding.homeNewsList.apply {
-                this.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-                val dAdapter = NewsListAdpater(requireContext(), newsListObj, true, false)
-                this.adapter = dAdapter
-            }
-        }
-
         // 搜索框
         initSearch()
+        initSmartRefresh()
+        GlobalScope.launch(Dispatchers.Main) { loadData() }
+    }
+
+    private suspend fun initRotation() {
+        val rotationListString =
+            withContext(Dispatchers.IO) { MRString.getHomeRotationList() }
+        val rotationListObj = DecodeJson.decodeHomeRotationList(rotationListString)
+        val imgUrl = ArrayList<String>()
+        rotationListObj.forEach {
+            imgUrl.add(it["advImg"].toString())
+        }
+
+        binding.homeBanner.apply {
+            this.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
+                override fun displayImage(
+                    context: Context?,
+                    path: Any?,
+                    imageView: ImageView?
+                ) {
+                    Glide.with(requireActivity())
+                        .load(API.getBaseUrl() + path.toString())
+                        .into(imageView!!)
+                }
+            })
+
+            this.setDelayTime(2000)
+            this.setImages(imgUrl)
+            this.start()
+            this.setOnBannerListener {
+                val id = rotationListObj[it]["targetId"]
+
+                val bundle = Bundle()
+                bundle.putInt("id", id!!.toInt())
+                Navigation.findNavController(requireActivity(), R.id.fragment_main)
+                    .navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle)
+            }
+        }
+    }
+
+    private suspend fun initServiceList() {
+        val serviceListString =
+            withContext(Dispatchers.IO) { MRString.getHomeServiceList() }
+        val serviceListObj = DecodeJson.decodeServiceList(serviceListString).apply {
+            val map = HashMap<String, String>()
+            map["id"] = "-1"
+            map["serviceName"] = "更多服务"
+            this.add(map)
+        }
+        binding.homeServiceList.apply {
+            this.layoutManager = GridLayoutManager(requireContext(), 5)
+            this.adapter = ServiceListAdpater(
+                requireContext(),
+                serviceListObj,
+                true
+            )
+        }
+    }
+
+    private suspend fun loadData() {
+        initRotation()
+        initServiceList()
+        initNewsList()
+    }
+
+    private fun initSmartRefresh() {
+        binding.homeSmartRefresh.apply {
+            this.setOnRefreshListener {
+                newsPage = 1
+                GlobalScope.launch(Dispatchers.Main) { loadData() }
+                binding.homeSmartRefresh.finishRefresh()
+            }
+            this.setOnLoadMoreListener {
+                newsPage++
+                GlobalScope.launch(Dispatchers.Main) { initNewsList() }
+                binding.homeSmartRefresh.finishLoadMore()
+            }
+        }
+    }
+
+    private suspend fun initNewsList() {
+        val newsListString = withContext(Dispatchers.IO) { MRString.getNewsList(newsPage) }
+        val newsListObj = DecodeJson.decodeNewsTypeList(newsListString)
+        binding.homeNewsList.apply {
+            this.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            if (newsPage == 1) newsData.clear()
+            newsData.addAll(newsListObj)
+
+            val dAdapter = NewsListAdpater(requireContext(), newsData, true, false)
+            this.adapter = dAdapter
+        }
     }
 
     private fun initSearch() {

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.kisssum.smartcity.R
 import androidx.recyclerview.widget.GridLayoutManager
-import com.kisssum.smartcity.adapter.home.HomeServiceListAdpater
+import com.kisssum.smartcity.adapter.allservice.ServiceListAdpater
 import com.kisssum.smartcity.databinding.FragmentAllServiceBinding
 import com.kisssum.smartcity.tool.DecodeJson
 import com.kisssum.smartcity.tool.MRString
@@ -76,14 +76,14 @@ class AllServiceFragment : Fragment() {
 
                     binding.asNextList.adapter = when (position) {
                         0 -> {
-                            HomeServiceListAdpater(requireContext(), serviceListObj)
+                            ServiceListAdpater(requireContext(), serviceListObj)
                         }
                         else -> {
                             serviceListObj.forEach {
                                 if (it["serviceType"] == serviceTypeList[position]) data.add(it)
                             }
 
-                            HomeServiceListAdpater(requireContext(), data)
+                            ServiceListAdpater(requireContext(), data)
                         }
                     }
                 }
@@ -93,7 +93,7 @@ class AllServiceFragment : Fragment() {
             binding.asNextList.apply {
                 this.layoutManager = GridLayoutManager(requireContext(), 3)
                 this.adapter =
-                    HomeServiceListAdpater(requireContext(), serviceListObj)
+                    ServiceListAdpater(requireContext(), serviceListObj)
             }
         }
     }

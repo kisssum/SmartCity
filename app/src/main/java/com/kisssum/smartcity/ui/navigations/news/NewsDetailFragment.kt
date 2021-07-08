@@ -33,7 +33,7 @@ class NewsDetailFragment : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     private lateinit var binding: FragmentNewsDetailBinding
-    private lateinit var handler: Handler
+    private var newsId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,77 +59,88 @@ class NewsDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = requireArguments().getInt("id", 0)
+        newsId = requireArguments().getInt("id", 0)
 
         GlobalScope.launch(Dispatchers.Main) {
-            val newsDetailString =
-                withContext(Dispatchers.IO) { MRString.getNewsDetail(id) }
-            val newsDetailObj = DecodeJson.decodeNewsDetail(newsDetailString)
-            binding.newsDetailTitle.text = newsDetailObj["title"]
-            binding.newsDetailsubTitle.text = newsDetailObj["subTitle"]
-            Glide.with(requireActivity()).load(API.getBaseUrl() + newsDetailObj["cover"])
-                .into(binding.newsDetailImg)
-            binding.newsDetailPublichDate.text = newsDetailObj["publishDate"]
-            binding.newsDetailContent.text = newsDetailObj["content"]
-
-            val newsCommentString =
-                withContext(Dispatchers.IO) { MRString.getNewsComments(id) }
-            val newsCommentObj = DecodeJson.decodeNewsCommentsList(newsCommentString)
-            binding.newsDetailCommentSize.text = newsCommentObj.size.toString()
-            binding.newsDetailcommentList.apply {
-                this.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
-                val dAdapter = NewsCommentsListAdpater(requireContext(), newsCommentObj)
-                this.adapter = dAdapter
-            }
+            initNewsDetail()
+            initNewsCommentsList()
         }
 
         binding.newsDetailAdd.setOnClickListener {
-            val content = binding.newsDetailCommentcotent.text.toString()
-
-            GlobalScope.launch(Dispatchers.Main) {
-                val newsCommentAddString: String =
-                    withContext(Dispatchers.IO) {
-                        MRString.getNewsCommentAdd(
-                            requireContext(),
-                            id,
-                            content
-                        )
-                    }
-                val newsCommentAddObj = DecodeJson.decodeCommentAdd(newsCommentAddString)
-
-                if (newsCommentAddObj == "") {
-                    UpdateUI.toastUi(requireContext(), "发布失败!")
-                } else {
-                    UpdateUI.toastUi(requireContext(), "发布成功!")
-
-                    val newsCommentString =
-                        withContext(Dispatchers.IO) { MRString.getNewsComments(id) }
-                    val newsCommentObj = DecodeJson.decodeNewsCommentsList(newsCommentString)
-                    binding.newsDetailCommentSize.text = newsCommentObj.size.toString()
-                    binding.newsDetailcommentList.apply {
-                        this.layoutManager =
-                            LinearLayoutManager(
-                                requireContext(),
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
-
-                        val dAdapter = NewsCommentsListAdpater(requireContext(), newsCommentObj)
-                        this.adapter = dAdapter
-                    }
-                }
-            }
+            GlobalScope.launch(Dispatchers.Main) { initNewsCommentsAdd() }
         }
 
         // Toolbar
         binding.newsDetailToolbar.setNavigationOnClickListener { v: View? ->
-            Navigation.findNavController(
-                requireActivity(),
-                R.id.fragment_main
-            ).navigateUp()
+            Navigation.findNavController(requireActivity(), R.id.fragment_main).navigateUp()
         }
+    }
+
+    private suspend fun initNewsCommentsAdd() {
+        val content = binding.newsDetailCommentcotent.text.toString()
+
+        if (content == "") {
+            UpdateUI.toastUi(requireContext(), "请输入内容!")
+        } else {
+            val newsCommentAddString: String =
+                withContext(Dispatchers.IO) {
+                    MRString.getNewsCommentAdd(
+                        requireContext(),
+                        newsId,
+                        content
+                    )
+                }
+            val newsCommentAddObj = DecodeJson.decodeCommentAdd(newsCommentAddString)
+
+            if (newsCommentAddObj == "") {
+                UpdateUI.toastUi(requireContext(), "发布失败!")
+            } else {
+                UpdateUI.toastUi(requireContext(), "发布成功!")
+                binding.newsDetailCommentcotent.setText("")
+
+                val newsCommentString =
+                    withContext(Dispatchers.IO) { MRString.getNewsComments(newsId) }
+                val newsCommentObj = DecodeJson.decodeNewsCommentsList(newsCommentString)
+                binding.newsDetailCommentSize.text = newsCommentObj.size.toString()
+                binding.newsDetailcommentList.apply {
+                    this.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+                    val dAdapter = NewsCommentsListAdpater(requireContext(), newsCommentObj)
+                    this.adapter = dAdapter
+                }
+            }
+        }
+    }
+
+    private suspend fun initNewsCommentsList() {
+        val newsCommentString =
+            withContext(Dispatchers.IO) { MRString.getNewsComments(newsId) }
+        val newsCommentObj = DecodeJson.decodeNewsCommentsList(newsCommentString)
+        binding.newsDetailCommentSize.text = newsCommentObj.size.toString()
+        binding.newsDetailcommentList.apply {
+            this.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            val dAdapter = NewsCommentsListAdpater(requireContext(), newsCommentObj)
+            this.adapter = dAdapter
+        }
+    }
+
+    private suspend fun initNewsDetail() {
+        val newsDetailString =
+            withContext(Dispatchers.IO) { MRString.getNewsDetail(newsId) }
+        val newsDetailObj = DecodeJson.decodeNewsDetail(newsDetailString)
+        binding.newsDetailTitle.text = "标题:${newsDetailObj["title"]}"
+        binding.newsDetailsubTitle.text = "副标题:${newsDetailObj["subTitle"]}"
+        Glide.with(requireActivity()).load(API.getBaseUrl() + newsDetailObj["cover"])
+            .into(binding.newsDetailImg)
+        binding.newsDetailPublichDate.text = "发布时间:${newsDetailObj["publishDate"]}"
+        binding.newsDetailWebContent.loadData(
+            newsDetailObj["content"].toString(),
+            "text/html",
+            "UTF-8"
+        )
     }
 
     companion object {

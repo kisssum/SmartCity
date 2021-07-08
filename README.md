@@ -13,4 +13,6 @@
 * 使用ConstrainLayout作为基本布局
 * 使用Jetpack Navigation作为页面导航
 * 使用协程配合网络请求
+* 使用开源组件SmartRefresh为下拉刷新和上拉加载
+
 ***

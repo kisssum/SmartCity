@@ -1,4 +1,4 @@
-package com.kisssum.smartcity.adapter.home
+package com.kisssum.smartcity.adapter.allservice
 
 import android.app.Activity
 import android.content.Context
@@ -15,7 +15,7 @@ import com.kisssum.smartcity.R
 import com.kisssum.smartcity.tool.API
 import kotlin.collections.ArrayList
 
-class HomeServiceListAdpater(
+class ServiceListAdpater(
     val context: Context,
     val data: ArrayList<Map<String, String>>,
     val isHome: Boolean = false,

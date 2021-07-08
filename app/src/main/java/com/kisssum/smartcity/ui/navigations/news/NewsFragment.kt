@@ -56,57 +56,8 @@ class NewsFragment : Fragment() {
         initSearch()
 
         GlobalScope.launch(Dispatchers.Main) {
-            val rotationListString = withContext(Dispatchers.IO) { MRString.getNewsList() }
-            val rotationListObj = DecodeJson.decodeNewsTypeList(rotationListString)
-            val imgUrl = ArrayList<String>()
-            rotationListObj.forEach {
-                imgUrl.add(it["cover"].toString())
-            }
-            binding.newsBanner.apply {
-                this.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
-                    override fun displayImage(
-                        context: Context?,
-                        path: Any?,
-                        imageView: ImageView?
-                    ) {
-                        Glide.with(requireActivity())
-                            .load(API.getBaseUrl() + path.toString())
-                            .into(imageView!!)
-                    }
-                })
-
-                this.setDelayTime(2000)
-                this.setImages(imgUrl)
-                this.start()
-                this.setOnBannerListener {
-                    val id = rotationListObj[it]["id"]
-
-                    val bundle = Bundle()
-                    bundle.putInt("id", id!!.toInt())
-                    Navigation.findNavController(requireActivity(), R.id.fragment_main)
-                        .navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle)
-                }
-            }
-
-            val newsCategoryListString =
-                withContext(Dispatchers.IO) { MRString.getHomeNewsCategoryList() }
-            val newsCategoryListObj = DecodeJson.decodeNewsCategoryList(newsCategoryListString)
-            binding.newsMainPager.apply {
-                this.adapter = object : FragmentStateAdapter(requireActivity()) {
-                    override fun createFragment(position: Int) =
-                        NewsPagerFragment(newsCategoryListObj[position]["id"]!!.toInt(), true)
-
-                    override fun getItemCount() = newsCategoryListObj.size
-                }
-                this.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
-
-                TabLayoutMediator(
-                    binding.newsMainTablayout,
-                    binding.newsMainPager
-                ) { tab: TabLayout.Tab, position: Int ->
-                    tab.text = newsCategoryListObj[position]["name"]
-                }.attach()
-            }
+            initRotation()
+            initNews()
         }
     }
 
@@ -116,6 +67,62 @@ class NewsFragment : Fragment() {
                 requireActivity(),
                 R.id.fragment_main
             ).navigate(R.id.action_navControlFragment_to_newsSearchFragment)
+        }
+    }
+
+    private suspend fun initRotation() {
+        val rotationListString = withContext(Dispatchers.IO) { MRString.getNewsList(0) }
+        val rotationListObj = DecodeJson.decodeNewsTypeList(rotationListString)
+        val imgUrl = ArrayList<String>()
+        rotationListObj.forEach {
+            imgUrl.add(it["cover"].toString())
+        }
+        binding.newsBanner.apply {
+            this.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
+                override fun displayImage(
+                    context: Context?,
+                    path: Any?,
+                    imageView: ImageView?
+                ) {
+                    Glide.with(requireActivity())
+                        .load(API.getBaseUrl() + path.toString())
+                        .into(imageView!!)
+                }
+            })
+
+            this.setDelayTime(2000)
+            this.setImages(imgUrl)
+            this.start()
+            this.setOnBannerListener {
+                val id = rotationListObj[it]["id"]
+
+                val bundle = Bundle()
+                bundle.putInt("id", id!!.toInt())
+                Navigation.findNavController(requireActivity(), R.id.fragment_main)
+                    .navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle)
+            }
+        }
+    }
+
+    private suspend fun initNews() {
+        val newsCategoryListString =
+            withContext(Dispatchers.IO) { MRString.getHomeNewsCategoryList() }
+        val newsCategoryListObj = DecodeJson.decodeNewsCategoryList(newsCategoryListString)
+        binding.newsMainPager.apply {
+            this.adapter = object : FragmentStateAdapter(requireActivity()) {
+                override fun createFragment(position: Int) =
+                    NewsPagerFragment(newsCategoryListObj[position]["id"]!!.toInt(), true)
+
+                override fun getItemCount() = newsCategoryListObj.size
+            }
+            this.getChildAt(0).overScrollMode = View.OVER_SCROLL_NEVER
+
+            TabLayoutMediator(
+                binding.newsMainTablayout,
+                binding.newsMainPager
+            ) { tab: TabLayout.Tab, position: Int ->
+                tab.text = newsCategoryListObj[position]["name"]
+            }.attach()
         }
     }
 

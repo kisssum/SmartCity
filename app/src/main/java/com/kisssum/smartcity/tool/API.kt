@@ -24,11 +24,11 @@ object API {
     fun getNewsListByTitleUrl(title: String) =
         "${getBaseUrl()}/prod-api/press/press/list?title=${title}&pageNum=0&pageSize=8&orderByColumn=publishDate desc"
 
-    fun getNewsListUrl() =
-        "${getBaseUrl()}/prod-api/press/press/list?pageNum=0&pageSize=8&orderByColumn=publishDate desc"
+    fun getNewsListUrl(page: Int) =
+        "${getBaseUrl()}/prod-api/press/press/list?pageNum=${page}&pageSize=8&orderByColumn=publishDate desc"
 
-    fun getNewsTypeListUrl(type: Int) =
-        "${getBaseUrl()}/prod-api/press/press/list?type=${type}&pageNum=0&pageSize=8&orderByColumn=publishDate desc"
+    fun getNewsTypeListUrl(type: Int, page: Int) =
+        "${getBaseUrl()}/prod-api/press/press/list?type=${type}&pageNum=${page}&pageSize=8&orderByColumn=publishDate desc"
 
     fun getNewsDetailUrl(id: Int) = "${getBaseUrl()}/prod-api/press/press/${id}"
     fun getNewsCommentsListUrl(id: Int) =

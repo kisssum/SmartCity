@@ -112,16 +112,16 @@ object MRString {
         return response.body?.string().toString()
     }
 
-    fun getNewsList(): String {
+    fun getNewsList(page: Int): String {
         val client = OkHttpClient()
         val request = Request.Builder()
-            .url(API.getNewsListUrl())
+            .url(API.getNewsListUrl(page))
             .build()
         val response = client.newCall(request).execute()
         return response.body?.string().toString()
     }
 
-    fun getNewsListByTitle(title:String): String {
+    fun getNewsListByTitle(title: String): String {
         val client = OkHttpClient()
         val request = Request.Builder()
             .url(API.getNewsListByTitleUrl(title))
@@ -130,10 +130,10 @@ object MRString {
         return response.body?.string().toString()
     }
 
-    fun getHomeNewsTypeList(type: Int): String {
+    fun getHomeNewsTypeList(type: Int, page: Int): String {
         val client = OkHttpClient()
         val request = Request.Builder()
-            .url(API.getNewsTypeListUrl(type))
+            .url(API.getNewsTypeListUrl(type, page))
             .build()
         val response = client.newCall(request).execute()
         return response.body?.string().toString()

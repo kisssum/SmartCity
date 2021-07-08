@@ -42,10 +42,10 @@
                 android:id="@+id/newsDetailTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_margin="10dp"
                 android:text="TextView"
                 android:textColor="@color/black"
-                android:textSize="16sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -57,8 +57,8 @@
                     android:id="@+id/newsDetailsubTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:padding="10dp"
                     android:text="TextView"
                     android:textSize="12sp" />
 
@@ -66,29 +66,34 @@
                     android:id="@+id/newsDetailPublichDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:padding="10dp"
                     android:text="TextView"
                     android:textAlignment="textEnd" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/newsDetailImg"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                android:layout_margin="10dp"
+                app:cardCornerRadius="9dp">
 
-            <TextView
-                android:id="@+id/newsDetailContent"
+                <ImageView
+                    android:id="@+id/newsDetailImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+            </androidx.cardview.widget.CardView>
+
+            <WebView
+                android:id="@+id/newsDetailWebContent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -117,7 +122,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/newsDetailcommentList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -132,8 +137,9 @@
                     android:id="@+id/newsDetailCommentcotent"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/search_style"
+                    android:background="@drawable/border_style"
                     android:ems="10"
                     android:hint="输入评论.."
                     android:inputType="textPersonName" />
@@ -141,7 +147,7 @@
                 <Button
                     android:id="@+id/newsDetailAdd"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:text="发布" />

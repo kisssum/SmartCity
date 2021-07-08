@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kisssum.smartcity.R
-import com.kisssum.smartcity.adapter.home.HomeServiceListAdpater
+import com.kisssum.smartcity.adapter.allservice.ServiceListAdpater
 import com.kisssum.smartcity.adapter.news.NewsListAdpater
 import com.kisssum.smartcity.databinding.FragmentNewsSearchBinding
 import com.kisssum.smartcity.tool.DecodeJson
@@ -109,14 +109,14 @@ class NewsSearchFragment : Fragment() {
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
                     val dAdapter =
-                        HomeServiceListAdpater(requireContext(), serviceListObj, isSearch = true)
+                        ServiceListAdpater(requireContext(), serviceListObj, isSearch = true)
                     this.adapter = dAdapter
                 }
             }
         } else {
             binding.newsSearchList.apply {
                 val dAdapter =
-                    HomeServiceListAdpater(requireContext(), ArrayList(), isSearch = true)
+                    ServiceListAdpater(requireContext(), ArrayList(), isSearch = true)
 
                 this.adapter = dAdapter
             }

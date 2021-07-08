@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@+id/newsImg" />
 
     <TextView
-        android:id="@+id/newsText"
+        android:id="@+id/newsContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -55,7 +55,7 @@
         android:text="时间"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsText" />
+        app:layout_constraintTop_toBottomOf="@+id/newsContent" />
 
     <TextView
         android:id="@+id/newsComment"
@@ -66,7 +66,7 @@
         android:text="评论数"
         android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newsText" />
+        app:layout_constraintTop_toBottomOf="@+id/newsContent" />
 
     <View
         android:layout_width="0dp"

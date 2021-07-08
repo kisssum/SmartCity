@@ -24,7 +24,8 @@ class NewsPagerFragment(private val type: Int, private val isHome: Boolean) : Fr
     // TODO: Rename and change types of parameters
     private var mParam1: String? = null
     private var mParam2: String? = null
-
+    private var page: Int = 1
+    private val data = ArrayList<Map<String, String>>()
     private lateinit var binding: FragmentNewsPagerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,8 +37,8 @@ class NewsPagerFragment(private val type: Int, private val isHome: Boolean) : Fr
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentNewsPagerBinding.inflate(inflater)
         return binding.root
@@ -46,16 +47,39 @@ class NewsPagerFragment(private val type: Int, private val isHome: Boolean) : Fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        GlobalScope.launch(Dispatchers.Main) {
-            val newsTypeListString = withContext(Dispatchers.IO) { MRString.getHomeNewsTypeList(type) }
-            val newsTypeListObj = DecodeJson.decodeNewsTypeList(newsTypeListString)
-            
-            binding.newsPagerList.apply {
-                this.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        GlobalScope.launch(Dispatchers.Main) { initList() }
+        initSmartRefresh()
+    }
 
-                val dAdapter = NewsListAdpater(requireContext(), newsTypeListObj, isHome, false)
-                this.adapter = dAdapter
+    private fun initSmartRefresh() {
+        binding.newsSmart.apply {
+            this.setOnRefreshListener {
+                page = 1
+                GlobalScope.launch(Dispatchers.Main) { initList() }
+                binding.newsSmart.finishRefresh()
             }
+            this.setOnLoadMoreListener {
+                page++
+                GlobalScope.launch(Dispatchers.Main) { initList() }
+                binding.newsSmart.finishLoadMore()
+            }
+        }
+    }
+
+    private suspend fun initList() {
+        val newsTypeListString =
+            withContext(Dispatchers.IO) { MRString.getHomeNewsTypeList(type, page) }
+        val newsTypeListObj = DecodeJson.decodeNewsTypeList(newsTypeListString)
+
+        binding.newsPagerList.apply {
+            this.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+            if (page == 1) data.clear()
+            data.addAll(newsTypeListObj)
+
+            val dAdapter = NewsListAdpater(requireContext(), data, isHome, false)
+            this.adapter = dAdapter
         }
     }
 
