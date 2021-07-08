@@ -13,6 +13,7 @@ import com.kisssum.smartcity.adapter.home.HomeServiceListAdpater
 import com.kisssum.smartcity.databinding.FragmentAllServiceBinding
 import com.kisssum.smartcity.tool.DecodeJson
 import com.kisssum.smartcity.tool.MRString
+import com.kisssum.smartcity.ui.navigations.news.NewsSearchFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -99,10 +100,13 @@ class AllServiceFragment : Fragment() {
 
     private fun initSearch() {
         binding.allServiceSearchView.border.setOnClickListener { v: View? ->
+            val bundle = Bundle()
+            bundle.putInt("type", NewsSearchFragment.TYPE_SERVICE)
+
             Navigation.findNavController(
                 requireActivity(),
                 R.id.fragment_main
-            ).navigate(R.id.action_navControlFragment_to_newsSearchFragment)
+            ).navigate(R.id.action_navControlFragment_to_newsSearchFragment, bundle)
         }
     }
 

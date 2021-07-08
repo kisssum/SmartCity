@@ -11,7 +11,6 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.adapter.home.HomeServiceListAdpater
 import com.kisssum.smartcity.adapter.news.NewsListAdpater
@@ -19,6 +18,7 @@ import com.kisssum.smartcity.databinding.FragmentHomeBinding
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
 import com.kisssum.smartcity.tool.MRString
+import com.kisssum.smartcity.ui.navigations.news.NewsSearchFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -52,47 +52,6 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         init()
-    }
-
-    private fun initMyServiceList() {
-        binding.homeServiceList.layoutManager = GridLayoutManager(requireContext(), 5)
-
-        val bottomNavigationView =
-            requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        val navController = Navigation.findNavController(requireActivity(), R.id.fragment_main)
-
-//        binding.homeServiceListMy.serviceGovernmentAffairs.setOnClickListener {
-//            bottomNavigationView.selectedItemId = R.id.item_allservice
-//        }
-//        binding.homeServiceListMy.serviceFilm.setOnClickListener { navController.navigate(R.id.action_navControlFragment_to_filmFragment) }
-        binding.homeServiceListMy.serviceRealWeather.setOnClickListener { navController.navigate(R.id.action_navControlFragment_to_realWeatherFragment) }
-        binding.homeServiceListMy.serviceViolationQuery.setOnClickListener {
-            navController.navigate(
-                R.id.action_navControlFragment_to_violationQueryFragment
-            )
-        }
-//        binding.homeServiceListMy.servicePension.setOnClickListener {
-//            bottomNavigationView.selectedItemId = R.id.item_allservice
-//        }
-//        binding.homeServiceListMy.serviceLivingExpenses.setOnClickListener {
-//            navController.navigate(
-//                R.id.action_navControlFragment_to_livingExpensesFragment
-//            )
-//        }
-//        binding.homeServiceListMy.serviceMedicalTreatment.setOnClickListener {
-//            navController.navigate(
-//                R.id.action_navControlFragment_to_medicalFragment
-//            );
-//        }
-        binding.homeServiceListMy.serviceOutpatientAppointment.setOnClickListener {
-            navController.navigate(
-                R.id.action_navControlFragment_to_outpatientAppointmentFragment
-            );
-        }
-//        binding.homeServiceListMy.serviceSmartBus.setOnClickListener { navController.navigate(R.id.action_navControlFragment_to_smartBusFragment); }
-//        binding.homeServiceListMy.serviceMore.setOnClickListener {
-//            bottomNavigationView.selectedItemId = R.id.item_allservice;
-//        }
     }
 
     private fun init() {
@@ -165,10 +124,12 @@ class HomeFragment : Fragment() {
 
     private fun initSearch() {
         binding.homeSearchView.border.setOnClickListener { v: View? ->
+            val bundle = Bundle()
+            bundle.putInt("type", NewsSearchFragment.TYPE_NEWS)
             Navigation.findNavController(
                 requireActivity(),
                 R.id.fragment_main
-            ).navigate(R.id.action_navControlFragment_to_newsSearchFragment)
+            ).navigate(R.id.action_navControlFragment_to_newsSearchFragment, bundle)
         }
     }
 

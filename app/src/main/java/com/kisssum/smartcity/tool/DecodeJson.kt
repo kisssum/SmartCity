@@ -33,6 +33,36 @@ object DecodeJson {
         return obj
     }
 
+    fun decodeServiceListByTitle(json: String, title: String): ArrayList<Map<String, String>> {
+        val obj = ArrayList<Map<String, String>>()
+        var map: HashMap<String, String>
+
+        val jsonObject = JSONObject(json)
+
+        if (jsonObject.getInt("code") == 200) {
+            val jsonArray = jsonObject.getJSONArray("rows")
+
+            for (i in 0 until jsonArray.length()) {
+                jsonArray.getJSONObject(i).apply {
+                    val name = this.getString("serviceName")
+
+                    if (name.indexOf(title) != -1) {
+                        map = HashMap()
+                        map["id"] = this.getInt("id").toString()
+                        map["serviceName"] = this.getString("serviceName")
+                        map["serviceDesc"] = this.getString("serviceDesc")
+                        map["serviceType"] = this.getString("serviceType")
+                        map["imgUrl"] = this.getString("imgUrl")
+                        map["link"] = this.getString("link")
+                        obj.add(map)
+                    }
+                }
+            }
+        }
+
+        return obj
+    }
+
     fun decodeNewsCommentsList(json: String): ArrayList<Map<String, String>> {
         val obj = ArrayList<Map<String, String>>()
         var map: HashMap<String, String>

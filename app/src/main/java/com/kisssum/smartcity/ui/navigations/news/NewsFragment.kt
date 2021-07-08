@@ -1,22 +1,19 @@
 package com.kisssum.smartcity.ui.navigations.news
 
+import android.content.Context
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory
 import androidx.navigation.Navigation
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kisssum.smartcity.R
 import com.kisssum.smartcity.databinding.FragmentNewsBinding
-import com.kisssum.smartcity.state.NewsModel
 import com.kisssum.smartcity.tool.API
 import com.kisssum.smartcity.tool.DecodeJson
 import com.kisssum.smartcity.tool.MRString
@@ -47,9 +44,9 @@ class NewsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentNewsBinding.inflate(inflater)
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -59,6 +56,38 @@ class NewsFragment : Fragment() {
         initSearch()
 
         GlobalScope.launch(Dispatchers.Main) {
+            val rotationListString = withContext(Dispatchers.IO) { MRString.getNewsList() }
+            val rotationListObj = DecodeJson.decodeNewsTypeList(rotationListString)
+            val imgUrl = ArrayList<String>()
+            rotationListObj.forEach {
+                imgUrl.add(it["cover"].toString())
+            }
+            binding.newsBanner.apply {
+                this.setImageLoader(object : com.youth.banner.loader.ImageLoader() {
+                    override fun displayImage(
+                        context: Context?,
+                        path: Any?,
+                        imageView: ImageView?
+                    ) {
+                        Glide.with(requireActivity())
+                            .load(API.getBaseUrl() + path.toString())
+                            .into(imageView!!)
+                    }
+                })
+
+                this.setDelayTime(2000)
+                this.setImages(imgUrl)
+                this.start()
+                this.setOnBannerListener {
+                    val id = rotationListObj[it]["id"]
+
+                    val bundle = Bundle()
+                    bundle.putInt("id", id!!.toInt())
+                    Navigation.findNavController(requireActivity(), R.id.fragment_main)
+                        .navigate(R.id.action_navControlFragment_to_newsDetailFragment, bundle)
+                }
+            }
+
             val newsCategoryListString =
                 withContext(Dispatchers.IO) { MRString.getHomeNewsCategoryList() }
             val newsCategoryListObj = DecodeJson.decodeNewsCategoryList(newsCategoryListString)

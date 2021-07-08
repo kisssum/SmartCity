@@ -33,6 +33,7 @@
         android:id="@+id/asNextList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:nestedScrollingEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline29"
@@ -48,10 +49,10 @@
     <View
         android:id="@+id/view7"
         android:layout_width="1dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="#eee"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline29"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/allServiceSearchView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
